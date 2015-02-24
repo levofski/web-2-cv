@@ -5,7 +5,9 @@ Feature: Laravel Behat Extension
 
   Scenario: Dummy Example
     Given I am on the homepage
-    When I follow "Click Me"
-    Then the url should match "/example"
-    And I should see "It works!"
+    Then I should see "Laravel 5"
+  
+  Scenario: Dashboard Protected from guests
+    When I go to "home"
+    Then the url should match "auth/login"
     And I should be able to do something with Laravel
