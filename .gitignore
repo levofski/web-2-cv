@@ -1,3 +1,5 @@
+.kdev4/
+web-2-cv.kdev4
 /bootstrap/compiled.php
 .env.*.php
 .env.php
