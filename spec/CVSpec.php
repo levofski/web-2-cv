@@ -1,0 +1,21 @@
+<?php
+
+namespace spec\Web2CV;
+
+use Web2CV\CandidateDetails;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+
+class CVSpec extends ObjectBehavior
+{
+    function it_is_initializable()
+    {
+        $this->shouldHaveType('Web2CV\CV');
+    }
+    
+    function it_can_contain_candidate_details(CandidateDetails $candidateDetails)
+    {
+		$this->setCandidateDetails($candidateDetails);
+		$this->getCandidateDetails()->shouldHaveType('Web2CV\CandidateDetails');
+    }
+}
