@@ -5,3 +5,11 @@ default:
         Behat\MinkExtension:
             default_session: laravel
             laravel: ~
+    suites:
+        candidate_features:
+            paths:      [ %paths.base%/features/candidate ]
+            contexts:   [ CandidateContext ]
+            
+        recruiter_features:
+            paths:      [ %paths.base%/features/recruiter ]
+            contexts:   [ RecruiterContext ]
