@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Exceptions;
+<?php namespace Web2CV\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

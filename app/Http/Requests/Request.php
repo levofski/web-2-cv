@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Http\Requests;
+<?php namespace Web2CV\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

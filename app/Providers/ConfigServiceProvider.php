@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Providers;
+<?php namespace Web2CV\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Events;
+<?php namespace Web2CV\Events;
 
 abstract class Event {
 

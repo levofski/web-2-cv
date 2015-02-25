@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Providers;
+<?php namespace Web2CV\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind(
 			'Illuminate\Contracts\Auth\Registrar',
-			'Web2Cv\Services\Registrar'
+			'Web2CV\Services\Registrar'
 		);
 	}
 

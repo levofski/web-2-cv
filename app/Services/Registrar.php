@@ -1,6 +1,6 @@
-<?php namespace Web2Cv\Services;
+<?php namespace Web2CV\Services;
 
-use Web2Cv\User;
+use Web2CV\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

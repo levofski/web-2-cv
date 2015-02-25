@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Http;
+<?php namespace Web2CV\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -15,7 +15,7 @@ class Kernel extends HttpKernel {
 		'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
 		'Illuminate\Session\Middleware\StartSession',
 		'Illuminate\View\Middleware\ShareErrorsFromSession',
-		'Web2Cv\Http\Middleware\VerifyCsrfToken',
+		'Web2CV\Http\Middleware\VerifyCsrfToken',
 	];
 
 	/**
@@ -24,9 +24,9 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth' => 'Web2Cv\Http\Middleware\Authenticate',
+		'auth' => 'Web2CV\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-		'guest' => 'Web2Cv\Http\Middleware\RedirectIfAuthenticated',
+		'guest' => 'Web2CV\Http\Middleware\RedirectIfAuthenticated',
 	];
 
 }

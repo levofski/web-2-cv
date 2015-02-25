@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Providers;
+<?php namespace Web2CV\Providers;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +16,7 @@ class BusServiceProvider extends ServiceProvider {
 		$dispatcher->mapUsing(function($command)
 		{
 			return Dispatcher::simpleMapping(
-				$command, 'Web2Cv\Commands', 'Web2Cv\Handlers\Commands'
+				$command, 'Web2CV\Commands', 'Web2CV\Handlers\Commands'
 			);
 		});
 	}

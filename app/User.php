@@ -1,4 +1,4 @@
-<?php namespace Web2Cv;
+<?php namespace Web2CV;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

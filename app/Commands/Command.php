@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Commands;
+<?php namespace Web2CV\Commands;
 
 abstract class Command {
 

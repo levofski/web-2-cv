@@ -139,11 +139,11 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'Web2Cv\Providers\AppServiceProvider',
-		'Web2Cv\Providers\BusServiceProvider',
-		'Web2Cv\Providers\ConfigServiceProvider',
-		'Web2Cv\Providers\EventServiceProvider',
-		'Web2Cv\Providers\RouteServiceProvider',
+		'Web2CV\Providers\AppServiceProvider',
+		'Web2CV\Providers\BusServiceProvider',
+		'Web2CV\Providers\ConfigServiceProvider',
+		'Web2CV\Providers\EventServiceProvider',
+		'Web2CV\Providers\RouteServiceProvider',
 
 	],
 

@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Http\Controllers;
+<?php namespace Web2CV\Http\Controllers;
 
 class HomeController extends Controller {
 

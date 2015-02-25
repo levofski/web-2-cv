@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
 	'Illuminate\Contracts\Http\Kernel',
-	'Web2Cv\Http\Kernel'
+	'Web2CV\Http\Kernel'
 );
 
 $app->singleton(
 	'Illuminate\Contracts\Console\Kernel',
-	'Web2Cv\Console\Kernel'
+	'Web2CV\Console\Kernel'
 );
 
 $app->singleton(
 	'Illuminate\Contracts\Debug\ExceptionHandler',
-	'Web2Cv\Exceptions\Handler'
+	'Web2CV\Exceptions\Handler'
 );
 
 /*

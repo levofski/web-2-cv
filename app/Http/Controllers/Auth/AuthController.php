@@ -1,6 +1,6 @@
-<?php namespace Web2Cv\Http\Controllers\Auth;
+<?php namespace Web2CV\Http\Controllers\Auth;
 
-use Web2Cv\Http\Controllers\Controller;
+use Web2CV\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;

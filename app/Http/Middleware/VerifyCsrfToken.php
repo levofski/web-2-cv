@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Http\Middleware;
+<?php namespace Web2CV\Http\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;

@@ -1,4 +1,4 @@
-<?php namespace Web2Cv\Console\Commands;
+<?php namespace Web2CV\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
