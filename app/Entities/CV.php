@@ -15,6 +15,11 @@ class CV
 	*/
 	protected $workExperiences = array();
 
+    /**
+     * @var array
+     */
+    protected $educations = array();
+
 	/**
 	 * @param CandidateDetails
 	 */
@@ -40,8 +45,36 @@ class CV
 		$this->workExperiences[] = $workExperience;
 	}
 
-	public function countWorkExperience()
+	public function countWorkExperiences()
 	{
 		return count($this->workExperiences);
 	}
+
+    public function addEducation($education)
+    {
+        if (is_array($education))
+        {
+            return array_map([$this,'addEducation'], $education);
+        }
+        $this->educations[] = $education;
+    }
+
+    public function countEducations()
+    {
+        return count($this->educations);
+    }
+
+    public function addHobby($hobby)
+    {
+        if (is_array($hobby))
+        {
+            return array_map([$this,'addHobby'], $hobby);
+        }
+        $this->hobbies[] = $hobby;
+    }
+
+    public function countHobbies()
+    {
+        return count($this->hobbies);
+    }
 }
