@@ -31,8 +31,12 @@ class CV
 		return $this->candidateDetails;
 	}
 
-	public function addWorkExperience(WorkExperience $workExperience)
+	public function addWorkExperience($workExperience)
 	{
+        if (is_array($workExperience))
+        {
+            return array_map([$this,'addWorkExperience'], $workExperience);
+        }
 		$this->workExperiences[] = $workExperience;
 	}
 

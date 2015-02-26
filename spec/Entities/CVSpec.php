@@ -25,4 +25,17 @@ class CVSpec extends ObjectBehavior
 		$this->addWorkExperience($workExperience);
 		$this->countWorkExperience()->shouldEqual(1);
 	}
+
+    function it_can_accept_multiple_work_experiences(WorkExperience $workExperience1, WorkExperience $workExperience2)
+    {
+        $this->addWorkExperience($workExperience1);
+        $this->addWorkExperience($workExperience2);
+        $this->countWorkExperience()->shouldEqual(2);
+    }
+
+    function it_can_accept_multiple_work_experiences_at_once(WorkExperience $workExperience1, WorkExperience $workExperience2)
+    {
+        $this->addWorkExperience([$workExperience1, $workExperience2]);
+        $this->countWorkExperience()->shouldEqual(2);
+    }
 }
