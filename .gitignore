@@ -5,3 +5,5 @@ web-2-cv.kdev4
 .env.php
 /vendor/
 /bin/
+readme.md
+README.md
