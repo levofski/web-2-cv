@@ -1,6 +1,6 @@
 <?php
 
-namespace Web2CV;
+namespace Web2CV\Entities;
 
 class CV
 {
