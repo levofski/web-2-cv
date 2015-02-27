@@ -9,7 +9,7 @@ class DataNode
 	 */
 	protected $nodeData = array();
 
-    public function add($value, $key = null)
+    public function set($value, $key = null)
     {
 		if (is_null($key))
 		{
