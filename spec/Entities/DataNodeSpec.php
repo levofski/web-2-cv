@@ -169,4 +169,30 @@ class DataNodeSpec extends ObjectBehavior
         $this->fromArray($arrayData);
         $this->toArray();
     }
+
+    /** Array Access */
+    function it_can_be_treated_as_an_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    {
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $this->fromArray($arrayData);
+        $this["key1"]->shouldReturn("value1");
+        $this["key2"]->shouldReturn($dataNode1);
+        $this["key3"]->shouldReturn(["child1","child2" => ["key4" => $dataNode2],"child3"]);
+        $this[0]->shouldReturn($dataNode3);
+    }
+
+    function it_can_be_treated_as_a_multidimensional_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    {
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $this->fromArray($arrayData);
+        $this["key3"]["child2"]["key4"]->shouldReturn($dataNode2);
+    }
+
+    function it_can_be_treated_as_a_multidimensional_array_of_data_nodes(DataNode $dataNode1)
+    {
+        $dataNode1->offsetGet("child1")->shouldBeCalled();
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1];
+        $this->fromArray($arrayData);
+        $this["key2"]["child1"];
+    }
 }
