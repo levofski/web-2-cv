@@ -143,5 +143,19 @@ class DataNodeSpec extends ObjectBehavior
         $this->get('child2')->shouldReturn(99);
     }
 
+    /** To/From array */
+    function it_can_be_populated_from_an_array()
+    {
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $this->fromArray($arrayData);
+        $this->get()->shouldReturn($arrayData);
 
+    }
+
+    function it_can_return_an_array()
+    {
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        array_walk($arrayData, [$this, 'set']);
+        $this->toArray()->shouldReturn($arrayData);
+    }
 }
