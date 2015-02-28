@@ -144,7 +144,7 @@ class DataNodeSpec extends ObjectBehavior
     }
 
     /** To/From array */
-    function it_can_be_populated_from_an_array()
+    function it_can_be_populated_from_an_array_of_primitives()
     {
         $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
         $this->fromArray($arrayData);
@@ -152,10 +152,21 @@ class DataNodeSpec extends ObjectBehavior
 
     }
 
-    function it_can_return_an_array()
+    function it_can_return_an_array_when_populated_with_primitives()
     {
         $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
         array_walk($arrayData, [$this, 'set']);
         $this->toArray()->shouldReturn($arrayData);
+    }
+
+    function it_can_be_populated_from_an_array_of_data_nodes(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    {
+        $dataNode1->toArray()->shouldBeCalled();
+        // Since $dataNode2 is effectively in a child, it should be the child calling toArray() not this Unit
+        $dataNode2->toArray()->shouldNotBeCalled();
+        $dataNode3->toArray()->shouldBeCalled();
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $this->fromArray($arrayData);
+        $this->toArray();
     }
 }

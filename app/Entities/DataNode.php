@@ -70,6 +70,13 @@ class DataNode
      */
     public function toArray()
     {
-        return $this->nodeData;
+        $nodeData = $this->nodeData;
+        array_walk($nodeData, function(&$val, $key){
+            if ($val instanceof static)
+            {
+                $val = $val->toArray();
+            }
+        });
+        return $nodeData;
     }
 }
