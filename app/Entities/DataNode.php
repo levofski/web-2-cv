@@ -71,7 +71,7 @@ class DataNode implements \ArrayAccess
     public function toArray()
     {
         $nodeData = $this->nodeData;
-        array_walk($nodeData, function(&$val, $key){
+        array_walk_recursive($nodeData, function(&$val, $key){
             if ($val instanceof static)
             {
                 $val = $val->toArray();
