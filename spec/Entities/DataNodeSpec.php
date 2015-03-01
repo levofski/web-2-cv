@@ -174,7 +174,7 @@ class DataNodeSpec extends ObjectBehavior
     }
 
     /** Array Access */
-    function it_can_be_treated_as_an_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    function it_can_be_read_from_as_an_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
         $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($arrayData);
@@ -184,18 +184,22 @@ class DataNodeSpec extends ObjectBehavior
         $this[0]->shouldReturn($dataNode3);
     }
 
-    function it_can_be_treated_as_a_multidimensional_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    function it_can_be_read_from_as_a_multidimensional_array(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
         $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this["key3"]["child2"]["key4"]->shouldReturn($dataNode2);
     }
 
-    function it_can_be_treated_as_a_multidimensional_array_of_data_nodes(DataNode $dataNode1)
+    function it_can_be_read_from_as_a_multidimensional_array_of_data_nodes(DataNode $dataNode1)
     {
-        $dataNode1->offsetGet("child1")->shouldBeCalled();
-        $arrayData = ["key1" => "value1", "key2" => $dataNode1];
-        $this->fromArray($arrayData);
-        $this["key2"]["child1"];
+        // $dataNode1Data = ["dataNode1Key1" => "dataNode1Value1", "dataNode1Value2"];
+        $dataNode1->offsetGet("dataNode1Key1")->willReturn("dataNode1Value1");
+        $dataNode1->offsetGet(0)->willReturn("dataNode1Value2");
+        $inputArrayData = ["key1" => "value1", "key2" => $dataNode1];
+        $this->fromArray($inputArrayData);
+        $this["key2"]->shouldReturn($dataNode1);
+        $this["key2"]["dataNode1Key1"]->shouldReturn("dataNode1Value1");
+        $this["key2"][0]->shouldReturn("dataNode1Value2");
     }
 }
