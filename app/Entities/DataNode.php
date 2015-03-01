@@ -2,7 +2,7 @@
 
 namespace Web2CV\Entities;
 
-class DataNode implements \ArrayAccess
+class DataNode
 {
 	/**
 	 * @var array $nodeData
@@ -10,47 +10,61 @@ class DataNode implements \ArrayAccess
 	protected $nodeData = array();
 
     /**
-     * Set a value
-     *
-     * @param $value
-     * @param string $key
+     * @param array $arrayData
      */
-    public function set($value, $key = null)
+    public function __construct($arrayData = null)
     {
-		if (is_null($key))
-		{
-			$this->nodeData[] = $value;
-		}
-		else 
-		{
-			$this->nodeData[$key] = $value;
+        if (!is_null($arrayData))
+        {
+            $this->fromArray($arrayData);
         }
     }
 
     /**
      * Get a value
      *
-     * @param string $key
+     * @param string $offset
      * @return mixed
      */
-    public function get($key = null)
+    public function get($offset = null)
     {
 		switch (true)
 		{
-			case (is_null($key)) :
+			case (is_null($offset)) :
 				$nodeData = $this->nodeData;
 				break;
-			case (is_int($key)) :
-				$nodeData = $this->nodeData[$key-1];
+			case (is_int($offset)) :
+				$nodeData = $this->nodeData[$offset];
 				break;
-			case (is_string($key)) :
-				$nodeData = $this->nodeData[$key];
+			case (is_string($offset)) :
+				$nodeData = $this->nodeData[$offset];
 				break;
 			default :
-				throw new UnexpectedValueException('Unexpected key sent to get()');
+				throw new UnexpectedValueException('Unexpected offset type sent to get()');
 				break;
 		}
         return $nodeData;
+    }
+
+    /**
+     * Set a value
+     *
+     * @param $value
+     * @param string $offset
+     */
+    public function set($value, $offset = null)
+    {
+        if ( is_array($value) ) {
+            $value = new static($value);
+        }
+        if (is_null($offset))
+        {
+            $this->nodeData[] = $value;
+        }
+        else
+        {
+            $this->nodeData[$offset] = $value;
+        }
     }
 
     /**
@@ -78,67 +92,5 @@ class DataNode implements \ArrayAccess
             }
         });
         return $nodeData;
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Whether a offset exists
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->nodeData[$offset]);
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
-     * @return mixed Can return all value types.
-     */
-    public function offsetGet($offset)
-    {
-        return $this->nodeData[$offset];
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->nodeData[$offset] = $value;
-    }
-
-    /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->nodeData[$offset]);
     }
 }
