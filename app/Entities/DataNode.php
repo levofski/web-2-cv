@@ -79,6 +79,17 @@ class DataNode
     }
 
     /**
+     * Set a value via object notation
+     *
+     * @param string $offset
+     * @param mixed $value
+     */
+    public function __set($offset, $value)
+    {
+        return $this->set($value, $offset);
+    }
+
+    /**
      * Populate with the data from the array
      *
      * @param array $arrayData

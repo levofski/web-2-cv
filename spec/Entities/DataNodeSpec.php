@@ -207,7 +207,6 @@ class DataNodeSpec extends ObjectBehavior
     /** Object Access (writing) */
     function it_can_be_written_to_as_an_object()
     {
-        throw new SkippingException("Object Access not yet implemented");
         $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->key2 = "newValue2";
@@ -219,7 +218,6 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_written_to_as_a_multidimensional_object()
     {
-        throw new SkippingException("Object Access not yet implemented");
         $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->key3->{0} = "newChild1";
