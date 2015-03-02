@@ -236,8 +236,27 @@ class DataNodeSpec extends ObjectBehavior
         $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->path("/key1")->shouldReturn("value1");
-        $this->path("/key2")->shouldReturn($dataNode1);
+        $this->path("key2")->shouldReturn($dataNode1);
         $this->path("/key3")->shouldHaveType('Web2CV\Entities\DataNode');
         $this->path(0)->shouldReturn($dataNode3);
+    }
+
+    function it_can_be_read_from_using_a_deep_path(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    {
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $this->fromArray($arrayData);
+        $this->path("/key3/child2/key4")->shouldReturn($dataNode2);
+    }
+
+    function it_can_be_read_from_using_a_deep_path_when_containing_data_nodes(DataNode $dataNode1)
+    {
+        // $dataNode1Data = ["dataNode1Key1" => "dataNode1Value1", "dataNode1Value2"];
+        $dataNode1->path("dataNode1Key1")->willReturn("dataNode1Value1");
+        $dataNode1->path(0)->willReturn("dataNode1Value2");
+        $inputArrayData = ["key1" => "value1", "key2" => $dataNode1];
+        $this->fromArray($inputArrayData);
+        $this->path("key2")->shouldReturn($dataNode1);
+        $this->path("/key2/dataNode1Key1")->shouldReturn("dataNode1Value1");
+        $this->path("key2/0")->shouldReturn("dataNode1Value2");
     }
 }
