@@ -273,4 +273,16 @@ class DataNodeSpec extends ObjectBehavior
         $outputArrayData = ["key1" => "value1", "key2" => "newValue2", "key3" => "newValue3", "key4" => "newValue4"];
         $this->toArray()->shouldReturn($outputArrayData);
     }
+
+    function it_can_be_written_to_using_a_deep_path()
+    {
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $this->fromArray($inputArrayData);
+        $this->path("/key3/0", "newChild1");
+        $this->path("key3/child2", "newChild3");
+        $this->path("/key4", []);
+        $this->path("key4/child4", "newValue4");
+        $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1","child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
+        $this->toArray()->shouldReturn($outputArrayData);
+    }
 }

@@ -120,23 +120,43 @@ class DataNode
 
     /**
      * Access the data using a path
+     * If a value is sent, the data will be updated
      *
      * @param $path
+     * @param $value
      * @return mixed
      */
-    public function path($path)
+    public function path($path, $value = null)
     {
         // Trim away any leading slash
         $path = ltrim($path, self::PATH_SEPARATOR);
         $pathParts = explode(self::PATH_SEPARATOR, $path);
-        $offset = array_shift($pathParts);
-        $result = $this->get($offset);
-        if (count($pathParts) > 0)
+        // If a value was sent, set the target's value
+        if (is_null($value))
         {
-            // Recurse
-            $newPath = implode(self::PATH_SEPARATOR, $pathParts);
-            $result = $result->path($newPath);
+            $offset = array_shift($pathParts);
+            $target = $this->get($offset);
+            if (count($pathParts) > 0)
+            {
+                // Recurse
+                $newPath = implode(self::PATH_SEPARATOR, $pathParts);
+                $target = $target->path($newPath);
+            }
+            return $target;
         }
-        return $result;
+        else
+        {
+            if (count($pathParts) > 1)
+            {
+                $offset = array_shift($pathParts);
+                $target = $this->get($offset);
+                // Recurse
+                $newPath = implode(self::PATH_SEPARATOR, $pathParts);
+                $target->path($newPath, $value);
+            } else {
+                $offset = array_shift($pathParts);
+                $this->set($value, $offset);
+            }
+        }
     }
 }
