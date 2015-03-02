@@ -4,6 +4,8 @@ namespace Web2CV\Entities;
 
 class DataNode
 {
+    const PATH_SEPARATOR = '/';
+
 	/**
 	 * @var array $nodeData
 	 */
@@ -114,5 +116,27 @@ class DataNode
             }
         });
         return $nodeData;
+    }
+
+    /**
+     * Access the data using a path
+     *
+     * @param $path
+     * @return mixed
+     */
+    public function path($path)
+    {
+        // Trim away any leading slash
+        $path = ltrim($path, self::PATH_SEPARATOR);
+        $pathParts = explode(self::PATH_SEPARATOR, $path);
+        $offset = array_shift($pathParts);
+        $result = $this->get($offset);
+        if (count($pathParts) > 0)
+        {
+            // Recurse
+            $newPath = implode(self::PATH_SEPARATOR, $pathParts);
+            $result = $result->path($newPath);
+        }
+        return $result;
     }
 }

@@ -227,4 +227,17 @@ class DataNodeSpec extends ObjectBehavior
         $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1","child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
         $this->toArray()->shouldReturn($outputArrayData);
     }
+
+    /**
+     * Path access (reading)
+     */
+    function it_can_be_read_from_using_a_path(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
+    {
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $this->fromArray($arrayData);
+        $this->path("/key1")->shouldReturn("value1");
+        $this->path("/key2")->shouldReturn($dataNode1);
+        $this->path("/key3")->shouldHaveType('Web2CV\Entities\DataNode');
+        $this->path(0)->shouldReturn($dataNode3);
+    }
 }
