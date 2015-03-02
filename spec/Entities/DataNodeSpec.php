@@ -177,18 +177,16 @@ class DataNodeSpec extends ObjectBehavior
     /** Object Access (reading) */
     function it_can_be_read_from_as_an_object(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        throw new SkippingException("Object Access not yet implemented");
         $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->key1->shouldReturn("value1");
         $this->key2->shouldReturn($dataNode1);
-        $this->key3->shouldReturn(["child1","child2" => ["key4" => $dataNode2],"child3"]);
+        $this->key3->shouldHaveType('Web2CV\Entities\DataNode');
         $this->{0}->shouldReturn($dataNode3);
     }
 
     function it_can_be_read_from_as_a_multidimensional_object(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        throw new SkippingException("Object Access not yet implemented");
         $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->key3->child2->key4->shouldReturn($dataNode2);
@@ -196,15 +194,14 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_read_from_as_a_multidimensional_object_of_data_nodes(DataNode $dataNode1)
     {
-        throw new SkippingException("Object Access not yet implemented");
         // $dataNode1Data = ["dataNode1Key1" => "dataNode1Value1", "dataNode1Value2"];
-        $dataNode1->offsetGet("dataNode1Key1")->willReturn("dataNode1Value1");
-        $dataNode1->offsetGet(0)->willReturn("dataNode1Value2");
+        $dataNode1->get("dataNode1Key1")->willReturn("dataNode1Value1");
+        $dataNode1->get(0)->willReturn("dataNode1Value2");
         $inputArrayData = ["key1" => "value1", "key2" => $dataNode1];
         $this->fromArray($inputArrayData);
-        $this["key2"]->shouldReturn($dataNode1);
-        $this["key2"]["dataNode1Key1"]->shouldReturn("dataNode1Value1");
-        $this["key2"][0]->shouldReturn("dataNode1Value2");
+        $this->key2->shouldReturn($dataNode1);
+        $this->key2->dataNode1Key1->shouldReturn("dataNode1Value1");
+        $this->key2->{0}->shouldReturn("dataNode1Value2");
     }
 
     /** Object Access (writing) */

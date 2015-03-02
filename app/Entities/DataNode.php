@@ -47,6 +47,17 @@ class DataNode
     }
 
     /**
+     * Get a value via object notation
+     *
+     * @param string $offset
+     * @return mixed
+     */
+    public function __get($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
      * Set a value
      *
      * @param $value
