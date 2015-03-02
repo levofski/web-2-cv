@@ -259,4 +259,18 @@ class DataNodeSpec extends ObjectBehavior
         $this->path("/key2/dataNode1Key1")->shouldReturn("dataNode1Value1");
         $this->path("key2/0")->shouldReturn("dataNode1Value2");
     }
+
+    /**
+     * Path access (writing)
+     */
+    function it_can_be_written_to_using_a_path()
+    {
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $this->fromArray($inputArrayData);
+        $this->path("/key2", "newValue2");
+        $this->path("key3", "newValue3");
+        $this->path("/key4", "newValue4");
+        $outputArrayData = ["key1" => "value1", "key2" => "newValue2", "key3" => "newValue3", "key4" => "newValue4"];
+        $this->toArray()->shouldReturn($outputArrayData);
+    }
 }
