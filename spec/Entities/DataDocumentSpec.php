@@ -12,11 +12,10 @@ class DataDocumentSpec extends ObjectBehavior
     {
         $this->shouldHaveType('Web2CV\Entities\DataDocument');
     }
-    
-    function it_can_contain_a_data_node(DataNode $dataNode)
+
+    public function let($name)
     {
-		$this->setDataNode($dataNode);
-		$this->getDataNode()->shouldReturn($dataNode);
+        $this->beConstructedThrough('create', [$name]);
     }
-    
+
 }
