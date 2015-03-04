@@ -9,9 +9,9 @@ use Behat\MinkExtension\Context\MinkContext;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
- * Defines application features from the specific context.
+ * Defines application features from the UI context, using browser (mink) to test.
  */
-class AbstractContext extends MinkContext implements Context, SnippetAcceptingContext
+class UIContext extends MinkContext implements Context, SnippetAcceptingContext
 {
 
     

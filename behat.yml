@@ -6,10 +6,10 @@ default:
             default_session: laravel
             laravel: ~
     suites:
-        candidate_features:
-            paths:      [ %paths.base%/features/candidate ]
-            contexts:   [ CandidateContext ]
+        domain:
+            paths:      [ %paths.base%/features ]
+            contexts:   [ DomainContext ]
             
-        recruiter_features:
-            paths:      [ %paths.base%/features/recruiter ]
-            contexts:   [ RecruiterContext ]
+        ui:
+            paths:      [ %paths.base%/features ]
+            contexts:   [ UIContext ]
