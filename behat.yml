@@ -1,4 +1,7 @@
 default:
+    extensions:
+        RMiller\BehatSpec\BehatExtension:
+            path: bin/phpspec
     suites:
         domain:
             paths:      [ %paths.base%/features ]

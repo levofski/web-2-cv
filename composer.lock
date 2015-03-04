@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "478ea31295194585ba2ff500fa265cf2",
+    "hash": "c11bcb487dcd738af6d98ee527233a9e",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -414,12 +414,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c393d510feaec13abfb150bf0d4a5f619ba118fb"
+                "reference": "9f52c6ff60134d709fc13f1201a27f87c81bf50f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c393d510feaec13abfb150bf0d4a5f619ba118fb",
-                "reference": "c393d510feaec13abfb150bf0d4a5f619ba118fb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/9f52c6ff60134d709fc13f1201a27f87c81bf50f",
+                "reference": "9f52c6ff60134d709fc13f1201a27f87c81bf50f",
                 "shasum": ""
             },
             "require": {
@@ -531,7 +531,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-27 14:46:13"
+            "time": "2015-02-26 03:13:24"
         },
         {
             "name": "league/flysystem",
@@ -784,12 +784,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "d56ff5a351d43cb4d26589f2aff878ae7cf01ff1"
+                "reference": "e3bc5b564d2eaceae8ecb74ff8194efa6235a04f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d56ff5a351d43cb4d26589f2aff878ae7cf01ff1",
-                "reference": "d56ff5a351d43cb4d26589f2aff878ae7cf01ff1",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e3bc5b564d2eaceae8ecb74ff8194efa6235a04f",
+                "reference": "e3bc5b564d2eaceae8ecb74ff8194efa6235a04f",
                 "shasum": ""
             },
             "require": {
@@ -821,7 +821,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-02-26 18:19:40"
+            "time": "2015-02-24 20:43:12"
         },
         {
             "name": "psr/log",
@@ -2162,12 +2162,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laracasts/Behat-Laravel-Extension.git",
-                "reference": "c8eeb440235c23ba14a601ea94801ace3af0e18e"
+                "reference": "205a3d217d33d4315d20d0f3497edd65a8b5443e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laracasts/Behat-Laravel-Extension/zipball/c8eeb440235c23ba14a601ea94801ace3af0e18e",
-                "reference": "c8eeb440235c23ba14a601ea94801ace3af0e18e",
+                "url": "https://api.github.com/repos/laracasts/Behat-Laravel-Extension/zipball/205a3d217d33d4315d20d0f3497edd65a8b5443e",
+                "reference": "205a3d217d33d4315d20d0f3497edd65a8b5443e",
                 "shasum": ""
             },
             "require": {
@@ -2203,7 +2203,7 @@
                 "extension",
                 "laravel"
             ],
-            "time": "2015-02-28 14:31:47"
+            "time": "2015-01-22 00:00:24"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2211,12 +2211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "d1da796ba5565789a623052eb9f2cf59d57fec60"
+                "reference": "5a87e6edaa9927e301ed6b16d230d977d14f1386"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/d1da796ba5565789a623052eb9f2cf59d57fec60",
-                "reference": "d1da796ba5565789a623052eb9f2cf59d57fec60",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/5a87e6edaa9927e301ed6b16d230d977d14f1386",
+                "reference": "5a87e6edaa9927e301ed6b16d230d977d14f1386",
                 "shasum": ""
             },
             "require": {
@@ -2253,7 +2253,7 @@
                     "email": "mike.vanriel@naenius.com"
                 }
             ],
-            "time": "2015-02-27 09:28:18"
+            "time": "2015-02-25 17:26:05"
         },
         {
             "name": "phpspec/php-diff",
@@ -2677,12 +2677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "70544916e867ec9792019735a69eaca2ff71e370"
+                "reference": "7b9e68dfc2fccb6b167b09a605152b0f5fd6d871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/70544916e867ec9792019735a69eaca2ff71e370",
-                "reference": "70544916e867ec9792019735a69eaca2ff71e370",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b9e68dfc2fccb6b167b09a605152b0f5fd6d871",
+                "reference": "7b9e68dfc2fccb6b167b09a605152b0f5fd6d871",
                 "shasum": ""
             },
             "require": {
@@ -2744,7 +2744,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-02-27 08:13:32"
+            "time": "2015-02-24 09:18:59"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2800,6 +2800,277 @@
                 "xunit"
             ],
             "time": "2015-01-18 10:44:19"
+        },
+        {
+            "name": "rmiller/behat-spec",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/BehatSpec.git",
+                "reference": "9f36516185707d0bea384ff4285f5c36a6650442"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/BehatSpec/zipball/9f36516185707d0bea384ff4285f5c36a6650442",
+                "reference": "9f36516185707d0bea384ff4285f5c36a6650442",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "rmiller/error-extension": "~0.1",
+                "rmiller/exemplify-extension": "~0.2",
+                "rmiller/phpspec-extension": "~0.1",
+                "rmiller/phpspec-run-extension": "~0.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RMiller\\BehatSpec\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com",
+                    "homepage": "http://richardmiller.co.uk"
+                }
+            ],
+            "description": "Behat and PhpSpec integration",
+            "homepage": "https://github.com/richardmiller/BehatSpec",
+            "keywords": [
+                "BDD",
+                "SpecBDD",
+                "StoryBDD"
+            ],
+            "time": "2014-11-12 14:09:59"
+        },
+        {
+            "name": "rmiller/caser",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/caser.git",
+                "reference": "ec7b0d9b5db806f5e6bcee48d6cce58efb20e834"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/caser/zipball/ec7b0d9b5db806f5e6bcee48d6cce58efb20e834",
+                "reference": "ec7b0d9b5db806f5e6bcee48d6cce58efb20e834",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "RMiller\\Caser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com"
+                }
+            ],
+            "description": "Manipulates case",
+            "homepage": "https://github.com/richardmiller/caser",
+            "time": "2014-11-02 22:15:20"
+        },
+        {
+            "name": "rmiller/error-extension",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/ErrorExtension.git",
+                "reference": "26d27c7c67f99fd9d56f56147f85cbc991ca4834"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/ErrorExtension/zipball/26d27c7c67f99fd9d56f56147f85cbc991ca4834",
+                "reference": "26d27c7c67f99fd9d56f56147f85cbc991ca4834",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "~3.0,>=3.0.4",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1@dev"
+            },
+            "type": "behat-extension",
+            "autoload": {
+                "psr-4": {
+                    "RMiller\\ErrorExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com"
+                }
+            ],
+            "description": "Fatal error handling extension for Behat",
+            "homepage": "https://github.com/richardmiller/ErrorExtension",
+            "keywords": [
+                "BDD",
+                "Behat"
+            ],
+            "time": "2014-11-04 10:15:46"
+        },
+        {
+            "name": "rmiller/exemplify-extension",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/ExemplifyExtension.git",
+                "reference": "c08bff7c4628d8972d2f4aeb5d02f855fd4ab843"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/ExemplifyExtension/zipball/c08bff7c4628d8972d2f4aeb5d02f855fd4ab843",
+                "reference": "c08bff7c4628d8972d2f4aeb5d02f855fd4ab843",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "phpspec/phpspec": "~2.0",
+                "rmiller/caser": "~0.1"
+            },
+            "require-dev": {
+                "behat/behat": "~3.0",
+                "bossa/phpspec2-expect": "~1.0",
+                "phpspec/phpspec": "~2.1@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RMiller\\ExemplifyExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com"
+                }
+            ],
+            "description": "PhpSpec extension that adds exemplify command to generate examples in specs ",
+            "homepage": "https://github.com/richardmiller/ExemplifyExtension",
+            "keywords": [
+                "BDD",
+                "phpspec"
+            ],
+            "time": "2014-11-12 13:59:10"
+        },
+        {
+            "name": "rmiller/phpspec-extension",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/PhpSpecExtension.git",
+                "reference": "df9967bd39cc20b7ab57475ccc93300c8d1ac6bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/PhpSpecExtension/zipball/df9967bd39cc20b7ab57475ccc93300c8d1ac6bb",
+                "reference": "df9967bd39cc20b7ab57475ccc93300c8d1ac6bb",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "~3.0,>=3.0.4",
+                "php": ">=5.4",
+                "phpspec/phpspec": "~2.0",
+                "symfony/process": "~2.1"
+            },
+            "require-dev": {
+                "rmiller/error-extension": "~0.1",
+                "rmiller/exemplify-extension": "~0.1"
+            },
+            "type": "behat-extension",
+            "autoload": {
+                "psr-4": {
+                    "RMiller\\PhpSpecExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com"
+                }
+            ],
+            "description": "PhpSpec extension for Behat",
+            "homepage": "https://github.com/richardmiller/PhpSpecExtension",
+            "keywords": [
+                "BDD",
+                "Behat",
+                "phpspec"
+            ],
+            "time": "2014-12-04 12:21:14"
+        },
+        {
+            "name": "rmiller/phpspec-run-extension",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardmiller/PhpSpecRunExtension.git",
+                "reference": "768400bcf73e5bf01e24146937cf241f994a2b59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardmiller/PhpSpecRunExtension/zipball/768400bcf73e5bf01e24146937cf241f994a2b59",
+                "reference": "768400bcf73e5bf01e24146937cf241f994a2b59",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "phpspec/phpspec": "~2.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RMiller\\PhpSpecRunExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Miller",
+                    "email": "mrrmiller46@gmail.com"
+                }
+            ],
+            "description": "PhpSpec extension to execute the run command after the describe command",
+            "homepage": "https://github.com/richardmiller/PhpSpecRunExtension",
+            "keywords": [
+                "BDD",
+                "phpspec"
+            ],
+            "time": "2014-11-12 13:49:02"
         },
         {
             "name": "sebastian/comparator",

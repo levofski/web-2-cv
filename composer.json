@@ -13,7 +13,8 @@
 		"behat/behat": "~3.0@dev",
 		"behat/mink": "~1.7@dev",
 		"behat/mink-extension": "~2.0@dev",
-		"laracasts/behat-laravel-extension": "dev-master"
+		"laracasts/behat-laravel-extension": "dev-master",
+		"rmiller/behat-spec": "~0.2"
 	},
 	"minimum-stability": "dev",
 	"autoload": {

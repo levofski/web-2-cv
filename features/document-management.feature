@@ -5,5 +5,5 @@ Feature: Document Management
 
   Scenario: Creating a Document
     Given I have a Document named "test-data"
-    When I upload the "test-data" Document
+    When I store the "test-data" Document
     Then I should be able to access the "test-data" Document
