@@ -122,6 +122,7 @@ class DataNode implements Data
      * Access the data using a path
      * If a value is sent, the data will be updated
      *
+     * @todo Refactor this to remove duplication
      * @param $path
      * @param $value
      * @return mixed
