@@ -2,6 +2,7 @@
 
 namespace Web2CV\Codecs;
 
+use Web2CV\Entities\Data;
 use Web2CV\Entities\DataNode;
 
 interface Codec
@@ -12,13 +13,13 @@ interface Codec
      * @param $data
      * @return DataNode
      */
-    public static function toDataNode($data);
+    public function toDataNode($data);
 
     /**
-     * Converts the passed DataNode to the correct format, and returns the result
+     * Converts the passed Data to the correct format, and returns the result
      *
-     * @param DataNode $dataNode
+     * @param Data $data
      * @return mixed
      */
-    public static function fromDataNode(DataNode $dataNode);
+    public function fromData(Data $data);
 }

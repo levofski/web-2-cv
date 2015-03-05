@@ -2,7 +2,7 @@
 
 namespace Web2CV\Entities;
 
-class DataNode
+class DataNode implements Data
 {
     const PATH_SEPARATOR = '/';
 

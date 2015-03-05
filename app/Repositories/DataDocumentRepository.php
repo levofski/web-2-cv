@@ -11,7 +11,7 @@ interface DataDocumentRepository
      *
      * @param DataDocument $dataDocument
      */
-    public static function store(DataDocument $dataDocument);
+    public function store(DataDocument $dataDocument);
 
     /**
      * Fetches a DataDocument with the passed name
@@ -19,5 +19,5 @@ interface DataDocumentRepository
      * @param string $name
      * @return mixed
      */
-    public static function fetch($name);
+    public function fetch($name);
 }

@@ -2,6 +2,7 @@
 
 namespace Web2CV\Codecs;
 
+use Web2CV\Entities\Data;
 use Web2CV\Entities\DataNode;
 
 class JSONCodec implements Codec
@@ -9,7 +10,7 @@ class JSONCodec implements Codec
     /**
      * {@inheritdoc }
      */
-    public static function toDataNode($data)
+    public function toDataNode($data)
     {
         $arrayData = json_decode($data, true);
         $dataNode = new DataNode();
@@ -20,9 +21,9 @@ class JSONCodec implements Codec
     /**
      * {@inheritdoc }
      */
-    public static function fromDataNode(DataNode $dataNode)
+    public function fromData(Data $data)
     {
-        $arrayData = $dataNode->toArray();
+        $arrayData = $data->toArray();
         return json_encode($arrayData);
     }
 }

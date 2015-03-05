@@ -2,7 +2,7 @@
 
 namespace Web2CV\Entities;
 
-class DataDocument
+class DataDocument implements Data
 {
     /**
      * The name is immutable
@@ -38,6 +38,14 @@ class DataDocument
     public static function create($name, $data=null)
     {
         $dataDocument = new static($name);
+        if ($data instanceof DataNode)
+        {
+            $data = $data->toArray();
+        }
+        if (is_array($data))
+        {
+            $dataDocument->fromArray($data);
+        }
         return $dataDocument;
     }
 
@@ -52,14 +60,35 @@ class DataDocument
     }
 
     /**
-     * Get the document data
+     * Populate with the data from the array
      *
-     * @return DataNode
+     * @param array $arrayData
      */
-    public function getDataNode()
+    public function fromArray(array $arrayData)
     {
-        return $this->dataNode;
+        $this->dataNode->fromArray($arrayData);
     }
 
+    /**
+     * Return the data in array form
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->dataNode->toArray();
+    }
 
+    /**
+     * Access the data using a path
+     * If a value is sent, the data will be updated
+     *
+     * @param $path
+     * @param $value
+     * @return mixed
+     */
+    public function path($path, $value = null)
+    {
+        return $this->dataNode->path($path, $value);
+    }
 }

@@ -14,7 +14,8 @@
 		"behat/mink": "~1.7@dev",
 		"behat/mink-extension": "~2.0@dev",
 		"laracasts/behat-laravel-extension": "dev-master",
-		"rmiller/behat-spec": "~0.2"
+		"rmiller/behat-spec": "~0.2",
+        "mikey179/vfsStream": "~1.4"
 	},
 	"minimum-stability": "dev",
 	"autoload": {

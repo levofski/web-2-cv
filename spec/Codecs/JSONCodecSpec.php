@@ -3,6 +3,7 @@
 namespace spec\Web2CV\Codecs;
 
 use Web2CV\Entities\DataNode;
+use Web2CV\Entities\DataDocument;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -17,8 +18,8 @@ class JSONCodecSpec extends ObjectBehavior
     {
         $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
         $jsonData = json_encode($arrayData);
-        $this::toDataNode($jsonData)->shouldHaveType('Web2CV\Entities\DataNode');
-        $this::toDataNode($jsonData)->toArray()->shouldReturn($arrayData);
+        $this->toDataNode($jsonData)->shouldHaveType('Web2CV\Entities\DataNode');
+        $this->toDataNode($jsonData)->toArray()->shouldReturn($arrayData);
     }
 
     function it_should_convert_data_node_to_json(DataNode $dataNode)
@@ -26,6 +27,14 @@ class JSONCodecSpec extends ObjectBehavior
         $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
         $jsonData = json_encode($arrayData);
         $dataNode->toArray()->willReturn($arrayData);
-        $this::fromDataNode($dataNode)->shouldReturn($jsonData);
+        $this->fromData($dataNode)->shouldReturn($jsonData);
+    }
+
+    function it_should_convert_data_document_to_json(DataDocument $dataDocument)
+    {
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $jsonData = json_encode($arrayData);
+        $dataDocument->toArray()->willReturn($arrayData);
+        $this->fromData($dataDocument)->shouldReturn($jsonData);
     }
 }
