@@ -2,11 +2,13 @@
 
 use Web2CV\Entities\DataDocument;
 use Web2CV\Repositories\DataDocumentFileSystemRepository as DocumentRepository;
+use Web2CV\Codecs\JSONCodec as Codec;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
@@ -15,11 +17,42 @@ use PHPUnit_Framework_Assert as PHPUnit;
 class DomainContext implements Context, SnippetAcceptingContext
 {
     /**
-     * @Given I have a Document named :documentName
+     * @var DataDocument $dataDocument
      */
-    public function iHaveADocumentNamed($documentName)
+    protected $dataDocument;
+
+    /**
+     * @var vfsStreamDirectory
+     */
+    private $storageDirectory;
+
+    /**
+     * @var DocumentRepository $documentRepository
+     */
+    protected $documentRepository;
+
+    /**
+     * @var Codec $codec
+     */
+    protected $codec;
+
+    /**
+     * @BeforeScenario
+     */
+    public function setupScenario(BeforeScenarioScope $scope)
     {
-        $this->dataDocument = DataDocument::create($documentName);
+        $this->codec = new Codec();
+        $this->storageDirectory = vfsStream::setup('storage');
+        $this->documentRepository = new DocumentRepository($this->codec, vfsStream::url('storage'));
+    }
+
+    /**
+     * @Given I have a Document named :documentName with data :
+     */
+    public function iHaveADocumentNamedWithData($documentName, PyStringNode $data)
+    {
+        $decodedData = $this->codec->toDataNode($data);
+        $this->dataDocument = DataDocument::create($documentName, $decodedData);
     }
 
     /**
@@ -27,7 +60,7 @@ class DomainContext implements Context, SnippetAcceptingContext
      */
     public function iStoreTheDocument($documentName)
     {
-        DocumentRepository::store($this->dataDocument);
+        $this->documentRepository->store($this->dataDocument);
     }
 
     /**
@@ -35,7 +68,17 @@ class DomainContext implements Context, SnippetAcceptingContext
      */
     public function iShouldBeAbleToViewTheDocument($documentName)
     {
-        $dataDocument = DocumentRepository::load($documentName);
-        PHPUnit::assertInstanceOf('DataDocument', $dataDocument);
+        $dataDocument = $this->documentRepository->fetch($documentName);
+        PHPUnit::assertInstanceOf('Web2CV\Entities\DataDocument', $dataDocument);
+        $this->dataDocument = $dataDocument;
+    }
+
+    /**
+     * @Then the data should be :
+     */
+    public function theDataShouldBe(PyStringNode $data)
+    {
+        $documentData = $this->codec->fromData($this->dataDocument);
+        PHPUnit::assertJsonStringEqualsJsonString($data->getRaw(), $documentData);
     }
 }
