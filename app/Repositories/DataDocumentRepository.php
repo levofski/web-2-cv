@@ -20,4 +20,12 @@ interface DataDocumentRepository
      * @return mixed
      */
     public function fetch($name);
+
+    /**
+     * Deletes a DataDocument with the passed name
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function delete($name);
 }

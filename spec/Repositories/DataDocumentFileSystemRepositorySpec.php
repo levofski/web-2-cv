@@ -42,4 +42,22 @@ class DataDocumentFileSystemRepositorySpec extends ObjectBehavior
         $this->store($dataDocument);
         $this->fetch($dataDocumentName)->toArray()->shouldReturn($arrayData);
     }
+
+    public function it_should_delete_a_data_document(DataDocument $dataDocument, DataNode $dataNode, Codec $codec)
+    {
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $jsonData = json_encode($arrayData);
+        $dataDocumentName = 'test-document';
+        // Setup mocks
+        $dataDocument->getName()->willReturn($dataDocumentName);
+        $dataDocument->toArray()->willReturn($arrayData);
+        $dataNode->toArray()->willReturn($arrayData);
+        $codec->fromData($dataDocument)->willReturn($jsonData);
+        $codec->toDataNode($jsonData)->willReturn($dataNode);
+        // Store and fetch the data
+        $this->store($dataDocument);
+        $this->fetch($dataDocumentName)->toArray()->shouldReturn($arrayData);
+        $this->delete($dataDocumentName);
+        $this->fetch($dataDocumentName)->shouldReturn(false);
+    }
 }

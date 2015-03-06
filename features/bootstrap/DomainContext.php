@@ -56,21 +56,38 @@ class DomainContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I store the :documentName Document
+     * @When I store the Document
      */
-    public function iStoreTheDocument($documentName)
+    public function iStoreTheDocument()
     {
         $this->documentRepository->store($this->dataDocument);
     }
 
     /**
-     * @Then I should be able to view the :documentName Document
+     * @When I delete the :documentName Document
      */
-    public function iShouldBeAbleToViewTheDocument($documentName)
+    public function iDeleteTheDocument($documentName)
+    {
+        $this->documentRepository->delete($documentName);
+    }
+
+    /**
+     * @Then I should be able to fetch the :documentName Document
+     */
+    public function iShouldBeAbleToFetchTheDocument($documentName)
     {
         $dataDocument = $this->documentRepository->fetch($documentName);
         PHPUnit::assertInstanceOf('Web2CV\Entities\DataDocument', $dataDocument);
         $this->dataDocument = $dataDocument;
+    }
+
+    /**
+     * @Then I should not be able to fetch the :documentName Document
+     */
+    public function iShouldNotBeAbleToFetchTheDocument($documentName)
+    {
+        $dataDocument = $this->documentRepository->fetch($documentName);
+        PHPUnit::assertFalse($dataDocument);
     }
 
     /**
@@ -81,4 +98,16 @@ class DomainContext implements Context, SnippetAcceptingContext
         $documentData = $this->codec->fromData($this->dataDocument);
         PHPUnit::assertJsonStringEqualsJsonString($data->getRaw(), $documentData);
     }
+
+    /**
+     * @When I update the path :path to :data
+     */
+    public function iUpdateTheDocumentPathTo($path, $data)
+    {
+        $this->dataDocument->path($path, $data);
+    }
+
+
+
+
 }

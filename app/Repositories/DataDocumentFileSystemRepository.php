@@ -2,6 +2,7 @@
 
 namespace Web2CV\Repositories;
 
+use PhpParser\Error;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Web2CV\Entities\DataDocument;
 use Web2CV\Codecs\Codec;
@@ -77,10 +78,36 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
      */
     public function fetch($name)
     {
+        $result = false;
         $filePath = $this->getFilePath($name);
-        $fileData = file_get_contents($filePath);
-        $dataNode = $this->decodeData($fileData);
-        return $dataDocument = DataDocument::create($name, $dataNode);
+        // Catch file stream errors
+        set_error_handler([$this, 'errorHandler']);
+        try {
+            $fileData = file_get_contents($filePath);
+        }
+        catch (\ErrorException $e)
+        {
+            // @todo, do something with the errors
+            $fileData = false;
+        }
+        restore_error_handler();
+        if ($fileData !== false)
+        {
+            $dataNode = $this->decodeData($fileData);
+            $dataDocument = DataDocument::create($name, $dataNode);
+            $result = $dataDocument;
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function delete($name)
+    {
+        $filePath = $this->getFilePath($name);
+        return unlink($filePath);
     }
 
     /**
@@ -95,5 +122,18 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
         }
         $filePath = $this->storageDirectory . DIRECTORY_SEPARATOR . $document . '.' . static::FILE_EXTENSION;
         return $filePath;
+    }
+
+    /**
+     * Custom error handler to wrap errors in Exceptions
+     *
+     * @param $severity
+     * @param $message
+     * @param $file
+     * @param $line
+     */
+    protected function errorHandler($severity, $message, $file, $line)
+    {
+        throw new \ErrorException($message, $severity, $severity, $file, $line);
     }
 }
