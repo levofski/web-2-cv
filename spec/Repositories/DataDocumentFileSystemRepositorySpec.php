@@ -36,8 +36,8 @@ class DataDocumentFileSystemRepositorySpec extends ObjectBehavior
         $dataDocument->getName()->willReturn($dataDocumentName);
         $dataDocument->toArray()->willReturn($arrayData);
         $dataNode->toArray()->willReturn($arrayData);
-        $codec->fromData($dataDocument)->willReturn($jsonData);
-        $codec->toDataNode($jsonData)->willReturn($dataNode);
+        $codec->encode($dataDocument)->willReturn($jsonData);
+        $codec->decode($jsonData)->willReturn($dataNode);
         // Store and fetch the data
         $this->store($dataDocument);
         $this->fetch($dataDocumentName)->toArray()->shouldReturn($arrayData);
@@ -52,8 +52,8 @@ class DataDocumentFileSystemRepositorySpec extends ObjectBehavior
         $dataDocument->getName()->willReturn($dataDocumentName);
         $dataDocument->toArray()->willReturn($arrayData);
         $dataNode->toArray()->willReturn($arrayData);
-        $codec->fromData($dataDocument)->willReturn($jsonData);
-        $codec->toDataNode($jsonData)->willReturn($dataNode);
+        $codec->encode($dataDocument)->willReturn($jsonData);
+        $codec->decode($jsonData)->willReturn($dataNode);
         // Store and fetch the data
         $this->store($dataDocument);
         $this->fetch($dataDocumentName)->toArray()->shouldReturn($arrayData);

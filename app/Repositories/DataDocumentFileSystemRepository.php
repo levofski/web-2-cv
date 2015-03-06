@@ -49,7 +49,7 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
      */
     protected function encodeData(DataDocument $dataDocument)
     {
-        return $this->codec->fromData($dataDocument);
+        return $this->codec->encode($dataDocument);
     }
 
     /**
@@ -60,7 +60,7 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
      */
     protected function decodeData($data)
     {
-        return $this->codec->toDataNode($data);
+        return $this->codec->decode($data);
     }
 
     /**

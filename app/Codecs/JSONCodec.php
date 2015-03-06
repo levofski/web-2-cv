@@ -10,7 +10,7 @@ class JSONCodec implements Codec
     /**
      * {@inheritdoc }
      */
-    public function toDataNode($data)
+    public function decode($data)
     {
         $arrayData = json_decode($data, true);
         $dataNode = new DataNode();
@@ -21,9 +21,22 @@ class JSONCodec implements Codec
     /**
      * {@inheritdoc }
      */
-    public function fromData(Data $data)
+    public function encode($data)
     {
-        $arrayData = $data->toArray();
-        return json_encode($arrayData);
+        if ($data instanceof Data)
+        {
+            $data = $data->toArray();
+        }
+        if (is_array($data))
+        {
+            array_walk_recursive($data, function(&$val, $key){
+                if ($val instanceof Data)
+                {
+                    $val = $val->toArray();
+                }
+            });
+            $data = json_encode($data);
+        }
+        return $data;
     }
 }

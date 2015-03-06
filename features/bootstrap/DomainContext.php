@@ -1,6 +1,7 @@
 <?php
 
 use Web2CV\Entities\DataDocument;
+use Web2CV\Entities\DataNode;
 use Web2CV\Repositories\DataDocumentFileSystemRepository as DocumentRepository;
 use Web2CV\Codecs\JSONCodec as Codec;
 use Behat\Behat\Tester\Exception\PendingException;
@@ -51,7 +52,7 @@ class DomainContext implements Context, SnippetAcceptingContext
      */
     public function iHaveADocumentNamedWithData($documentName, PyStringNode $data)
     {
-        $decodedData = $this->codec->toDataNode($data);
+        $decodedData = $this->codec->decode($data);
         $this->dataDocument = DataDocument::create($documentName, $decodedData);
     }
 
@@ -91,12 +92,38 @@ class DomainContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the data should be :
+     * @Then the data should be :data
      */
-    public function theDataShouldBe(PyStringNode $data)
+    public function theDataShouldBe($data)
     {
-        $documentData = $this->codec->fromData($this->dataDocument);
+        PHPUnit::assertEquals($data, $this->pathData);
+    }
+
+    /**
+     * @Then the JSON should be :
+     */
+    public function theJsonShouldBe(PyStringNode $data)
+    {
+        PHPUnit::assertJsonStringEqualsJsonString($data->getRaw(), $this->pathData);
+    }
+
+    /**
+     * @Then the Document data should be :
+     */
+    public function theDocumentDataShouldBe(PyStringNode $data)
+    {
+        $documentData = $this->codec->encode($this->dataDocument);
         PHPUnit::assertJsonStringEqualsJsonString($data->getRaw(), $documentData);
+    }
+
+    /**
+     * @When I read the path :path
+     */
+    public function iReadThePath($path)
+    {
+        $pathData = $this->dataDocument->path($path);
+        // Ensure the data is encoded
+        $this->pathData = $this->codec->encode($pathData);
     }
 
     /**
@@ -106,8 +133,4 @@ class DomainContext implements Context, SnippetAcceptingContext
     {
         $this->dataDocument->path($path, $data);
     }
-
-
-
-
 }

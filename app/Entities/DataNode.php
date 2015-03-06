@@ -39,7 +39,14 @@ class DataNode implements Data
 				$nodeData = $this->nodeData[$offset];
 				break;
 			case (is_string($offset)) :
-				$nodeData = $this->nodeData[$offset];
+                // An empty string is equivalent to null
+                if ("" == $offset)
+                {
+                    $nodeData = $this->nodeData;
+                } else
+                {
+                    $nodeData = $this->nodeData[$offset];
+                }
 				break;
 			default :
 				throw new UnexpectedValueException('Unexpected offset type sent to get()');

@@ -22,7 +22,7 @@ Feature: Document Management
 
   Scenario: Creating a Document
     Then I should be able to fetch the "test-data" Document
-    And the data should be :
+    And the Document data should be :
     """
     {
       "key1":"value1",
@@ -39,7 +39,7 @@ Feature: Document Management
 
   Scenario: A Simple Document Update
     When I update the path "key2" to "newValue2"
-    Then the data should be :
+    Then the Document data should be :
     """
     {
       "key1":"value1",
@@ -56,7 +56,7 @@ Feature: Document Management
 
   Scenario: A Complex Document Update
     When I update the path "key3/child2/key4" to "newGrandChild1"
-    Then the data should be :
+    Then the Document data should be :
     """
     {
       "key1":"value1",
@@ -73,7 +73,7 @@ Feature: Document Management
 
   Scenario: A Simple Data Insertion
     When I update the path "key5" to "value5"
-    Then the data should be :
+    Then the Document data should be :
     """
     {
       "key1":"value1",
@@ -91,7 +91,7 @@ Feature: Document Management
 
   Scenario: A Complex Data Insertion
     When I update the path "key3/child2/key5" to "grandChild2"
-    Then the data should be :
+    Then the Document data should be :
     """
     {
       "key1":"value1",
