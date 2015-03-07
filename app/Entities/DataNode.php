@@ -139,14 +139,16 @@ class DataNode implements Data
         // Trim away any leading slash
         $path = ltrim($path, self::PATH_SEPARATOR);
         $pathParts = explode(self::PATH_SEPARATOR, $path);
-        // If a value was sent, set the target's value
+        // Getting/Setting ?
         if (is_null($value))
         {
+            // Getting
             $offset = array_shift($pathParts);
             $target = $this->get($offset);
+            // Have we reached the correct node?
             if (count($pathParts) > 0)
             {
-                // Recurse
+                // No : Recurse
                 $newPath = implode(self::PATH_SEPARATOR, $pathParts);
                 $target = $target->path($newPath);
             }
@@ -154,14 +156,17 @@ class DataNode implements Data
         }
         else
         {
+            // Setting
+            // Have we reached the correct node?
             if (count($pathParts) > 1)
             {
+                // No : Recurse
                 $offset = array_shift($pathParts);
                 $target = $this->get($offset);
-                // Recurse
                 $newPath = implode(self::PATH_SEPARATOR, $pathParts);
                 $target->path($newPath, $value);
             } else {
+                // Yes : Set the data
                 $offset = array_shift($pathParts);
                 $this->set($value, $offset);
             }
