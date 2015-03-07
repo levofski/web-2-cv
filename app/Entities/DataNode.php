@@ -129,7 +129,6 @@ class DataNode implements Data
      * Access the data using a path
      * If a value is sent, the data will be updated
      *
-     * @todo Refactor this to remove duplication
      * @param $path
      * @param $value
      * @return mixed
@@ -141,6 +140,8 @@ class DataNode implements Data
         $pathParts = explode(self::PATH_SEPARATOR, $path);
         // Fetch the offset from the path
         $offset = array_shift($pathParts);
+        // Rebuild the path for use later
+        $newPath = implode(self::PATH_SEPARATOR, $pathParts);
         // Getting/Setting ?
         if (is_null($value))
         {
@@ -150,7 +151,6 @@ class DataNode implements Data
             if (count($pathParts) > 0)
             {
                 // No : Recurse
-                $newPath = implode(self::PATH_SEPARATOR, $pathParts);
                 $target = $target->path($newPath);
             }
             return $target;
@@ -163,7 +163,6 @@ class DataNode implements Data
             {
                 // No : Recurse
                 $target = $this->get($offset);
-                $newPath = implode(self::PATH_SEPARATOR, $pathParts);
                 $target->path($newPath, $value);
             } else {
                 // Yes : Set the data
