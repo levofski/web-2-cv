@@ -107,6 +107,37 @@ Feature: Document Management
     }
     """
 
+  Scenario: A Simple Data Deletion
+    When I delete the path "key2"
+    Then the Document data should be :
+    """
+    {
+      "key1":"value1",
+      "key3":{
+        "0":"child1",
+        "child2":{
+          "key4":"grandChild1"
+        },
+        "1":"child3"
+      }
+    }
+    """
+
+  Scenario: A Complex Data Deletion
+    When I delete the path "key3/child2/key4"
+    Then the Document data should be :
+    """
+    {
+      "key1":"value1",
+      "key2":"value2",
+      "key3":{
+        "0":"child1",
+        "child2":{},
+        "1":"child3"
+      }
+    }
+    """
+
   Scenario: Deleting a Document
     When I delete the "test-data" Document
     Then I should not be able to fetch the "test-data" Document

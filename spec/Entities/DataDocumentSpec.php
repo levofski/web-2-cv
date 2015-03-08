@@ -48,4 +48,9 @@ class DataDocumentSpec extends ObjectBehavior
         $this->toArray()->shouldReturn($outputArrayData);
     }
 
+
+    function it_can_delete_data_using_a_path()
+    {
+
+    }
 }

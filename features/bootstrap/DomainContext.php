@@ -129,8 +129,16 @@ class DomainContext implements Context, SnippetAcceptingContext
     /**
      * @When I update the path :path to :data
      */
-    public function iUpdateTheDocumentPathTo($path, $data)
+    public function iUpdateThePathTo($path, $data)
     {
         $this->dataDocument->path($path, $data);
+    }
+
+    /**
+     * @When I delete the path :path
+     */
+    public function iDeleteThePath($path)
+    {
+        $this->dataDocument->unsetPath($path);
     }
 }

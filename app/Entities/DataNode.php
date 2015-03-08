@@ -99,6 +99,16 @@ class DataNode implements Data
     }
 
     /**
+     * Delete a value
+     *
+     * @param string $offset
+     */
+    public function delete($offset)
+    {
+        unset($this->nodeData[$offset]);
+    }
+
+    /**
      * Populate with the data from the array
      *
      * @param array $arrayData
@@ -169,5 +179,10 @@ class DataNode implements Data
                 $this->set($value, $offset);
             }
         }
+    }
+
+    public function unsetPath()
+    {
+        // TODO: write logic here
     }
 }

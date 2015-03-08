@@ -150,7 +150,6 @@ class DataNodeSpec extends ObjectBehavior
         $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
         $this->fromArray($arrayData);
         $this->toArray()->shouldReturn($arrayData);
-
     }
 
     function it_can_return_an_array_when_populated_with_primitives()
@@ -171,6 +170,25 @@ class DataNodeSpec extends ObjectBehavior
         $inputArrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
         $this->fromArray($inputArrayData);
         $outputArrayData = ["key1" => "value1", "key2" => $dataNode1Data, "key3" => ["child1","child2" => ["key4" => $dataNode2Data],"child3"], $dataNode3Data];
+        $this->toArray()->shouldReturn($outputArrayData);
+    }
+
+    /** Data Deletion */
+    function it_can_delete_data()
+    {
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $this->fromArray($inputArrayData);
+        $outputArrayData = ["key1" => "value1", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $this->delete("key2");
+        $this->toArray()->shouldReturn($outputArrayData);
+    }
+
+    function it_can_delete_data_using_a_path()
+    {
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $this->fromArray($inputArrayData);
+        $outputArrayData = ["key1" => "value1", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $this->unsetPath("key2");
         $this->toArray()->shouldReturn($outputArrayData);
     }
 
@@ -284,5 +302,10 @@ class DataNodeSpec extends ObjectBehavior
         $this->path("key4/child4", "newValue4");
         $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1","child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
         $this->toArray()->shouldReturn($outputArrayData);
+    }
+
+    public function it_should_unset_path()
+    {
+
     }
 }

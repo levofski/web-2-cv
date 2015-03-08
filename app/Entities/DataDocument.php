@@ -91,4 +91,14 @@ class DataDocument implements Data
     {
         return $this->dataNode->path($path, $value);
     }
+
+    /**
+     * Unset data using a path
+     *
+     * @param $path
+     */
+    public function unsetPath($path)
+    {
+        $this->dataNode->unsetPath($path);
+    }
 }
