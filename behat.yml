@@ -1,15 +1,12 @@
 default:
     extensions:
+        Behat\WebApiExtension: ~
         RMiller\BehatSpec\BehatExtension:
             path: bin/phpspec
     suites:
         domain:
             paths:      [ %paths.base%/features ]
             contexts:   [ DomainContext ]
-#        ui:
-#            extensions:
-#                Behat\MinkExtension:
-#                    default_session: laravel
-#                    laravel: ~
-#            paths:      [ %paths.base%/features ]
-#            contexts:   [ UIContext ]
+        api:
+            paths:      [ %paths.base%/features ]
+            contexts:   [ APIContext ]
