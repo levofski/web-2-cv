@@ -132,7 +132,7 @@ Feature: Document Management
       "key2":"value2",
       "key3":{
         "0":"child1",
-        "child2":{},
+        "child2":[],
         "1":"child3"
       }
     }

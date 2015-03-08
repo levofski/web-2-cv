@@ -181,8 +181,29 @@ class DataNode implements Data
         }
     }
 
-    public function unsetPath()
+    /**
+     * Unset the data using a path
+     *
+     * @param $path
+     */
+    public function unsetPath($path)
     {
-        // TODO: write logic here
+        // Trim away any leading slash
+        $path = ltrim($path, self::PATH_SEPARATOR);
+        $pathParts = explode(self::PATH_SEPARATOR, $path);
+        // Fetch the offset from the path
+        $offset = array_shift($pathParts);
+        // Rebuild the path for use later
+        $newPath = implode(self::PATH_SEPARATOR, $pathParts);
+        // Have we reached the correct node?
+        if (count($pathParts) > 0)
+        {
+            // No : Recurse
+            $target = $this->get($offset);
+            $target->unsetPath($newPath);
+        } else {
+            // Yes : Set the data
+            $this->delete($offset);
+        }
     }
 }

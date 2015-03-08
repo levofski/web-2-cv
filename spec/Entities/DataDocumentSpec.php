@@ -51,6 +51,10 @@ class DataDocumentSpec extends ObjectBehavior
 
     function it_can_delete_data_using_a_path()
     {
-
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
+        $this->fromArray($inputArrayData);
+        $outputArrayData = ["key1" => "value1", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
+        $this->unsetPath("key2");
+        $this->toArray()->shouldReturn($outputArrayData);
     }
 }

@@ -65,49 +65,49 @@ class DataNodeSpec extends ObjectBehavior
     /** DataNode children */
     function it_can_contain_a_data_node(DataNode $dataNode)
     {
-		$this->set($dataNode);
-		$this->get()->shouldReturn([$dataNode]);
+        $this->set($dataNode);
+        $this->get()->shouldReturn([$dataNode]);
         $this->get(0)->shouldReturn($dataNode);
     }
 
     function it_can_contain_a_named_data_node(DataNode $dataNode)
     {
-		$this->set($dataNode, 'child');
-		$this->get()->shouldReturn(['child' => $dataNode]);
-		$this->get('child')->shouldReturn($dataNode);
+        $this->set($dataNode, 'child');
+        $this->get()->shouldReturn(['child' => $dataNode]);
+        $this->get('child')->shouldReturn($dataNode);
     }
 
     function it_can_contain_multiple_data_nodes(DataNode $dataNode1, DataNode $dataNode2)
     {
-		$this->set($dataNode1);
-		$this->get()->shouldReturn([$dataNode1]);
-		$this->set($dataNode2);
-		$this->get()->shouldReturn([$dataNode1, $dataNode2]);
-		$this->get(0)->shouldReturn($dataNode1);
-		$this->get(1)->shouldReturn($dataNode2);
+        $this->set($dataNode1);
+        $this->get()->shouldReturn([$dataNode1]);
+        $this->set($dataNode2);
+        $this->get()->shouldReturn([$dataNode1, $dataNode2]);
+        $this->get(0)->shouldReturn($dataNode1);
+        $this->get(1)->shouldReturn($dataNode2);
     }
 
     function it_can_contain_multiple_named_data_nodes(DataNode $dataNode1, DataNode $dataNode2)
     {
-		$this->set($dataNode1, 'child1');
-		$this->get()->shouldReturn(['child1' => $dataNode1]);
-		$this->set($dataNode2, 'child2');
-		$this->get()->shouldReturn(['child1' => $dataNode1, 'child2' => $dataNode2]);
-		$this->get('child1')->shouldReturn($dataNode1);
-		$this->get('child2')->shouldReturn($dataNode2);
+        $this->set($dataNode1, 'child1');
+        $this->get()->shouldReturn(['child1' => $dataNode1]);
+        $this->set($dataNode2, 'child2');
+        $this->get()->shouldReturn(['child1' => $dataNode1, 'child2' => $dataNode2]);
+        $this->get('child1')->shouldReturn($dataNode1);
+        $this->get('child2')->shouldReturn($dataNode2);
     }
 
     function it_can_contain_multiple_named_and_unnamed_data_nodes(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-		$this->set($dataNode1, 'child1');
-		$this->get()->shouldReturn(['child1' => $dataNode1]);
-		$this->set($dataNode2);
-		$this->get()->shouldReturn(['child1' => $dataNode1, $dataNode2]);
-		$this->set($dataNode3, 'child2');
-		$this->get()->shouldReturn(['child1' => $dataNode1, $dataNode2, 'child2' => $dataNode3]);
-		$this->get('child1')->shouldReturn($dataNode1);
-		$this->get(0)->shouldReturn($dataNode2);
-		$this->get('child2')->shouldReturn($dataNode3);
+        $this->set($dataNode1, 'child1');
+        $this->get()->shouldReturn(['child1' => $dataNode1]);
+        $this->set($dataNode2);
+        $this->get()->shouldReturn(['child1' => $dataNode1, $dataNode2]);
+        $this->set($dataNode3, 'child2');
+        $this->get()->shouldReturn(['child1' => $dataNode1, $dataNode2, 'child2' => $dataNode3]);
+        $this->get('child1')->shouldReturn($dataNode1);
+        $this->get(0)->shouldReturn($dataNode2);
+        $this->get('child2')->shouldReturn($dataNode3);
     }
 
     /** Mixed children */
@@ -147,14 +147,14 @@ class DataNodeSpec extends ObjectBehavior
     /** To/From array */
     function it_can_be_populated_from_an_array_of_primitives()
     {
-        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         $this->fromArray($arrayData);
         $this->toArray()->shouldReturn($arrayData);
     }
 
     function it_can_return_an_array_when_populated_with_primitives()
     {
-        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $arrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         array_walk($arrayData, [$this, 'set']);
         $this->toArray()->shouldReturn($arrayData);
     }
@@ -167,27 +167,27 @@ class DataNodeSpec extends ObjectBehavior
         $dataNode1->toArray()->willReturn($dataNode1Data);
         $dataNode2->toArray()->willReturn($dataNode2Data);
         $dataNode3->toArray()->willReturn($dataNode3Data);
-        $inputArrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $inputArrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1", "child2" => ["key4" => $dataNode2], "child3"], $dataNode3];
         $this->fromArray($inputArrayData);
-        $outputArrayData = ["key1" => "value1", "key2" => $dataNode1Data, "key3" => ["child1","child2" => ["key4" => $dataNode2Data],"child3"], $dataNode3Data];
+        $outputArrayData = ["key1" => "value1", "key2" => $dataNode1Data, "key3" => ["child1", "child2" => ["key4" => $dataNode2Data], "child3"], $dataNode3Data];
         $this->toArray()->shouldReturn($outputArrayData);
     }
 
     /** Data Deletion */
     function it_can_delete_data()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         $this->fromArray($inputArrayData);
-        $outputArrayData = ["key1" => "value1", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $outputArrayData = ["key1" => "value1", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         $this->delete("key2");
         $this->toArray()->shouldReturn($outputArrayData);
     }
 
     function it_can_delete_data_using_a_path()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         $this->fromArray($inputArrayData);
-        $outputArrayData = ["key1" => "value1", "key3" => ["child1","child2" => ["key4" => "grandChild1"],"child3"]];
+        $outputArrayData = ["key1" => "value1", "key3" => ["child1", "child2" => ["key4" => "grandChild1"], "child3"]];
         $this->unsetPath("key2");
         $this->toArray()->shouldReturn($outputArrayData);
     }
@@ -195,7 +195,7 @@ class DataNodeSpec extends ObjectBehavior
     /** Object Access (reading) */
     function it_can_be_read_from_as_an_object(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1", "child2" => ["key4" => $dataNode2], "child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->key1->shouldReturn("value1");
         $this->key2->shouldReturn($dataNode1);
@@ -205,7 +205,7 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_read_from_as_a_multidimensional_object(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1", "child2" => ["key4" => $dataNode2], "child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->key3->child2->key4->shouldReturn($dataNode2);
     }
@@ -225,7 +225,7 @@ class DataNodeSpec extends ObjectBehavior
     /** Object Access (writing) */
     function it_can_be_written_to_as_an_object()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->key2 = "newValue2";
         $this->key3 = "newValue3";
@@ -236,13 +236,13 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_written_to_as_a_multidimensional_object()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->key3->{0} = "newChild1";
         $this->key3->child2 = "newChild3";
         $this->key4 = [];
         $this->key4->child4 = "newValue4";
-        $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1","child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
+        $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1", "child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
         $this->toArray()->shouldReturn($outputArrayData);
     }
 
@@ -251,7 +251,7 @@ class DataNodeSpec extends ObjectBehavior
      */
     function it_can_be_read_from_using_a_path(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1", "child2" => ["key4" => $dataNode2], "child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->path("/key1")->shouldReturn("value1");
         $this->path("key2")->shouldReturn($dataNode1);
@@ -261,7 +261,7 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_read_from_using_a_deep_path(DataNode $dataNode1, DataNode $dataNode2, DataNode $dataNode3)
     {
-        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1","child2" => ["key4" => $dataNode2],"child3"], $dataNode3];
+        $arrayData = ["key1" => "value1", "key2" => $dataNode1, "key3" => ["child1", "child2" => ["key4" => $dataNode2], "child3"], $dataNode3];
         $this->fromArray($arrayData);
         $this->path("/key3/child2/key4")->shouldReturn($dataNode2);
     }
@@ -283,7 +283,7 @@ class DataNodeSpec extends ObjectBehavior
      */
     function it_can_be_written_to_using_a_path()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->path("/key2", "newValue2");
         $this->path("key3", "newValue3");
@@ -294,18 +294,13 @@ class DataNodeSpec extends ObjectBehavior
 
     function it_can_be_written_to_using_a_deep_path()
     {
-        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1","child2" => "child3"]];
+        $inputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["child1", "child2" => "child3"]];
         $this->fromArray($inputArrayData);
         $this->path("/key3/0", "newChild1");
         $this->path("key3/child2", "newChild3");
         $this->path("/key4", []);
         $this->path("key4/child4", "newValue4");
-        $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1","child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
+        $outputArrayData = ["key1" => "value1", "key2" => "value2", "key3" => ["newChild1", "child2" => "newChild3"], "key4" => ["child4" => "newValue4"]];
         $this->toArray()->shouldReturn($outputArrayData);
-    }
-
-    public function it_should_unset_path()
-    {
-
     }
 }
