@@ -44,6 +44,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
         $method = 'PUT';
         $url = $this->apiUrl.'/'.$this->documentName;
         $this->iSendARequestWithBody($method, $url, $this->documentData);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
@@ -52,8 +53,9 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iShouldBeAbleToFetchTheDocument($documentName)
     {
         $method = 'GET';
-        $url = $this->apiUrl.'/'.$this->documentName;
+        $url = $this->apiUrl.'/'.$documentName;
         $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
@@ -65,58 +67,73 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     }
 
     /**
-     * @When I update the path :arg1 to :arg2
+     * @When I update the path :path to :data
      */
-    public function iUpdateThePathTo($arg1, $arg2)
+    public function iUpdateThePathTo($path, $data)
     {
-        throw new PendingException();
+        $method = 'POST';
+        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $this->iSendARequestWithBody($method, $url, $data);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
-     * @When I delete the path :arg1
+     * @When I delete the path :path
      */
-    public function iDeleteThePath($arg1)
+    public function iDeleteThePath($path)
     {
-        throw new PendingException();
+        $method = 'DELETE';
+        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
-     * @When I delete the :arg1 Document
+     * @When I delete the :documentName Document
      */
-    public function iDeleteTheDocument($arg1)
+    public function iDeleteTheDocument($documentName)
     {
-        throw new PendingException();
+        $method = 'DELETE';
+        $url = $this->apiUrl.'/'.$documentName;
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
-     * @Then I should not be able to fetch the :arg1 Document
+     * @Then I should not be able to fetch the :documentName Document
      */
-    public function iShouldNotBeAbleToFetchTheDocument($arg1)
+    public function iShouldNotBeAbleToFetchTheDocument($documentName)
     {
-        throw new PendingException();
+        $method = 'GET';
+        $url = $this->apiUrl.'/'.$documentName;
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(404);
     }
 
     /**
-     * @When I read the path :arg1
+     * @When I read the path :path
      */
-    public function iReadThePath($arg1)
+    public function iReadThePath($path)
     {
-        throw new PendingException();
+        $method = 'GET';
+        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
-     * @Then the data should be :arg1
+     * @Then the data should be :data
      */
-    public function theDataShouldBe($arg1)
+    public function theDataShouldBe($data)
     {
-        throw new PendingException();
+        $this->theResponseShouldContain($data);
     }
 
     /**
      * @Then the JSON should be :
      */
-    public function theJsonShouldBe(PyStringNode $string)
+    public function theJsonShouldBe(PyStringNode $data)
     {
-        throw new PendingException();
+        $this->theResponseShouldContainJson($data);
     }
 }
