@@ -8,77 +8,48 @@ use Illuminate\Http\Request;
 class DocumentController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
+	 * Store a newly created Document.
 	 *
+     * @param  string $documentName
 	 * @return Response
 	 */
-	public function index()
+	public function store($documentName)
 	{
-		//
+        return "Creating : {$documentName}";
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Display the specified Document.
 	 *
+	 * @param  string $documentName
 	 * @return Response
 	 */
-	public function create()
+	public function show($documentName)
 	{
-		//
+        return "Showing : {$documentName}";
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Update the specified path on the specified Document.
 	 *
+	 * @param  string $documentName
+     * @param  string $path
 	 * @return Response
 	 */
-	public function store()
+	public function update($documentName, $path)
 	{
-		//
+		return "Updating : {$documentName} : {$path}";
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Remove the specified Document.
 	 *
-	 * @param  int  $id
+	 * @param  string $documentName
 	 * @return Response
 	 */
-	public function show($id)
+	public function destroy($documentName)
 	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+        return "Destroying : {$documentName}";
 	}
 
 }
