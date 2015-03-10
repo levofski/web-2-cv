@@ -1,9 +1,12 @@
 <?php namespace Web2CV\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Request;
+use Web2CV\Codecs\JSONCodec;
 use Web2CV\Http\Requests;
 use Web2CV\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
+use Web2CV\Entities\DataDocument;
+use Web2CV\Repositories\DataDocumentFileSystemRepository;
 
 class DocumentController extends Controller {
 
@@ -15,7 +18,12 @@ class DocumentController extends Controller {
 	 */
 	public function store($documentName)
 	{
-        return "Creating : {$documentName}";
+        $documentData = Request::json()->all();
+        $document = DataDocument::create($documentName, $documentData);
+        $jsonCodec = new JSONCodec();
+        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
+        $documentRepository->store($document);
+        return new JsonResponse(array("message" => "Created : {$documentName}"));
 	}
 
 	/**
@@ -26,7 +34,10 @@ class DocumentController extends Controller {
 	 */
 	public function show($documentName)
 	{
-        return "Showing : {$documentName}";
+        $jsonCodec = new JSONCodec();
+        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
+        $document = $documentRepository->fetch($documentName);
+        return new JsonResponse($document->toArray());
 	}
 
 	/**
@@ -38,7 +49,13 @@ class DocumentController extends Controller {
 	 */
 	public function update($documentName, $path)
 	{
-		return "Updating : {$documentName} : {$path}";
+        $documentData = Request::json()->all();
+        $jsonCodec = new JSONCodec();
+        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
+        $document = $documentRepository->fetch($documentName);
+        $document->path($path, $documentData);
+        $documentRepository->store($document);
+        return new JsonResponse(array("message" => "Updated : {$documentName} : {$path}"));
 	}
 
 	/**
@@ -49,7 +66,10 @@ class DocumentController extends Controller {
 	 */
 	public function destroy($documentName)
 	{
-        return "Destroying : {$documentName}";
+        $jsonCodec = new JSONCodec();
+        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
+        $documentRepository->delete($documentName);
+        return new JsonResponse(array("message" => "Destroyed : {$documentName}"));
 	}
 
 }
