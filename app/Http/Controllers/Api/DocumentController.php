@@ -2,13 +2,24 @@
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Request;
-use Web2CV\Codecs\JSONCodec;
 use Web2CV\Http\Requests;
 use Web2CV\Http\Controllers\Controller;
 use Web2CV\Entities\DataDocument;
-use Web2CV\Repositories\DataDocumentFileSystemRepository;
+use Web2CV\Repositories\DataDocumentRepository;
 
 class DocumentController extends Controller {
+
+    /**
+     * @var DataDocumentRepository
+     */
+    protected $documentRepository;
+    /**
+     * Construct with dependencies
+     */
+    public function __construct(DataDocumentRepository $documentRepository)
+    {
+        $this->documentRepository = $documentRepository;
+    }
 
 	/**
 	 * Store a newly created Document.
@@ -20,9 +31,7 @@ class DocumentController extends Controller {
 	{
         $documentData = Request::json()->all();
         $document = DataDocument::create($documentName, $documentData);
-        $jsonCodec = new JSONCodec();
-        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
-        $documentRepository->store($document);
+        $this->documentRepository->store($document);
         return new JsonResponse(array("message" => "Created : {$documentName}"));
 	}
 
@@ -34,9 +43,11 @@ class DocumentController extends Controller {
 	 */
 	public function show($documentName)
 	{
-        $jsonCodec = new JSONCodec();
-        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
-        $document = $documentRepository->fetch($documentName);
+        $document = $this->documentRepository->fetch($documentName);
+        if (!$document instanceof DataDocument)
+        {
+            return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
+        }
         return new JsonResponse($document->toArray());
 	}
 
@@ -50,11 +61,13 @@ class DocumentController extends Controller {
 	public function update($documentName, $path)
 	{
         $documentData = Request::json()->all();
-        $jsonCodec = new JSONCodec();
-        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
-        $document = $documentRepository->fetch($documentName);
+        $document = $this->documentRepository->fetch($documentName);
+        if (!$document instanceof DataDocument)
+        {
+            return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
+        }
         $document->path($path, $documentData);
-        $documentRepository->store($document);
+        $this->documentRepository->store($document);
         return new JsonResponse(array("message" => "Updated : {$documentName} : {$path}"));
 	}
 
@@ -66,9 +79,7 @@ class DocumentController extends Controller {
 	 */
 	public function destroy($documentName)
 	{
-        $jsonCodec = new JSONCodec();
-        $documentRepository = new DataDocumentFileSystemRepository($jsonCodec, storage_path());
-        $documentRepository->delete($documentName);
+        $this->documentRepository->delete($documentName);
         return new JsonResponse(array("message" => "Destroyed : {$documentName}"));
 	}
 

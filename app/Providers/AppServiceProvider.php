@@ -1,6 +1,7 @@
 <?php namespace Web2CV\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Web2CV\Repositories\DataDocumentFileSystemRepository;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -29,6 +30,15 @@ class AppServiceProvider extends ServiceProvider {
 			'Illuminate\Contracts\Auth\Registrar',
 			'Web2CV\Services\Registrar'
 		);
+
+        // @todo Contextual Binding
+        $this->app->bind('Web2CV\Codecs\Codec', 'Web2CV\Codecs\JSONCodec');
+        $this->app->bind('Web2CV\Repositories\DataDocumentRepository',
+            function($app) {
+                // @todo Configurable storage directory
+                return new DataDocumentFileSystemRepository($app->make('Web2CV\Codecs\Codec'), storage_path());
+            }
+        );
 	}
 
 }
