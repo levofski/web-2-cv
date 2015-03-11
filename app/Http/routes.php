@@ -14,6 +14,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('api/{documentName}', 'Api\DocumentController@show');
+Route::get('api/{documentName}/{path}', 'Api\DocumentController@show');
 Route::put('api/{documentName}', 'Api\DocumentController@store');
 Route::post('api/{documentName}/{path}', 'Api\DocumentController@update');
 Route::delete('api/{documentName}', 'Api\DocumentController@destroy');

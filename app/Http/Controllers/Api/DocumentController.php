@@ -2,6 +2,7 @@
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Request;
+use Web2CV\Entities\DataNode;
 use Web2CV\Http\Requests;
 use Web2CV\Http\Controllers\Controller;
 use Web2CV\Entities\DataDocument;
@@ -38,17 +39,30 @@ class DocumentController extends Controller {
 	/**
 	 * Display the specified Document.
 	 *
-	 * @param  string $documentName
-	 * @return Response
+     * @param  string $documentName
+     * @param  string $path
+     * @return Response
 	 */
-	public function show($documentName)
+	public function show($documentName, $path=null)
 	{
         $document = $this->documentRepository->fetch($documentName);
         if (!$document instanceof DataDocument)
         {
             return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
         }
-        return new JsonResponse($document->toArray());
+        if ($path)
+        {
+            $arrayData = $document->path($path);
+            if ($arrayData instanceof DataNode)
+            {
+                $arrayData = $arrayData->toArray();
+            }
+        }
+        else
+        {
+            $arrayData = $document->toArray();
+        }
+        return new JsonResponse($arrayData);
 	}
 
 	/**

@@ -37,12 +37,41 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     }
 
     /**
+     * @AfterScenario
+     */
+    public function tearDown()
+    {
+        $method = 'DELETE';
+        $url = $this->buildUrl($this->documentName);
+        $this->iSendARequest($method, $url);
+    }
+
+    /**
+     * Build a well-formed URL
+     * @param string $documentName
+     * @param string $path
+     */
+    protected function buildUrl($documentName, $path=null)
+    {
+        $url = $this->apiUrl;
+        if ($documentName)
+        {
+            $url .= '/'.trim($documentName, '/');
+        }
+        if ($path)
+        {
+            $url .= '/'.trim($path, '/');
+        }
+        return $url;
+    }
+
+    /**
      * @Given I store the Document
      */
     public function iStoreTheDocument()
     {
         $method = 'PUT';
-        $url = $this->apiUrl.'/'.$this->documentName;
+        $url = $this->buildUrl($this->documentName);
         $this->iSendARequestWithBody($method, $url, $this->documentData);
         $this->theResponseCodeShouldBe(200);
     }
@@ -53,7 +82,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iShouldBeAbleToFetchTheDocument($documentName)
     {
         $method = 'GET';
-        $url = $this->apiUrl.'/'.$documentName;
+        $url = $this->buildUrl($documentName);
         $this->iSendARequest($method, $url);
         $this->theResponseCodeShouldBe(200);
     }
@@ -72,7 +101,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iUpdateThePathTo($path, $data)
     {
         $method = 'POST';
-        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $url = $this->buildUrl($this->documentName, $path);
         $this->iSendARequestWithBody($method, $url, $data);
         $this->theResponseCodeShouldBe(200);
     }
@@ -83,7 +112,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iDeleteThePath($path)
     {
         $method = 'DELETE';
-        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $url = $this->buildUrl($this->documentName, $path);
         $this->iSendARequest($method, $url);
         $this->theResponseCodeShouldBe(200);
     }
@@ -94,7 +123,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iDeleteTheDocument($documentName)
     {
         $method = 'DELETE';
-        $url = $this->apiUrl.'/'.$documentName;
+        $url = $this->buildUrl($documentName);
         $this->iSendARequest($method, $url);
         $this->theResponseCodeShouldBe(200);
     }
@@ -105,7 +134,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iShouldNotBeAbleToFetchTheDocument($documentName)
     {
         $method = 'GET';
-        $url = $this->apiUrl.'/'.$documentName;
+        $url = $this->buildUrl($documentName);
         $this->iSendARequest($method, $url);
         $this->theResponseCodeShouldBe(404);
     }
@@ -116,7 +145,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function iReadThePath($path)
     {
         $method = 'GET';
-        $url = $this->apiUrl.'/'.$this->documentName.'/'.$path;
+        $url = $this->buildUrl($this->documentName, $path);
         $this->iSendARequest($method, $url);
         $this->theResponseCodeShouldBe(200);
     }
