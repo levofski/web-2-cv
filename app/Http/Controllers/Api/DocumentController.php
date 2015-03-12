@@ -107,27 +107,30 @@ class DocumentController extends Controller {
 	 * Remove the specified Document.
 	 *
 	 * @param string $documentName
-     * @param string $path
 	 * @return Response
 	 */
-	public function destroy($documentName, $path=null)
+	public function destroy($documentName)
 	{
-        if ($path)
-        {
-            $document = $this->documentRepository->fetch($documentName);
-            if (!$document instanceof DataDocument)
-            {
-                return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
-            }
-            $document->unsetPath($path);
-            $this->documentRepository->store($document);
-            return new JsonResponse(array("message" => "Deleted : {$documentName} : {$path}"));
-        }
-        else
-        {
-            $this->documentRepository->delete($documentName);
-            return new JsonResponse(array("message" => "Deleted : {$documentName}"));
-        }
+        $this->documentRepository->delete($documentName);
+        return new JsonResponse(array("message" => "Deleted : {$documentName}"));
 	}
 
+    /**
+     * Remove the specified Document path.
+     *
+     * @param string $documentName
+     * @param string $path
+     * @return Response
+     */
+    public function destroyPath($documentName, $path=null)
+    {
+        $document = $this->documentRepository->fetch($documentName);
+        if (!$document instanceof DataDocument)
+        {
+            return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
+        }
+        $document->unsetPath($path);
+        $this->documentRepository->store($document);
+        return new JsonResponse(array("message" => "Deleted : {$documentName} : {$path}"));
+    }
 }
