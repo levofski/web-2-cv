@@ -40,30 +40,39 @@ class DocumentController extends Controller {
 	 * Display the specified Document.
 	 *
      * @param  string $documentName
-     * @param  string $path
      * @return Response
 	 */
-	public function show($documentName, $path=null)
+	public function show($documentName)
 	{
         $document = $this->documentRepository->fetch($documentName);
         if (!$document instanceof DataDocument)
         {
             return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
         }
-        if ($path)
+        return new JsonResponse($document->toArray());
+	}
+
+    /**
+     * Display the specified Document path.
+     *
+     * @param  string $documentName
+     * @param  string $path
+     * @return Response
+     */
+    public function showPath($documentName, $path)
+    {
+        $document = $this->documentRepository->fetch($documentName);
+        if (!$document instanceof DataDocument)
         {
-            $arrayData = $document->path($path);
-            if ($arrayData instanceof DataNode)
-            {
-                $arrayData = $arrayData->toArray();
-            }
+            return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
         }
-        else
+        $arrayData = $document->path($path);
+        if ($arrayData instanceof DataNode)
         {
-            $arrayData = $document->toArray();
+            $arrayData = $arrayData->toArray();
         }
         return new JsonResponse($arrayData);
-	}
+    }
 
 	/**
 	 * Update the specified path on the specified Document.

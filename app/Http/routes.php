@@ -14,7 +14,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('api/{documentName}', 'Api\DocumentController@show');
-Route::get('api/{documentName}/{path}', 'Api\DocumentController@show')->where('path', '.+');
+Route::get('api/{documentName}/{path}', 'Api\DocumentController@showPath')->where('path', '.+');
 Route::put('api/{documentName}', 'Api\DocumentController@store');
 Route::post('api/{documentName}/{path}', 'Api\DocumentController@update')->where('path', '.+');
 Route::delete('api/{documentName}', 'Api\DocumentController@destroy');
