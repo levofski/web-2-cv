@@ -1,11 +1,9 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\WebApiExtension\Context\WebApiContext;
-use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Defines application features from the API context, using browser (mink) to test.

@@ -74,13 +74,22 @@ class DocumentController extends Controller {
 	 */
 	public function update($documentName, $path)
 	{
-        $documentData = Request::json()->all();
+        $requestContent = Request::getContent();
+        $requestJson = Request::json();
+        $decodedRequestContent = json_decode($requestContent);
+        // We want to accept a valid JSON strings, not just valid JSON objects
+        // If the $requestJson is not the same as the decoded $requestContent
+        $requestData = $requestJson;
+        if ($decodedRequestContent != $requestJson)
+        {
+            $requestData = $decodedRequestContent;
+        }
         $document = $this->documentRepository->fetch($documentName);
         if (!$document instanceof DataDocument)
         {
             return new JsonResponse(array("message" => "Document '{$documentName}' not found"), 404);
         }
-        $document->path($path, $documentData);
+        $document->path($path, $requestData);
         $this->documentRepository->store($document);
         return new JsonResponse(array("message" => "Updated : {$documentName} : {$path}"));
 	}
