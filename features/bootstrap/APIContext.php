@@ -104,6 +104,8 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     {
         $method = 'POST';
         $url = $this->buildUrl($this->documentName, $path);
+        // To be a Json string, the data must be wrapped in double-quotes
+        $data = '"'.$data.'"';
         $jsonData = new PyStringNode(array($data), 0);
         $this->iSendARequestWithBody($method, $url, $jsonData);
         $this->theResponseCodeShouldBe(200);

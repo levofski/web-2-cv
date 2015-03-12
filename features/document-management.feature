@@ -20,7 +20,6 @@ Feature: Document Management
     """
     And I store the Document
 
-  @runme
   Scenario: Creating a Document
     Then I should be able to fetch the "test-data" Document
     And the Document data should be :
@@ -37,7 +36,7 @@ Feature: Document Management
       }
     }
     """
-  @runme
+
   Scenario: A Simple Document Update
     When I update the path "key2" to "newValue2"
     Then the Document data should be :
