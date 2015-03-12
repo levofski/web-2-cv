@@ -92,6 +92,10 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function theDocumentDataShouldBe(PyStringNode $data)
     {
+        $method = 'GET';
+        $url = $this->buildUrl($this->documentName);
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
         $this->theResponseShouldContainJson($data);
     }
 
@@ -102,7 +106,8 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     {
         $method = 'POST';
         $url = $this->buildUrl($this->documentName, $path);
-        $this->iSendARequestWithBody($method, $url, $data);
+        $jsonData = new PyStringNode(array($data), 0);
+        $this->iSendARequestWithBody($method, $url, $jsonData);
         $this->theResponseCodeShouldBe(200);
     }
 
