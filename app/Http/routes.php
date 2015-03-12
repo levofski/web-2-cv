@@ -18,3 +18,4 @@ Route::get('api/{documentName}/{path}', 'Api\DocumentController@show')->where('p
 Route::put('api/{documentName}', 'Api\DocumentController@store');
 Route::post('api/{documentName}/{path}', 'Api\DocumentController@update')->where('path', '.+');
 Route::delete('api/{documentName}', 'Api\DocumentController@destroy');
+Route::delete('api/{documentName}/{path}', 'Api\DocumentController@destroy')->where('path', '.+');
