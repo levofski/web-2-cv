@@ -26,6 +26,8 @@ class Kernel extends HttpKernel {
 		'auth' => 'Web2CV\Http\Middleware\Authenticate',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'Web2CV\Http\Middleware\RedirectIfAuthenticated',
+        'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+        'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
 	];
 
 }
