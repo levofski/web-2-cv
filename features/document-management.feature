@@ -4,7 +4,8 @@ Feature: Document Management
   I want to be able to manage my data documents
 
   Background:
-    Given I have a Document named "test-data" with data :
+    Given I am authenticating as "test-user" with "test-pass" password
+    And I have a Document named "test-data" with data :
     """
     {
       "key1":"value1",

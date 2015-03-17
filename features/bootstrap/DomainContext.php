@@ -48,6 +48,14 @@ class DomainContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given I am authenticating as :username with :password password
+     */
+    public function iAmAuthenticatingAsWithPassword($username, $password)
+    {
+        // Auth is outside scope of the Domain Context, do nothing
+    }
+
+    /**
      * @Given I have a Document named :documentName with data :
      */
     public function iHaveADocumentNamedWithData($documentName, PyStringNode $data)
