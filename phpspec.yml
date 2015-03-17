@@ -3,6 +3,7 @@ suites:
         namespace: Web2CV
         psr4_prefix: Web2CV
         src_path: app
+        spec_path: tests
         spec_prefix: spec
 extensions:
     - RMiller\BehatSpec\PhpSpecExtension
