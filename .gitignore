@@ -4,6 +4,7 @@ web-2-cv.kdev4
 /bootstrap/compiled.php
 .env.*.php
 .env.php
+/node_modules/
 /vendor/
 /bin/
 readme.md
