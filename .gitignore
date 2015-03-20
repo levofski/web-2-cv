@@ -7,5 +7,6 @@ web-2-cv.kdev4
 /node_modules/
 /vendor/
 /bin/
+/public/vendor/
 readme.md
 README.md
