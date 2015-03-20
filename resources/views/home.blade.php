@@ -1,4 +1,4 @@
-@extends('app')
+@extends('master')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
 				<div class="panel-heading">Home</div>
 
 				<div class="panel-body">
-					You are logged in!
+					HOME
 				</div>
 			</div>
 		</div>

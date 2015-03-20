@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@index');
 
 Route::get('api/{documentName}', 'Api\DocumentController@show');
 Route::get('api/{documentName}/{path}', 'Api\DocumentController@showPath')->where('path', '.+');
