@@ -8,7 +8,8 @@
 				<div class="panel-heading">Home</div>
 
 				<div class="panel-body">
-					HOME
+                    <input type="text" ng-model="testText" placeholder="Enter text here" />
+					[[testText]]
 				</div>
 			</div>
 		</div>

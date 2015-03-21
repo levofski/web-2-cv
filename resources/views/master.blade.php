@@ -11,7 +11,7 @@
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body ng-app="cvApp">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -51,5 +51,6 @@
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbower -->
+    <script src="js/main.js"></script>
 </body>
 </html>

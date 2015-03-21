@@ -2,8 +2,7 @@
 web-2-cv.kdev4
 .idea/
 /bootstrap/compiled.php
-.env.*.php
-.env.php
+.env
 /node_modules/
 /vendor/
 /bin/

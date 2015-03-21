@@ -20,4 +20,6 @@ var lessPaths = [
 elixir(function(mix) {
     mix.less("main.less", "public/css/", {paths: lessPaths})
         .wiredep({src: "master.blade.php"}, {exclude: 'vendor/bootstrap/dist/css/bootstrap.css'});
+
+    mix.scriptsIn("resources/assets/js/", "public/js/main.js");
 });

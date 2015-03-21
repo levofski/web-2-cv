@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"main.js","sourcesContent":["var cvApp = angular.module('cvApp', []);\n\ncvApp.config(function($interpolateProvider) {\n    $interpolateProvider.startSymbol('[[');\n    $interpolateProvider.endSymbol(']]');\n});\n"],"sourceRoot":"/source/"}
