@@ -7,9 +7,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Home</div>
 
-				<div class="panel-body">
-                    <input type="text" ng-model="testText" placeholder="Enter text here" />
+				<div class="panel-body" ng-app="cvApp">
+                    <input type="text" ng-model="testText" placeholder="Enter text" />
 					[[testText]]
+                    <div ng-controller="DocumentController as document">
+
+                    </div>
 				</div>
 			</div>
 		</div>
