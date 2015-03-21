@@ -14,7 +14,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      * @var string
      * @todo this should come from environment config
      */
-    protected $apiUrl = 'http://localhost:8000/api';
+    protected $apiUrl = 'http://web-2-cv.dev/api';
     /**
      * @var string
      */
