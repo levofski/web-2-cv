@@ -10,10 +10,10 @@
 				<div class="panel-body" ng-app="cvApp">
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group" role="group">
-                            <a href="#new" class="btn btn-primary">New Document</a>
+                            <a ui-sref="document.new" class="btn btn-primary">New Document</a>
                         </div>
                     </div>
-                    <div ng-view></div>
+                    <div ui-view></div>
 				</div>
 			</div>
 		</div>
