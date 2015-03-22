@@ -11,8 +11,9 @@ cvApp.config(function($interpolateProvider) {
 
 cvApp.config( function($routeProvider) {
     $routeProvider
-        .when('/:document_name', { controller: 'DocumentController', templateUrl: './document/document.html' })
-        .when('/:document_name/:path', { controller: 'DocumentController', templateUrl: './document/node.html' })
+        .when('/new', { controller: 'DocumentController', templateUrl: 'document/new.html' })
+        .when('/:document_name', { controller: 'DocumentController', templateUrl: 'document/document.html' })
+        .when('/:document_name/:path', { controller: 'NodeController', templateUrl: 'node/node.html' })
         .otherwise({ redirect: '/' });
 });
 
@@ -24,7 +25,7 @@ cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
         documentCtrl.document = data;
     });
 
-    console.log("DocumentController");
+
 }]);
 
 /**
@@ -33,6 +34,7 @@ cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
 
 cvApp.service('DocumentData', function($http) {
     this.getDocument = function (document_name) { return $http.get('/api/' + document_name); }
+    this.createDocument = function (document_name) { return $http.put('/api/' + document_name, {}); }
 });
 
 

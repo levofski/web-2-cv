@@ -8,11 +8,12 @@
 				<div class="panel-heading">Home</div>
 
 				<div class="panel-body" ng-app="cvApp">
-                    <input type="text" ng-model="testText" placeholder="Enter text" />
-					[[testText]]
-                    <div ng-controller="DocumentController as document">
-
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group" role="group">
+                            <a href="#new" class="btn btn-primary">New Document</a>
+                        </div>
                     </div>
+                    <div ng-view></div>
 				</div>
 			</div>
 		</div>

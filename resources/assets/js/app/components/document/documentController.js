@@ -6,5 +6,5 @@ cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
         documentCtrl.document = data;
     });
 
-    console.log("DocumentController");
+
 }]);
