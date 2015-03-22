@@ -1,39 +1,24 @@
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
+cvApp.controller('DocumentController', ['DocumentService', 'document',  function(DocumentService, document){
     var documentCtrl = this;
 
-    this.newDocument = {
-        name: '',
-        data: ''
-    };
+    this.document = document;
 
     /**
-     * View a document with the given name
+     * Create a document with the given name
      *
      * @param documentName
      */
     this.createDocument = function() {
-        var documentName = documentCtrl.newDocument.name;
-        var documentData = documentCtrl.newDocument.data;
-        DocumentData.createDocument(documentName, documentData).success(function(data){
-            documentCtrl.newDocument = {
+        var documentName = documentCtrl.document.name;
+        var documentData = documentCtrl.document.data;
+        DocumentService.createDocument(documentName, documentData).success(function(data){
+            documentCtrl.document = {
                 name: '',
                 data: ''
             };
         });
     }
-
-    /**
-     * View a document with the given name
-     *
-     * @param documentName
-     */
-    this.viewDocument = function(documentName) {
-        DocumentData.getDocument(documentName).success(function(data){
-            documentCtrl.document = data;
-        });
-    }
-
 
 }]);

@@ -15,7 +15,15 @@ cvApp.config( function($stateProvider) {
             url: '/document',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
-            templateUrl: 'document/document.html'
+            templateUrl: 'document/document.html',
+            resolve: {
+                document: function() {
+                    return {
+                        name: '',
+                        data: ''
+                    };
+                }
+            }
         })
         .state('document.new', {
             url: '/new',
@@ -23,7 +31,20 @@ cvApp.config( function($stateProvider) {
         })
         .state('document.view', {
             url: '/:document_name',
-            templateUrl: 'document/document-view.html'
+            templateUrl: 'document/document-view.html',
+            controller: 'DocumentController',
+            controllerAs : 'documentCtrl',
+            resolve: {
+                document: function($stateParams, DocumentService, documentData){
+                    return {
+                        name: $stateParams.document_name,
+                        data: documentData.data
+                    };
+                },
+                documentData: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name);
+                }
+            }
         })
         .state('.node', {
             url: '/:document_name/:path',
@@ -35,41 +56,26 @@ cvApp.config( function($stateProvider) {
 
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
+cvApp.controller('DocumentController', ['DocumentService', 'document',  function(DocumentService, document){
     var documentCtrl = this;
 
-    this.newDocument = {
-        name: '',
-        data: ''
-    };
+    this.document = document;
 
     /**
-     * View a document with the given name
+     * Create a document with the given name
      *
      * @param documentName
      */
     this.createDocument = function() {
-        var documentName = documentCtrl.newDocument.name;
-        var documentData = documentCtrl.newDocument.data;
-        DocumentData.createDocument(documentName, documentData).success(function(data){
-            documentCtrl.newDocument = {
+        var documentName = documentCtrl.document.name;
+        var documentData = documentCtrl.document.data;
+        DocumentService.createDocument(documentName, documentData).success(function(data){
+            documentCtrl.document = {
                 name: '',
                 data: ''
             };
         });
     }
-
-    /**
-     * View a document with the given name
-     *
-     * @param documentName
-     */
-    this.viewDocument = function(documentName) {
-        DocumentData.getDocument(documentName).success(function(data){
-            documentCtrl.document = data;
-        });
-    }
-
 
 }]);
 
@@ -77,7 +83,7 @@ cvApp.controller('DocumentController', ['DocumentData', function(DocumentData){
  * Service to provide Document Data
  */
 
-cvApp.service('DocumentData', function($http) {
+cvApp.service('DocumentService', ['$http', function($http) {
 
     this.getDocument = function (documentName) {
         return $http.get('/api/' + documentName);
@@ -86,7 +92,7 @@ cvApp.service('DocumentData', function($http) {
     this.createDocument = function (documentName, documentData) {
         return $http.put('/api/' + documentName, documentData);
     }
-});
+}]);
 
 
 /** Node Controller */
@@ -100,7 +106,7 @@ cvApp.controller('NodeController', ['NodeData', function(NodeData){
  * Service to provide Node Data
  */
 
-cvApp.service('NodeData', function($http) {
+cvApp.service('NodeService', function($http) {
     this.getNode = function (documentName, nodePath) {
         return $http.get('/api/' + document_name + '/' + nodePath);
     }

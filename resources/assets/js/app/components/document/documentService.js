@@ -2,7 +2,7 @@
  * Service to provide Document Data
  */
 
-cvApp.service('DocumentData', function($http) {
+cvApp.service('DocumentService', ['$http', function($http) {
 
     this.getDocument = function (documentName) {
         return $http.get('/api/' + documentName);
@@ -11,5 +11,5 @@ cvApp.service('DocumentData', function($http) {
     this.createDocument = function (documentName, documentData) {
         return $http.put('/api/' + documentName, documentData);
     }
-});
+}]);
 
