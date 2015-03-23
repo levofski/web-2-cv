@@ -4,6 +4,10 @@
 
 cvApp.service('DocumentService', ['$http', function($http) {
 
+    this.getDocuments = function () {
+        return $http.get('/api/');
+    }
+
     this.getDocument = function (documentName) {
         return $http.get('/api/' + documentName);
     }

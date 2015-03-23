@@ -12,16 +12,13 @@ cvApp.config(function($interpolateProvider) {
 cvApp.config( function($stateProvider) {
     $stateProvider
         .state('document', {
-            url: '/document',
-            controller: 'DocumentController',
-            controllerAs : 'documentCtrl',
-            templateUrl: 'document/document.html',
+            url: '',
+            controller: 'DocumentsController',
+            controllerAs : 'documentsCtrl',
+            templateUrl: 'documents/documents.html',
             resolve: {
-                document: function() {
-                    return {
-                        name: '',
-                        data: ''
-                    };
+                documents: function(DocumentService){
+                    return DocumentService.getDocuments();
                 }
             }
         })
@@ -85,6 +82,10 @@ cvApp.controller('DocumentController', ['DocumentService', 'document',  function
 
 cvApp.service('DocumentService', ['$http', function($http) {
 
+    this.getDocuments = function () {
+        return $http.get('/api/');
+    }
+
     this.getDocument = function (documentName) {
         return $http.get('/api/' + documentName);
     }
@@ -94,6 +95,15 @@ cvApp.service('DocumentService', ['$http', function($http) {
     }
 }]);
 
+
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
 
 /** Node Controller */
 

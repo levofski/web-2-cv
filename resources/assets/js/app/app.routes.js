@@ -3,16 +3,13 @@
 cvApp.config( function($stateProvider) {
     $stateProvider
         .state('document', {
-            url: '/document',
-            controller: 'DocumentController',
-            controllerAs : 'documentCtrl',
-            templateUrl: 'document/document.html',
+            url: '',
+            controller: 'DocumentsController',
+            controllerAs : 'documentsCtrl',
+            templateUrl: 'documents/documents.html',
             resolve: {
-                document: function() {
-                    return {
-                        name: '',
-                        data: ''
-                    };
+                documents: function(DocumentService){
+                    return DocumentService.getDocuments();
                 }
             }
         })
