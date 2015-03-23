@@ -9,21 +9,32 @@ cvApp.config(function($interpolateProvider) {
 
 /** Angular UI Routing Config */
 
-cvApp.config( function($stateProvider) {
+cvApp.config( function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('document', {
-            url: '',
+            url: '/',
             controller: 'DocumentsController',
             controllerAs : 'documentsCtrl',
             templateUrl: 'documents/documents.html',
             resolve: {
-                documents: function(DocumentService){
+                documents: function(DocumentService, documentsData){
+                    var documentResult = [];
+                    var documentsDataData = documentsData.data;
+                    for(documentName in documentsDataData){
+                        documentResult.push({
+                            name: documentName,
+                            data: documentsDataData[documentName]
+                        });
+                    }
+                    return documentResult;
+                },
+                documentsData: function(DocumentService){
                     return DocumentService.getDocuments();
                 }
             }
         })
         .state('document.new', {
-            url: '/new',
+            url: 'new',
             templateUrl: 'document/document-new.html',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
@@ -37,7 +48,7 @@ cvApp.config( function($stateProvider) {
             }
         })
         .state('document.view', {
-            url: '/:document_name',
+            url: ':document_name',
             templateUrl: 'document/document-view.html',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
@@ -54,16 +65,18 @@ cvApp.config( function($stateProvider) {
             }
         })
         .state('.node', {
-            url: '/:document_name/:path',
+            url: ':document_name/:path',
             controller: 'NodeController',
             controllerAs: 'nodeCtrl',
             templateUrl: 'node/node.html'
         });
+
+    $urlRouterProvider.otherwise("/");
 });
 
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'document',  function(DocumentService, document){
+cvApp.controller('DocumentController', ['DocumentService', 'document', '$state',  function(DocumentService, document, $state){
     var documentCtrl = this;
 
     this.document = document;
@@ -81,7 +94,14 @@ cvApp.controller('DocumentController', ['DocumentService', 'document',  function
                 name: '',
                 data: ''
             };
-        });
+        }).success(
+            function(){
+                $state.go('document', {}, {
+                    reload: true
+                });
+            }
+        );
+
     }
 
 }]);

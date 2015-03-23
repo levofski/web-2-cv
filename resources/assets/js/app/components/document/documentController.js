@@ -1,6 +1,6 @@
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'document',  function(DocumentService, document){
+cvApp.controller('DocumentController', ['DocumentService', 'document', '$state',  function(DocumentService, document, $state){
     var documentCtrl = this;
 
     this.document = document;
@@ -18,7 +18,14 @@ cvApp.controller('DocumentController', ['DocumentService', 'document',  function
                 name: '',
                 data: ''
             };
-        });
+        }).success(
+            function(){
+                $state.go('document', {}, {
+                    reload: true
+                });
+            }
+        );
+
     }
 
 }]);
