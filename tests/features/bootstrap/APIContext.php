@@ -40,9 +40,9 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function tearDown()
     {
-//        $method = 'DELETE';
-//        $url = $this->buildUrl($this->documentName);
-//        $this->iSendARequest($method, $url);
+        $method = 'DELETE';
+        $url = $this->buildUrl($this->documentName);
+        $this->iSendARequest($method, $url);
     }
 
     /**
