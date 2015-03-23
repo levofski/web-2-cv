@@ -40,9 +40,9 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function tearDown()
     {
-        $method = 'DELETE';
-        $url = $this->buildUrl($this->documentName);
-        $this->iSendARequest($method, $url);
+//        $method = 'DELETE';
+//        $url = $this->buildUrl($this->documentName);
+//        $this->iSendARequest($method, $url);
     }
 
     /**
@@ -50,7 +50,7 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      * @param string $documentName
      * @param string $path
      */
-    protected function buildUrl($documentName, $path=null)
+    protected function buildUrl($documentName=null, $path=null)
     {
         $url = $this->apiUrl;
         if ($documentName)
@@ -177,7 +177,10 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function iListTheDocuments()
     {
-        throw new PendingException();
+        $method = 'GET';
+        $url = $this->buildUrl();
+        $this->iSendARequest($method, $url);
+        $this->theResponseCodeShouldBe(200);
     }
 
     /**
@@ -185,6 +188,9 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function shouldBeListed($documentName)
     {
-        throw new PendingException();
+        $documentName = '"'.$documentName.'"';
+        $responseArray = array($documentName);
+        $responseJson = new PyStringNode($responseArray, 0);
+        $this->theResponseShouldContainJson($responseJson);
     }
 }

@@ -74,6 +74,6 @@ class DataDocumentFileSystemRepositorySpec extends ObjectBehavior
         $codec->decode($jsonData)->willReturn($dataNode);
         // Store and fetch the data
         $this->store($dataDocument);
-        $this->fetchAll()[0]->toArray()->shouldReturn($arrayData);;
+        $this->fetchAll()[$dataDocumentName]->toArray()->shouldReturn($arrayData);
     }
 }

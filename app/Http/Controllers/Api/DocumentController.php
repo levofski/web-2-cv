@@ -22,6 +22,17 @@ class DocumentController extends Controller {
         $this->documentRepository = $documentRepository;
     }
 
+    /**
+     * List the Documents.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $documents = $this->documentRepository->fetchAll();
+        return new JsonResponse($documents->toArray());
+    }
+
 	/**
 	 * Store a newly created Document.
 	 *

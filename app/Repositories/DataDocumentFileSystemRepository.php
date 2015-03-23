@@ -4,6 +4,7 @@ namespace Web2CV\Repositories;
 
 use PhpParser\Error;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Web2CV\Collections\DataDocumentCollection;
 use Web2CV\Entities\DataDocument;
 use Web2CV\Codecs\Codec;
 
@@ -142,12 +143,12 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
      */
     public function fetchAll()
     {
-        $documents = array();
+        $documents = new DataDocumentCollection();
         foreach (scandir($this->storageDirectory) as $filePath){
             if (is_file($this->storageDirectory . DIRECTORY_SEPARATOR . $filePath)){
                 list($fileName, $fileExtension) = explode('.', $filePath);
                 if ($fileExtension == static::FILE_EXTENSION) {
-                    $documents[] = $this->fetch($fileName);
+                    $documents[$fileName] = $this->fetch($fileName);
                 }
             }
         }
