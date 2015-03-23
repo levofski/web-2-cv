@@ -149,4 +149,12 @@ class DomainContext implements Context, SnippetAcceptingContext
     {
         $this->dataDocument->unsetPath($path);
     }
+
+    /**
+     * @When I list the Documents
+     */
+    public function iListTheDocuments()
+    {
+        throw new PendingException();
+    }
 }

@@ -48,6 +48,15 @@ Feature: Document Reading
     }
     """
 
+  Scenario: Listing Documents
+    When I list the Documents
+    Then the JSON should be :
+    """
+    [
+      "test-data"
+    [
+    """
+
   Scenario: Reading JSON values, key3
     When I read the path "/key3"
     Then the JSON should be :

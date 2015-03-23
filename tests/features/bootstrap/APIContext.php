@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
@@ -169,5 +170,13 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     public function theJsonShouldBe(PyStringNode $data)
     {
         $this->theResponseShouldContainJson($data);
+    }
+
+    /**
+     * @When I list the Documents
+     */
+    public function iListTheDocuments()
+    {
+        throw new PendingException();
     }
 }
