@@ -188,9 +188,9 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
      */
     public function shouldBeListed($documentName)
     {
-        $documentName = '"'.$documentName.'"';
-        $responseArray = array($documentName);
-        $responseJson = new PyStringNode($responseArray, 0);
-        $this->theResponseShouldContainJson($responseJson);
+        $responseArray = array($this->documentName => json_decode($this->documentData->getRaw(), true));
+        $responseJson = json_encode($responseArray);
+        $responsePyString = new PyStringNode(array($responseJson), 0);
+        $this->theResponseShouldContainJson($responsePyString);
     }
 }
