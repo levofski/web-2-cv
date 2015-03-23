@@ -168,6 +168,6 @@ class DomainContext implements Context, SnippetAcceptingContext
      */
     public function shouldBeListed($documentName)
     {
-        PHPUnit::assertContains($this->dataDocument, $this->dataDocuments);
+        PHPUnit::assertEquals($this->dataDocument->toArray(), $this->dataDocuments[0]->toArray());
     }
 }
