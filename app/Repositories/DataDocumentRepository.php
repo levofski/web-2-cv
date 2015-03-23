@@ -22,6 +22,13 @@ interface DataDocumentRepository
     public function fetch($name);
 
     /**
+     * Fetches all DataDocuments
+     *
+     * @return array
+     */
+    public function fetchAll();
+
+    /**
      * Deletes a DataDocument with the passed name
      *
      * @param string $name

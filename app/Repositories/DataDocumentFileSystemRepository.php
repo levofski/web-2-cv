@@ -137,8 +137,20 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
         throw new \ErrorException($message, $severity, $severity, $file, $line);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function fetchAll()
     {
-        // TODO: write logic here
+        $documents = array();
+        foreach (scandir($this->storageDirectory) as $filePath){
+            if (is_file($this->storageDirectory . DIRECTORY_SEPARATOR . $filePath)){
+                list($fileName, $fileExtension) = explode('.', $filePath);
+                if ($fileExtension == static::FILE_EXTENSION) {
+                    $documents[] = $this->fetch($fileName);
+                }
+            }
+        }
+        return $documents;
     }
 }
