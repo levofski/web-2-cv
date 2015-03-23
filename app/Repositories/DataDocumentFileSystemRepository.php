@@ -136,4 +136,9 @@ class DataDocumentFileSystemRepository implements DataDocumentRepository
     {
         throw new \ErrorException($message, $severity, $severity, $file, $line);
     }
+
+    public function fetchAll()
+    {
+        // TODO: write logic here
+    }
 }

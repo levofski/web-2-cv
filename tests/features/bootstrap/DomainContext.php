@@ -23,6 +23,11 @@ class DomainContext implements Context, SnippetAcceptingContext
     protected $dataDocument;
 
     /**
+     * @var array $dataDocuments
+     */
+    protected $dataDocuments;
+
+    /**
      * @var vfsStreamDirectory
      */
     private $storageDirectory;
@@ -155,6 +160,14 @@ class DomainContext implements Context, SnippetAcceptingContext
      */
     public function iListTheDocuments()
     {
-        throw new PendingException();
+        $this->dataDocuments = $this->documentRepository->fetchAll();
+    }
+
+    /**
+     * @Then :documentName should be listed
+     */
+    public function shouldBeListed($documentName)
+    {
+        PHPUnit::assertContains($this->dataDocument, $this->dataDocuments);
     }
 }

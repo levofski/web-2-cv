@@ -179,4 +179,12 @@ class APIContext extends WebApiContext implements Context, SnippetAcceptingConte
     {
         throw new PendingException();
     }
+
+    /**
+     * @Then :documentName should be listed
+     */
+    public function shouldBeListed($documentName)
+    {
+        throw new PendingException();
+    }
 }
