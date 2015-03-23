@@ -24,7 +24,17 @@ cvApp.config( function($stateProvider) {
         })
         .state('document.new', {
             url: '/new',
-            templateUrl: 'document/document-new.html'
+            templateUrl: 'document/document-new.html',
+            controller: 'DocumentController',
+            controllerAs : 'documentCtrl',
+            resolve: {
+                document: function(){
+                    return {
+                        name: '',
+                        data: ''
+                    };
+                }
+            }
         })
         .state('document.view', {
             url: '/:document_name',
@@ -83,7 +93,7 @@ cvApp.controller('DocumentController', ['DocumentService', 'document',  function
 cvApp.service('DocumentService', ['$http', function($http) {
 
     this.getDocuments = function () {
-        return $http.get('/api/');
+        return $http.get('/api');
     }
 
     this.getDocument = function (documentName) {

@@ -15,7 +15,17 @@ cvApp.config( function($stateProvider) {
         })
         .state('document.new', {
             url: '/new',
-            templateUrl: 'document/document-new.html'
+            templateUrl: 'document/document-new.html',
+            controller: 'DocumentController',
+            controllerAs : 'documentCtrl',
+            resolve: {
+                document: function(){
+                    return {
+                        name: '',
+                        data: ''
+                    };
+                }
+            }
         })
         .state('document.view', {
             url: '/:document_name',
