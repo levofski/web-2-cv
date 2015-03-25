@@ -159,6 +159,8 @@ cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeServ
     var nodeCtrl = this;
 
     this.nodeData = nodeData;
+
+    this.isNumber = angular.isNumber;
 }]);
 
 /**

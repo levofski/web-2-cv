@@ -1,3 +1,4 @@
-<blockquote>
-    <pre>[[ nodeCtrl.nodeData | json ]]</pre>
+<blockquote ng-repeat="(nodeKey, nodeValue) in nodeCtrl.nodeData">
+    <h4 ng-hide="nodeCtrl.isNumber(nodeKey)">[[ nodeKey ]]</h4>
+    <pre>[[ nodeValue | json ]]</pre>
 </blockquote>
