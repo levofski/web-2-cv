@@ -41,15 +41,15 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
         .state('document.view', {
             url: ':document_name',
             views: {
-                mainModule: {
+                '': {
                     templateUrl: 'document/document-view.html'
                 },
-                'name': {
+                'name@document.view': {
                     templateUrl: 'document/document-name.html',
                     controller: 'DocumentController',
                     controllerAs : 'documentCtrl'
                 },
-                'data': {
+                'data@document.view': {
                     templateUrl: 'node/node.html',
                     controller: 'NodeController',
                     controllerAs : 'nodeCtrl'
@@ -62,8 +62,11 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 documentData: function(){
                     return '';
                 },
-                nodeData: function($stateParams, NodeService){
+                nodePromise: function($stateParams, NodeService){
                     return NodeService.getNode($stateParams.document_name, '/');
+                },
+                nodeData: function(nodePromise){
+                    return nodePromise.data;
                 }
             }
         })

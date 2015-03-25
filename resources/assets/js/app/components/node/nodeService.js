@@ -2,9 +2,10 @@
  * Service to provide Node Data
  */
 
-cvApp.service('NodeService', function($http) {
+cvApp.service('NodeService', ['$http', function($http) {
     this.getNode = function (documentName, nodePath) {
-        console.log('/api/' + document_name + '/' + nodePath);
-        return $http.get('/api/' + document_name + '/' + nodePath);
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + nodePath);
     }
-});
+}]);

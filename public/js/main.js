@@ -50,15 +50,15 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
         .state('document.view', {
             url: ':document_name',
             views: {
-                mainModule: {
+                '': {
                     templateUrl: 'document/document-view.html'
                 },
-                'name': {
+                'name@document.view': {
                     templateUrl: 'document/document-name.html',
                     controller: 'DocumentController',
                     controllerAs : 'documentCtrl'
                 },
-                'data': {
+                'data@document.view': {
                     templateUrl: 'node/node.html',
                     controller: 'NodeController',
                     controllerAs : 'nodeCtrl'
@@ -71,8 +71,11 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 documentData: function(){
                     return '';
                 },
-                nodeData: function($stateParams, NodeService){
+                nodePromise: function($stateParams, NodeService){
                     return NodeService.getNode($stateParams.document_name, '/');
+                },
+                nodeData: function(nodePromise){
+                    return nodePromise.data;
                 }
             }
         })
@@ -152,22 +155,22 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 /** Node Controller */
 
-cvApp.controller('NodeController', ['NodeService', function(NodeService){
+cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
     var nodeCtrl = this;
 
-    console.log("NodeController");
-
+    this.nodeData = nodeData;
 }]);
 
 /**
  * Service to provide Node Data
  */
 
-cvApp.service('NodeService', function($http) {
+cvApp.service('NodeService', ['$http', function($http) {
     this.getNode = function (documentName, nodePath) {
-        console.log('/api/' + document_name + '/' + nodePath);
-        return $http.get('/api/' + document_name + '/' + nodePath);
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + nodePath);
     }
-});
+}]);
 
 //# sourceMappingURL=main.js.map
