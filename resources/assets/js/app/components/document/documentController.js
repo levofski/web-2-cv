@@ -1,9 +1,12 @@
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'document', '$state',  function(DocumentService, document, $state){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
     var documentCtrl = this;
 
-    this.document = document;
+    this.document = {
+        name: documentName,
+        data: documentData
+    };
 
     /**
      * Create a document with the given name

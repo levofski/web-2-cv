@@ -39,28 +39,40 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
             resolve: {
-                document: function(){
-                    return {
-                        name: '',
-                        data: ''
-                    };
+                documentName: function(){
+                    return '';
+                },
+                documentData: function(){
+                    return '';
                 }
             }
         })
         .state('document.view', {
             url: ':document_name',
-            templateUrl: 'document/document-view.html',
-            controller: 'DocumentController',
-            controllerAs : 'documentCtrl',
-            resolve: {
-                document: function($stateParams, DocumentService, documentData){
-                    return {
-                        name: $stateParams.document_name,
-                        data: documentData.data
-                    };
+            views: {
+                mainModule: {
+                    templateUrl: 'document/document-view.html'
                 },
-                documentData: function($stateParams, DocumentService){
-                    return DocumentService.getDocument($stateParams.document_name);
+                'name': {
+                    templateUrl: 'document/document-name.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
+                },
+                'data': {
+                    templateUrl: 'node/node.html',
+                    controller: 'NodeController',
+                    controllerAs : 'nodeCtrl'
+                }
+            },
+            resolve: {
+                documentName: function($stateParams){
+                    return $stateParams.document_name;
+                },
+                documentData: function(){
+                    return '';
+                },
+                nodeData: function($stateParams, NodeService){
+                    return NodeService.getNode($stateParams.document_name, '/');
                 }
             }
         })
@@ -76,10 +88,13 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
 
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'document', '$state',  function(DocumentService, document, $state){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
     var documentCtrl = this;
 
-    this.document = document;
+    this.document = {
+        name: documentName,
+        data: documentData
+    };
 
     /**
      * Create a document with the given name
@@ -137,8 +152,10 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 /** Node Controller */
 
-cvApp.controller('NodeController', ['NodeData', function(NodeData){
+cvApp.controller('NodeController', ['NodeService', function(NodeService){
     var nodeCtrl = this;
+
+    console.log("NodeController");
 
 }]);
 
@@ -148,6 +165,7 @@ cvApp.controller('NodeController', ['NodeData', function(NodeData){
 
 cvApp.service('NodeService', function($http) {
     this.getNode = function (documentName, nodePath) {
+        console.log('/api/' + document_name + '/' + nodePath);
         return $http.get('/api/' + document_name + '/' + nodePath);
     }
 });

@@ -30,28 +30,40 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
             resolve: {
-                document: function(){
-                    return {
-                        name: '',
-                        data: ''
-                    };
+                documentName: function(){
+                    return '';
+                },
+                documentData: function(){
+                    return '';
                 }
             }
         })
         .state('document.view', {
             url: ':document_name',
-            templateUrl: 'document/document-view.html',
-            controller: 'DocumentController',
-            controllerAs : 'documentCtrl',
-            resolve: {
-                document: function($stateParams, DocumentService, documentData){
-                    return {
-                        name: $stateParams.document_name,
-                        data: documentData.data
-                    };
+            views: {
+                mainModule: {
+                    templateUrl: 'document/document-view.html'
                 },
-                documentData: function($stateParams, DocumentService){
-                    return DocumentService.getDocument($stateParams.document_name);
+                'name': {
+                    templateUrl: 'document/document-name.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
+                },
+                'data': {
+                    templateUrl: 'node/node.html',
+                    controller: 'NodeController',
+                    controllerAs : 'nodeCtrl'
+                }
+            },
+            resolve: {
+                documentName: function($stateParams){
+                    return $stateParams.document_name;
+                },
+                documentData: function(){
+                    return '';
+                },
+                nodeData: function($stateParams, NodeService){
+                    return NodeService.getNode($stateParams.document_name, '/');
                 }
             }
         })

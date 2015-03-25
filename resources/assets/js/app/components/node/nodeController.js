@@ -1,6 +1,8 @@
 /** Node Controller */
 
-cvApp.controller('NodeController', ['NodeData', function(NodeData){
+cvApp.controller('NodeController', ['NodeService', function(NodeService){
     var nodeCtrl = this;
+
+    console.log("NodeController");
 
 }]);
