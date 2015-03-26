@@ -2,7 +2,6 @@
 cvApp.directive('node', function($compile) {
     return {
         restrict: 'E',
-        replace:false,
         templateUrl: 'node/node.html',
         link: function(scope, elm, attrs) {
             scope.isNumber = angular.isNumber;

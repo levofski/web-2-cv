@@ -7,6 +7,16 @@ cvApp.config(function($interpolateProvider) {
     $interpolateProvider.endSymbol(']]');
 });
 
+cvApp.filter('objOrder', function () {
+    return function(object) {
+        var array = [];
+        angular.forEach(object, function (value, key) {
+            array.push({key: key, value: value});
+        });
+        return array;
+    };
+});
+
 /** Angular UI Routing Config */
 
 cvApp.config( function($stateProvider, $urlRouterProvider) {
@@ -162,7 +172,6 @@ cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeServ
 cvApp.directive('node', function($compile) {
     return {
         restrict: 'E',
-        replace:false,
         templateUrl: 'node/node.html',
         link: function(scope, elm, attrs) {
             scope.isNumber = angular.isNumber;
@@ -191,7 +200,6 @@ cvApp.service('NodeService', ['$http', function($http) {
 cvApp.directive('nodeTree', function() {
     return {
         templateUrl: 'node/node-tree.html',
-        replace: false,
         transclude: true,
         restrict: 'E',
         scope: {
