@@ -59,23 +59,20 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                     controllerAs : 'documentCtrl'
                 },
                 'data@document.view': {
-                    templateUrl: 'node/node.html',
-                    controller: 'NodeController',
-                    controllerAs : 'nodeCtrl'
+                    templateUrl: 'document/document-data.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
                 }
             },
             resolve: {
                 documentName: function($stateParams){
                     return $stateParams.document_name;
                 },
-                documentData: function(){
-                    return '';
+                documentDataPromise: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name);
                 },
-                nodePromise: function($stateParams, NodeService){
-                    return NodeService.getNode($stateParams.document_name, '/');
-                },
-                nodeData: function(nodePromise){
-                    return nodePromise.data;
+                documentData: function(documentDataPromise){
+                    return documentDataPromise.data;
                 }
             }
         })
@@ -89,6 +86,51 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
+/** Node Controller */
+
+cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
+    var nodeCtrl = this;
+
+    this.nodeData = nodeData;
+}]);
+
+
+cvApp.directive('node', function($compile) {
+    return {
+        restrict: 'E',
+        replace:true,
+        templateUrl: 'node/node.html',
+        link: function(scope, elm, attrs) {
+            for (key in scope.node) {
+                var childNode = $compile('<ul><node-tree ng-model="node.'+key+'"></node-tree></ul>')(scope)
+                elm.append(childNode);
+            }
+        }
+    };
+});
+/**
+ * Service to provide Node Data
+ */
+
+cvApp.service('NodeService', ['$http', function($http) {
+    this.getNode = function (documentName, nodePath) {
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + nodePath);
+    }
+}]);
+
+cvApp.directive('nodeTree', function() {
+    return {
+        templateUrl: 'node/node-tree.html',
+        replace: false,
+        transclude: true,
+        restrict: 'E',
+        scope: {
+            tree: '=ngModel'
+        }
+    };
+});
 /** Document Controller */
 
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
@@ -151,28 +193,6 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
     this.documents = documents;
 
-}]);
-
-/** Node Controller */
-
-cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
-    var nodeCtrl = this;
-
-    this.nodeData = nodeData;
-
-    this.isNumber = angular.isNumber;
-}]);
-
-/**
- * Service to provide Node Data
- */
-
-cvApp.service('NodeService', ['$http', function($http) {
-    this.getNode = function (documentName, nodePath) {
-        // Remove any leading slash from path
-        nodePath = nodePath.replace(/^\//, '');
-        return $http.get('/api/' + documentName + nodePath);
-    }
 }]);
 
 //# sourceMappingURL=main.js.map
