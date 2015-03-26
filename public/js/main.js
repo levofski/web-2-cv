@@ -86,51 +86,6 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
-/** Node Controller */
-
-cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
-    var nodeCtrl = this;
-
-    this.nodeData = nodeData;
-}]);
-
-
-cvApp.directive('node', function($compile) {
-    return {
-        restrict: 'E',
-        replace:true,
-        templateUrl: 'node/node.html',
-        link: function(scope, elm, attrs) {
-            for (key in scope.node) {
-                var childNode = $compile('<ul><node-tree ng-model="node.'+key+'"></node-tree></ul>')(scope)
-                elm.append(childNode);
-            }
-        }
-    };
-});
-/**
- * Service to provide Node Data
- */
-
-cvApp.service('NodeService', ['$http', function($http) {
-    this.getNode = function (documentName, nodePath) {
-        // Remove any leading slash from path
-        nodePath = nodePath.replace(/^\//, '');
-        return $http.get('/api/' + documentName + nodePath);
-    }
-}]);
-
-cvApp.directive('nodeTree', function() {
-    return {
-        templateUrl: 'node/node-tree.html',
-        replace: false,
-        transclude: true,
-        restrict: 'E',
-        scope: {
-            tree: '=ngModel'
-        }
-    };
-});
 /** Document Controller */
 
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
@@ -195,4 +150,53 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 }]);
 
+/** Node Controller */
+
+cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
+    var nodeCtrl = this;
+
+    this.nodeData = nodeData;
+}]);
+
+
+cvApp.directive('node', function($compile) {
+    return {
+        restrict: 'E',
+        replace:false,
+        templateUrl: 'node/node.html',
+        link: function(scope, elm, attrs) {
+            scope.isNumber = angular.isNumber;
+            scope.isCollection = function(item){
+                return angular.isArray(item) || angular.isObject(item);
+            }
+            if (scope.isCollection(scope.nodeValue)) {
+                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')(scope)
+                elm.append(childNode);
+            }
+        }
+    };
+});
+/**
+ * Service to provide Node Data
+ */
+
+cvApp.service('NodeService', ['$http', function($http) {
+    this.getNode = function (documentName, nodePath) {
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + nodePath);
+    }
+}]);
+
+cvApp.directive('nodeTree', function() {
+    return {
+        templateUrl: 'node/node-tree.html',
+        replace: false,
+        transclude: true,
+        restrict: 'E',
+        scope: {
+            tree: '=ngModel'
+        }
+    };
+});
 //# sourceMappingURL=main.js.map

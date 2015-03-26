@@ -2,11 +2,15 @@
 cvApp.directive('node', function($compile) {
     return {
         restrict: 'E',
-        replace:true,
+        replace:false,
         templateUrl: 'node/node.html',
         link: function(scope, elm, attrs) {
-            for (key in scope.node) {
-                var childNode = $compile('<ul><node-tree ng-model="node.'+key+'"></node-tree></ul>')(scope)
+            scope.isNumber = angular.isNumber;
+            scope.isCollection = function(item){
+                return angular.isArray(item) || angular.isObject(item);
+            }
+            if (scope.isCollection(scope.nodeValue)) {
+                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')(scope)
                 elm.append(childNode);
             }
         }
