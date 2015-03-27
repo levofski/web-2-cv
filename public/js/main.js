@@ -162,12 +162,13 @@ cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $te
         }
         if( typeof jsonData == "object" ) {
             $.each(jsonData, function(key,val) {
-                documentService.preloadCache(val, String(path) + '/' + String(key));
+                // if the key is template, add the value to the cache at this path
+                if (key == 'template'){
+                    $templateCache.put(path, val);
+                } else {
+                    documentService.preloadCache(val, String(path) + '/' + String(key));
+                }
             });
-        }
-        else {
-            // jsonData is a string, add it to the cache at this path
-            $templateCache.put(path, jsonData);
         }
     }
 }]);

@@ -2,7 +2,7 @@
     <div class="btn-group">
         <a ui-sref="document.new" class="btn btn-primary">New Document</a>
     </div>
-    <div class="btn-group" ng-repeat="document in documentsCtrl.documents">
+    <div class="btn-group" ng-repeat="document in documentsCtrl.documents" ng-hide="document.name.indexOf('templates') != -1">
         <a ui-sref="document.view({document_name:document.name})" class="btn btn-primary" >[[ document.name ]]</a>
     </div>
 </div>

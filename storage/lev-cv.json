@@ -1,25 +1,22 @@
 {
-  "sections":[
-    {
+  "sections": {
+    "0": {
       "name": "Personal Details",
       "fields": {
         "name": "Christopher Levy",
+        "twitterUsername": "levofski",
         "email": "chrisianlevy@yahoo.co.uk"
       }
     },
-    {
+    "1": {
       "name": "Employment History",
-      "sections": [
-        {
-          "fields": [
-            {
-              "dateFrom": "June 2011",
-              "dateTo": "August 2013",
-              "company": "Screenpages"
-            }
-          ]
+      "sections": {
+        "screenpages": {
+          "dateFrom": "June 2011",
+          "dateTo": "August 2013",
+          "company": "Screenpages"
         }
-      ]
+      }
     }
-  ]
+  }
 }
