@@ -6,6 +6,11 @@ cvApp.service('NodeService', ['$http', function($http) {
     this.getNode = function (documentName, nodePath) {
         // Remove any leading slash from path
         nodePath = nodePath.replace(/^\//, '');
-        return $http.get('/api/' + documentName + nodePath);
+        return $http.get('/api/' + documentName + '/' + nodePath);
+    }
+    this.getNodeTemplate = function (documentName, nodePath) {
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + '-templates/' + nodePath);
     }
 }]);

@@ -1,17 +1,31 @@
 
-cvApp.directive('node', function($compile) {
+cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templateCache) {
     return {
         restrict: 'E',
-        templateUrl: 'node/node.html',
-        link: function(scope, elm, attrs) {
-            scope.isNumber = angular.isNumber;
-            scope.isCollection = function(item){
+        template: '<div ng-include="getTemplateUrl()"></div>',
+        link: function($scope, elm) {
+            var grandparentNodePath = $scope.$parent.$parent.nodePath;
+            if (typeof grandparentNodePath == 'undefined'){
+                grandparentNodePath = '';
+            }
+            $scope.nodePath = grandparentNodePath + '/' + $scope.nodeKey;
+            // Define dynamic template function
+            $scope.getTemplateUrl = function(){
+                if ($templateCache.get(this.nodePath)){
+                    return this.nodePath;
+                }
+                return 'node/node.html';
+            };
+            // Assign helper functions
+            $scope.isNumber = angular.isNumber;
+            $scope.isCollection = function(item){
                 return angular.isArray(item) || angular.isObject(item);
             }
-            if (scope.isCollection(scope.nodeValue)) {
-                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')(scope)
+            // If the value is a collection, append a new tree for it
+            if ($scope.isCollection($scope.nodeValue)) {
+                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')($scope)
                 elm.append(childNode);
             }
         }
     };
-});
+}]);

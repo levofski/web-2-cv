@@ -81,7 +81,13 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 documentDataPromise: function($stateParams, DocumentService){
                     return DocumentService.getDocument($stateParams.document_name);
                 },
-                documentData: function(documentDataPromise){
+                documentTemplatesPromise: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name+'-templates');
+                },
+                documentData: function(documentDataPromise, documentTemplatesPromise, DocumentService){
+                    // Preload the template cache with the templates for this document
+                    var documentTemplates = documentTemplatesPromise.data;
+                    DocumentService.preloadCache(documentTemplates);
                     return documentDataPromise.data;
                 }
             }
@@ -135,7 +141,8 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
  * Service to provide Document Data
  */
 
-cvApp.service('DocumentService', ['$http', function($http) {
+cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $templateCache) {
+    var documentService = this;
 
     this.getDocuments = function () {
         return $http.get('/api');
@@ -147,6 +154,21 @@ cvApp.service('DocumentService', ['$http', function($http) {
 
     this.createDocument = function (documentName, documentData) {
         return $http.put('/api/' + documentName, documentData);
+    }
+
+    this.preloadCache = function(jsonData, path) {
+        if (typeof path == 'undefined'){
+            path = '';
+        }
+        if( typeof jsonData == "object" ) {
+            $.each(jsonData, function(key,val) {
+                documentService.preloadCache(val, String(path) + '/' + String(key));
+            });
+        }
+        else {
+            // jsonData is a string, add it to the cache at this path
+            $templateCache.put(path, jsonData);
+        }
     }
 }]);
 
@@ -169,22 +191,36 @@ cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeServ
 }]);
 
 
-cvApp.directive('node', function($compile) {
+cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templateCache) {
     return {
         restrict: 'E',
-        templateUrl: 'node/node.html',
-        link: function(scope, elm, attrs) {
-            scope.isNumber = angular.isNumber;
-            scope.isCollection = function(item){
+        template: '<div ng-include="getTemplateUrl()"></div>',
+        link: function($scope, elm) {
+            var grandparentNodePath = $scope.$parent.$parent.nodePath;
+            if (typeof grandparentNodePath == 'undefined'){
+                grandparentNodePath = '';
+            }
+            $scope.nodePath = grandparentNodePath + '/' + $scope.nodeKey;
+            // Define dynamic template function
+            $scope.getTemplateUrl = function(){
+                if ($templateCache.get(this.nodePath)){
+                    return this.nodePath;
+                }
+                return 'node/node.html';
+            };
+            // Assign helper functions
+            $scope.isNumber = angular.isNumber;
+            $scope.isCollection = function(item){
                 return angular.isArray(item) || angular.isObject(item);
             }
-            if (scope.isCollection(scope.nodeValue)) {
-                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')(scope)
+            // If the value is a collection, append a new tree for it
+            if ($scope.isCollection($scope.nodeValue)) {
+                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')($scope)
                 elm.append(childNode);
             }
         }
     };
-});
+}]);
 /**
  * Service to provide Node Data
  */
@@ -193,7 +229,12 @@ cvApp.service('NodeService', ['$http', function($http) {
     this.getNode = function (documentName, nodePath) {
         // Remove any leading slash from path
         nodePath = nodePath.replace(/^\//, '');
-        return $http.get('/api/' + documentName + nodePath);
+        return $http.get('/api/' + documentName + '/' + nodePath);
+    }
+    this.getNodeTemplate = function (documentName, nodePath) {
+        // Remove any leading slash from path
+        nodePath = nodePath.replace(/^\//, '');
+        return $http.get('/api/' + documentName + '-templates/' + nodePath);
     }
 }]);
 

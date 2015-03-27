@@ -2,12 +2,10 @@
   "sections":[
     {
       "name": "Personal Details",
-      "fields": [
-        {
-          "name": "Christopher Levy",
-          "email": "chrisianlevy@yahoo.co.uk"
-        }
-      ]
+      "fields": {
+        "name": "Christopher Levy",
+        "email": "chrisianlevy@yahoo.co.uk"
+      }
     },
     {
       "name": "Employment History",

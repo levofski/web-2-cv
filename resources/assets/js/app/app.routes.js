@@ -62,7 +62,13 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 documentDataPromise: function($stateParams, DocumentService){
                     return DocumentService.getDocument($stateParams.document_name);
                 },
-                documentData: function(documentDataPromise){
+                documentTemplatesPromise: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name+'-templates');
+                },
+                documentData: function(documentDataPromise, documentTemplatesPromise, DocumentService){
+                    // Preload the template cache with the templates for this document
+                    var documentTemplates = documentTemplatesPromise.data;
+                    DocumentService.preloadCache(documentTemplates);
                     return documentDataPromise.data;
                 }
             }

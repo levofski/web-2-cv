@@ -1,0 +1,7 @@
+{
+  "sections":[
+    {
+      "fields": "Name : [[nodeValue.name]], Email : [[nodeValue.email]]"
+    }
+  ]
+}
