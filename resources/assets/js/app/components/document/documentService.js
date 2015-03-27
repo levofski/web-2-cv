@@ -18,8 +18,12 @@ cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $te
     }
 
     this.preloadCache = function(jsonData, path) {
+        // To start off, set the path to en empty string, and add the node-child template to the cache
         if (typeof path == 'undefined'){
             path = '';
+            $http.get('node/node-child.html').success(function(data){
+                $templateCache.put('node/node-child.html', data);
+            });
         }
         if( typeof jsonData == "object" ) {
             $.each(jsonData, function(key,val) {

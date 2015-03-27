@@ -1,12 +1,21 @@
 {
   "sections": {
     "0": {
-      "template":"<h1>SECTIONS</h1>",
       "name": {
         "template": "<h2>[[nodeValue]]</h2>"
       },
       "fields": {
-        "template": "<blockquote>Name : [[nodeValue.name]], Twitter : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a>, Email : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></blockquote>"
+        "template": "<h1>[[nodeValue.name]]</h1><blockquote>Twitter : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a>, Email : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></blockquote>"
+      }
+    },
+    "1": {
+      "name": {
+        "template": "<h2>[[nodeValue]]</h2>"
+      },
+      "sections": {
+        "screenpages": {
+          "template": "<h3>[[nodeValue.dateFrom]] - [[nodeValue.dateTo]]</h3><blockquote>Company : [[nodeValue.company]]</blockquote>"
+        }
       }
     }
   }

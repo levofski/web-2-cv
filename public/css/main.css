@@ -6478,5 +6478,11 @@ button.close {
     display: none !important;
   }
 }
+.node-child > .btn-toolbar {
+  display: none;
+}
+.node-child:hover > .btn-toolbar {
+  display: block;
+}
 
 /*# sourceMappingURL=main.css.map */

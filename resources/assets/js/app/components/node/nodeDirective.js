@@ -23,7 +23,7 @@ cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templ
             }
             // If the value is a collection, append a new tree for it
             if ($scope.isCollection($scope.nodeValue)) {
-                var childNode = $compile('<ul><node-tree ng-model="nodeValue"></node-tree></ul>')($scope)
+                var childNode = $compile($templateCache.get('node/node-child.html'))($scope)
                 elm.append(childNode);
             }
         }
