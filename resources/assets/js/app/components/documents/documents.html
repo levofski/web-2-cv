@@ -1,10 +1,7 @@
-<div class="btn-toolbar">
-    <div class="btn-group">
-        <a ui-sref="document.new" class="btn btn-primary">New Document</a>
-    </div>
-    <div class="btn-group" ng-repeat="document in documentsCtrl.documents" ng-hide="document.name.indexOf('templates') != -1">
-        <a ui-sref="document.view({document_name:document.name})" class="btn btn-primary" >[[ document.name ]]</a>
-    </div>
+<div class="col-md-2 btn-group-vertical">
+    <a ui-sref="document.new" class="btn btn-primary">New Document</a>
+    <a ng-repeat="document in documentsCtrl.documents" ng-hide="document.name.indexOf('templates') != -1" ui-sref="document.view({document_name:document.name})" class="btn btn-primary" >[[ document.name ]]</a>
 </div>
-
-<div ui-view></div>
+<div class="col-md-10">
+    <div class="panel panel-default" ui-view></div>
+</div>
