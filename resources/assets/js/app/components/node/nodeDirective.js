@@ -11,8 +11,14 @@ cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templ
             $scope.nodePath = grandparentNodePath + '/' + $scope.nodeKey;
             // Define dynamic template function
             $scope.getTemplateUrl = function(){
+                // Try the exact path
                 if ($templateCache.get(this.nodePath)){
                     return this.nodePath;
+                }
+                // If the path ends with a number, try the default ("_")
+                var defaultPath = this.nodePath.replace(/\/\d+$/, '/_');
+                if (defaultPath != this.nodePath && $templateCache.get(defaultPath)){
+                    return defaultPath;
                 }
                 return 'node/node.html';
             };
