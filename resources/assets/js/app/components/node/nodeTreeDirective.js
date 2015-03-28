@@ -4,7 +4,7 @@ cvApp.directive('nodeTree', function() {
         transclude: true,
         restrict: 'E',
         scope: {
-            tree: '=ngModel'
+            node: '='
         }
     };
 });
