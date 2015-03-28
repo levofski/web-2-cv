@@ -1,6 +1,6 @@
 {
-  "sections": {
-    "0": {
+  "sections": [
+    {
       "name": "Personal Details",
       "fields": {
         "name": "Christopher Levy",
@@ -8,15 +8,28 @@
         "email": "chrisianlevy@yahoo.co.uk"
       }
     },
-    "1": {
+    {
       "name": "Employment History",
-      "sections": {
-        "screenpages": {
-          "dateFrom": "June 2011",
-          "dateTo": "August 2013",
-          "company": "Screenpages"
+      "sections": [
+        {
+          "dateFrom": "July 2012",
+          "dateTo": "Present",
+          "company": "The Strategies Group Ltd",
+          "location": "Camberley"
+        },
+        {
+          "dateFrom": "March 2010",
+          "dateTo": "July 2012",
+          "company": "Screenpages Ltd",
+          "location": "Wisley"
+        },
+        {
+          "dateFrom": "April 2009",
+          "dateTo": "March 2010",
+          "company": "Freeads Classifieds Ltd",
+          "location": "Camberley"
         }
-      }
+      ]
     }
-  }
+  ]
 }
