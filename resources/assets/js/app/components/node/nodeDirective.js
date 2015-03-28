@@ -1,6 +1,7 @@
 
 cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templateCache) {
     return {
+        replace: true,
         restrict: 'E',
         template: '<div ng-include="getTemplateUrl()"></div>',
         link: function($scope, elm) {

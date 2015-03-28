@@ -191,6 +191,7 @@ cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
         transclude: true,
+        replace: true,
         restrict: 'E'
     };
 });
@@ -205,6 +206,7 @@ cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeServ
 
 cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templateCache) {
     return {
+        replace: true,
         restrict: 'E',
         template: '<div ng-include="getTemplateUrl()"></div>',
         link: function($scope, elm) {
@@ -258,7 +260,8 @@ cvApp.directive('nodeTree', function() {
         replace: true,
         restrict: 'E',
         scope: {
-            node: '='
+            node: '=',
+            nodePath: '@'
         }
     };
 });

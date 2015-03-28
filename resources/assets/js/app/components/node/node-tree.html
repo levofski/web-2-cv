@@ -1,3 +1,17 @@
 <div class="node-tree">
-    <node ng-repeat="(nodeKey, nodeValue) in node track by $index"></node>
+    <div class="btn-toolbar" ng-repeat-start="(nodeKey, nodeValue) in node track by $index">
+        <div class="btn-group btn-group-xs">
+            <a title="Edit [[nodePath]]" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+        </div>
+        <div class="btn-group btn-group-xs">
+            <a title="Add child to [[nodePath]]" class="btn btn-success"><i class="glyphicon glyphicon-plus-sign"></i></a>
+        </div>
+        <div class="btn-group btn-group-xs">
+            <a title="Delete [[nodePath]]" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+        </div>
+        <div class="btn-group btn-group-xs">
+            <a class="btn btn-default" disabled="disabled">[[nodePath]]</a>
+        </div>
+    </div>
+    <node ng-repeat-end></node>
 </div>
