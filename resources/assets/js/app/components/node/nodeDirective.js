@@ -21,11 +21,6 @@ cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templ
             $scope.isCollection = function(item){
                 return angular.isArray(item) || angular.isObject(item);
             }
-            // If the value is a collection, append a new tree for it
-            if ($scope.isCollection($scope.nodeValue)) {
-                var childNode = $compile($templateCache.get('node/node-child.html'))($scope)
-                elm.append(childNode);
-            }
         }
     };
 }]);

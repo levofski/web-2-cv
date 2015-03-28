@@ -1,17 +1,13 @@
 {
   "sections": {
     "0": {
-      "name": {
-        "template": "<h2>[[nodeValue]]</h2>"
-      },
+      "template": "<h2>[[nodeValue.name]]</h2><blockquote><node-child ng-model='nodeValue.fields'></node-child></blockquote>",
       "fields": {
         "template": "<h1>[[nodeValue.name]]</h1><blockquote>Twitter : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a>, Email : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></blockquote>"
       }
     },
     "1": {
-      "name": {
-        "template": "<h2>[[nodeValue]]</h2>"
-      },
+      "template": "<h2>[[nodeValue.name]]</h2><blockquote><node-child ng-model='nodeValue.sections'></node-child></blockquote>",
       "sections": {
         "screenpages": {
           "template": "<h3>[[nodeValue.dateFrom]] - [[nodeValue.dateTo]]</h3><blockquote>Company : [[nodeValue.company]]</blockquote>"

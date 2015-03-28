@@ -187,6 +187,16 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 }]);
 
+cvApp.directive('nodeChild', function() {
+    return {
+        templateUrl: 'node/node-child.html',
+        transclude: true,
+        restrict: 'E',
+        link: function($scope, elm) {
+            $scope.nodePath = $scope.$parent.nodePath;
+        }
+    };
+});
 /** Node Controller */
 
 cvApp.controller('NodeController', ['NodeService', 'nodeData', function(NodeService, nodeData){
@@ -217,11 +227,6 @@ cvApp.directive('node', ['$compile', '$templateCache', function($compile, $templ
             $scope.isNumber = angular.isNumber;
             $scope.isCollection = function(item){
                 return angular.isArray(item) || angular.isObject(item);
-            }
-            // If the value is a collection, append a new tree for it
-            if ($scope.isCollection($scope.nodeValue)) {
-                var childNode = $compile($templateCache.get('node/node-child.html'))($scope)
-                elm.append(childNode);
             }
         }
     };

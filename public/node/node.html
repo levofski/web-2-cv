@@ -1,2 +1,1 @@
-<h2 ng-hide="isNumber(nodeKey)">[[nodeKey]]</h2>
-<blockquote ng-hide="isCollection(nodeValue)">[[ nodeValue ]]</blockquote>
+<node-child ng-if="isCollection(nodeValue)" ng-model="nodeValue"></node-child>

@@ -1,1 +1,3 @@
-<node ng-repeat="(nodeKey, nodeValue) in tree"></node>
+<div class="node-tree">
+    <node ng-repeat="(nodeKey, nodeValue) in tree track by $index"></node>
+</div>
