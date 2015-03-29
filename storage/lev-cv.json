@@ -4,9 +4,19 @@
       "name": "Personal Details",
       "fields": {
         "name": "Christopher Levy",
+        "address": "29 Medlar Drive,\nBlackwater, Camberley,\nSurrey,\nGU17 9EW",
         "twitterUsername": "levofski",
-        "email": "chrisianlevy@yahoo.co.uk"
+        "email": "chrisianlevy@yahoo.co.uk",
+        "telephone": "Available on request",
+        "drivingLicense": "Full, UK - Car and Motorcycle"
       }
+    },
+    {
+      "name": "Personal Statement",
+      "bullets": [
+        "A Senior Software Developer looking to further his career, and expand his skills and knowledge",
+        "Reliable, trustworthy, versatile and hardworking, with the ability to work independently or as part of a team"
+      ]
     },
     {
       "name": "Employment History",

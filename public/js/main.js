@@ -102,6 +102,15 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
+
 /** Document Controller */
 
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
@@ -177,15 +186,6 @@ cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $te
     }
 }]);
 
-
-/** Documents Controller */
-
-cvApp.controller('DocumentsController', ['documents',  function(documents){
-    var documentsCtrl = this;
-
-    this.documents = documents;
-
-}]);
 
 cvApp.directive('nodeChild', function() {
     return {

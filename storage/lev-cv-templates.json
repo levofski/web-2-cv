@@ -1,13 +1,21 @@
 {
   "sections": {
     "0": {
-      "template": "<h2>[[nodeValue.name]]</h2><blockquote><node-child ng-model='nodeValue.fields'></node-child></blockquote>",
+      "template": "<h1 class='document-title'>[[nodeValue.fields.name]]</h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
       "fields": {
-        "template": "<h1>[[nodeValue.name]]</h1><blockquote>Twitter : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a>, Email : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></blockquote>"
+        "template": "<div class='col-md-6'><address>[[nodeValue.address]]</address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></div><div><strong>Telephone</strong> : [[nodeValue.telephone]]</div><div><strong>Driving License</strong> : [[nodeValue.drivingLicense]]</div></div>"
       }
     },
     "1": {
-      "template": "<h2>[[nodeValue.name]]</h2><blockquote><node-child ng-model='nodeValue.sections'></node-child></blockquote>",
+      "template": "<div class='row'><div class='col-md-12'><blockquote><node-child ng-model='nodeValue.fields'></node-child></blockquote></div></div>",
+      "bullets": {
+        "_": {
+          "template": "<div>[[nodeValue]]</div>"
+        }
+      }
+    },
+    "2": {
+      "template": "<h2>[[nodeValue.name]]</h2><div class='row'><div class='col-md-12'><blockquote><node-child ng-model='nodeValue.sections'></node-child></blockquote></div></div>",
       "sections": {
         "_": {
           "template": "<h3>[[nodeValue.dateFrom]] - [[nodeValue.dateTo]]</h3><blockquote>Company : [[nodeValue.company]]</blockquote>"

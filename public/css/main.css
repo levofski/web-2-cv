@@ -6478,5 +6478,16 @@ button.close {
     display: none !important;
   }
 }
+.node-tree > .btn-toolbar {
+  display: none;
+}
+.document-title {
+  font-size: 6em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+address {
+  white-space: pre-wrap;
+}
 
 /*# sourceMappingURL=main.css.map */
