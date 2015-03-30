@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>CV</title>
     <!-- bower:css -->
+    <link rel='stylesheet' href='vendor/angular-xeditable/dist/css/xeditable.css' />
     <!-- endbower -->
     <link rel='stylesheet' href='css/main.css' />
 	<!-- Fonts -->
@@ -52,6 +53,7 @@
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
     <!-- endbower -->
     <script src="js/main.js"></script>
 </body>
