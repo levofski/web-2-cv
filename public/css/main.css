@@ -6478,9 +6478,6 @@ button.close {
     display: none !important;
   }
 }
-.node-tree > .btn-toolbar {
-  display: none;
-}
 .editable-click,
 a.editable-click {
   color: inherit;

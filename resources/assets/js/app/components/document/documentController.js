@@ -3,6 +3,8 @@
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
     var documentCtrl = this;
 
+    this.editing = false;
+
     this.document = {
         name: documentName,
         data: documentData

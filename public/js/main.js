@@ -100,6 +100,8 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
     var documentCtrl = this;
 
+    this.editing = false;
+
     this.document = {
         name: documentName,
         data: documentData
@@ -280,7 +282,8 @@ cvApp.directive('nodeTree', function() {
         restrict: 'E',
         scope: {
             node: '=',
-            nodePath: '@'
+            nodePath: '@',
+            editing: '='
         }
     };
 });

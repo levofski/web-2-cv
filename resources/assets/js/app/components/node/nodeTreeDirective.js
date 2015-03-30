@@ -6,7 +6,8 @@ cvApp.directive('nodeTree', function() {
         restrict: 'E',
         scope: {
             node: '=',
-            nodePath: '@'
+            nodePath: '@',
+            editing: '='
         }
     };
 });
