@@ -186,19 +186,26 @@ cvApp.controller('EditableController', [function(){
     var editableCtrl = this;
 }]);
 
-cvApp.directive('editable', ['$parse', '$interpolate', function($parse, $interpolate) {
+cvApp.directive('editable', function() {
     return {
-        templateUrl: 'editable/editable.html',
         restrict: 'E',
         controller: 'EditableController',
         controllerAs: 'editableCtrl',
+        templateUrl: function(elem, attrs){
+            // Default type is text
+            var type = 'text';
+            if (typeof attrs.type != 'undefined'){
+                type = attrs.type;
+            }
+            return 'editable/editable-'+type+'.html';
+        },
         link: {
             pre:function($scope, elm, attrs) {
-                $scope.fieldKey = attrs['fieldKey'];
+                $scope.fieldKey = attrs.fieldKey;
             }
         }
     };
-}]);
+});
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',

@@ -3,7 +3,7 @@
     "0": {
       "template": "<h1 class='document-title'><editable field-key='nodeValue.fields.name' /></h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
       "fields": {
-        "template": "<div class='col-md-6'><address><editable field-key='nodeValue.address' /></address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@<editable field-key='nodeValue.twitterUsername' /></a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'><editable field-key='nodeValue.email' /></a></div><div><strong>Telephone</strong> : <editable field-key='nodeValue.telephone' /></div><div><strong>Driving License</strong> : <editable field-key='nodeValue.drivingLicense' /></div></div>"
+        "template": "<div class='col-md-6'><address><editable type='textarea' field-key='nodeValue.address' /></address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@<editable field-key='nodeValue.twitterUsername' /></a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'><editable field-key='nodeValue.email' /></a></div><div><strong>Telephone</strong> : <editable field-key='nodeValue.telephone' /></div><div><strong>Driving License</strong> : <editable field-key='nodeValue.drivingLicense' /></div></div>"
       }
     },
     "1": {
