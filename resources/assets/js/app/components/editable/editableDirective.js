@@ -1,4 +1,4 @@
-cvApp.directive('editable', ['$interpolate', function($interpolate) {
+cvApp.directive('editable', ['$parse', '$interpolate', function($parse, $interpolate) {
     return {
         templateUrl: 'editable/editable.html',
         restrict: 'E',
@@ -7,7 +7,6 @@ cvApp.directive('editable', ['$interpolate', function($interpolate) {
         link: {
             pre:function($scope, elm, attrs) {
                 $scope.fieldKey = attrs['fieldKey'];
-                $scope.fieldValue = $interpolate("[["+attrs['fieldKey']+"]]")($scope.$parent);
             }
         }
     };
