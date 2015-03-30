@@ -1,12 +1,15 @@
 /** CV App Module */
 
-var cvApp = angular.module('cvApp', ['ui.router']);
+var cvApp = angular.module('cvApp', ['ui.router', 'xeditable']);
 
 cvApp.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
 
+cvApp.run(function(editableOptions) {
+    editableOptions.theme = 'bs3'; // bootstrap3 theme
+});
 /** Angular UI Routing Config */
 
 cvApp.config( function($stateProvider, $urlRouterProvider) {
@@ -92,24 +95,6 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
-/** Editable Controller */
-
-cvApp.controller('EditableController', [function(){
-    var editableCtrl = this;
-}]);
-
-cvApp.directive('editable', ['$interpolate', function($interpolate) {
-    return {
-        templateUrl: 'editable/editable.html',
-        restrict: 'E',
-        controller: 'EditableController',
-        controllerAs: 'editableCtrl',
-        link: function($scope, elm, attrs) {
-            $scope.fieldKey = attrs['fieldKey'];
-            $scope.fieldValue = $interpolate("[["+attrs['fieldKey']+"]]")($scope.$parent);
-        }
-    };
-}]);
 /** Document Controller */
 
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
@@ -195,6 +180,26 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 }]);
 
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$interpolate', function($interpolate) {
+    return {
+        templateUrl: 'editable/editable.html',
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        link: {
+            pre:function($scope, elm, attrs) {
+                $scope.fieldKey = attrs['fieldKey'];
+                $scope.fieldValue = $interpolate("[["+attrs['fieldKey']+"]]")($scope.$parent);
+            }
+        }
+    };
+}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
