@@ -6482,6 +6482,16 @@ button.close {
 a.editable-click {
   color: inherit;
 }
+span.editable-click {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: none;
+}
+span.editable-click:hover {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: none;
+}
 .document-title {
   font-size: 6em;
   font-weight: bold;
