@@ -1,7 +1,7 @@
 {
   "sections": {
     "0": {
-      "template": "<h1 class='document-title'>[[nodeValue.fields.name]]</h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
+      "template": "<h1 class='document-title'><editable field-key='nodeValue.fields.name'></editable></h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
       "fields": {
         "template": "<div class='col-md-6'><address>[[nodeValue.address]]</address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@[[nodeValue.twitterUsername]]</a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'>[[nodeValue.email]]</a></div><div><strong>Telephone</strong> : [[nodeValue.telephone]]</div><div><strong>Driving License</strong> : [[nodeValue.drivingLicense]]</div></div>"
       }

@@ -7,16 +7,6 @@ cvApp.config(function($interpolateProvider) {
     $interpolateProvider.endSymbol(']]');
 });
 
-cvApp.filter('objOrder', function () {
-    return function(object) {
-        var array = [];
-        angular.forEach(object, function (value, key) {
-            array.push({key: key, value: value});
-        });
-        return array;
-    };
-});
-
 /** Angular UI Routing Config */
 
 cvApp.config( function($stateProvider, $urlRouterProvider) {
@@ -102,6 +92,24 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$interpolate', function($interpolate) {
+    return {
+        templateUrl: 'editable/editable.html',
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        link: function($scope, elm, attrs) {
+            $scope.fieldKey = attrs['fieldKey'];
+            $scope.fieldValue = $interpolate("[["+attrs['fieldKey']+"]]")($scope.$parent);
+        }
+    };
+}]);
 /** Document Controller */
 
 cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
