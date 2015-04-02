@@ -15,7 +15,7 @@ cvApp.run(function(editableOptions) {
 cvApp.config( function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('document', {
-            url: '/',
+            url: '',
             controller: 'DocumentsController',
             controllerAs : 'documentsCtrl',
             templateUrl: 'documents/documents.html',
@@ -37,7 +37,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.new', {
-            url: 'new',
+            url: '/new',
             templateUrl: 'document/document-new.html',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
@@ -51,7 +51,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.view', {
-            url: ':document_name',
+            url: '/:document_name/{editing}',
             views: {
                 '': {
                     templateUrl: 'document/document-view.html'
@@ -86,13 +86,13 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('.node', {
-            url: ':document_name/:path',
+            url: '/:document_name/:path',
             controller: 'NodeController',
             controllerAs: 'nodeCtrl',
             templateUrl: 'node/node.html'
         });
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("");
 });
 
 /** Document Controller */
@@ -106,6 +106,36 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
         name: documentName,
         data: documentData
     };
+
+    /**
+     * Start editing the document
+     */
+    this.startEditing = function() {
+        this.editing = true;
+        this.reloadViews();
+    }
+
+    /**
+     * Stop editing the document
+     */
+    this.stopEditing = function() {
+        this.editing = false;
+        this.reloadViews();
+    }
+
+    /**
+     * Reload views
+     */
+    this.reloadViews = function() {
+        // Reload only child views
+        var params = angular.copy($state.params);
+        console.log(params, "PARAMS");
+        // do some tricks to not change URL
+        params.editing = params.editing === null ? "" : null;
+        // go to the same state but without reload : true
+        console.log(params, "PARAMS");
+        $state.go($state.current, params, { reload: false, inherit: true, notify: true });
+    }
 
     /**
      * Create a document with the given name

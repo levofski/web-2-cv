@@ -3,7 +3,7 @@
 cvApp.config( function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('document', {
-            url: '/',
+            url: '',
             controller: 'DocumentsController',
             controllerAs : 'documentsCtrl',
             templateUrl: 'documents/documents.html',
@@ -25,7 +25,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.new', {
-            url: 'new',
+            url: '/new',
             templateUrl: 'document/document-new.html',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
@@ -39,7 +39,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.view', {
-            url: ':document_name',
+            url: '/:document_name/{editing}',
             views: {
                 '': {
                     templateUrl: 'document/document-view.html'
@@ -74,11 +74,11 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('.node', {
-            url: ':document_name/:path',
+            url: '/:document_name/:path',
             controller: 'NodeController',
             controllerAs: 'nodeCtrl',
             templateUrl: 'node/node.html'
         });
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("");
 });
