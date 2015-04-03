@@ -10,12 +10,13 @@ cvApp.config(function($interpolateProvider) {
 cvApp.run(function(editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme
 });
+
 /** Angular UI Routing Config */
 
 cvApp.config( function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('document', {
-            url: '',
+            url: '/',
             controller: 'DocumentsController',
             controllerAs : 'documentsCtrl',
             templateUrl: 'documents/documents.html',
@@ -37,7 +38,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.new', {
-            url: '/new',
+            url: 'new',
             templateUrl: 'document/document-new.html',
             controller: 'DocumentController',
             controllerAs : 'documentCtrl',
@@ -51,13 +52,13 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('document.view', {
-            url: '/:document_name/{editing}',
+            url: ':document_name',
             views: {
                 '': {
-                    templateUrl: 'document/document-view.html'
+                    templateUrl: 'document/document.html'
                 },
                 'name@document.view': {
-                    templateUrl: 'document/document-name.html',
+                    templateUrl: 'document/document-view-name.html',
                     controller: 'DocumentController',
                     controllerAs : 'documentCtrl'
                 },
@@ -84,23 +85,59 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                     return documentDataPromise.data;
                 }
             }
-        })
-        .state('.node', {
-            url: '/:document_name/:path',
-            controller: 'NodeController',
-            controllerAs: 'nodeCtrl',
-            templateUrl: 'node/node.html'
+        }).state('document.edit', {
+            url: ':document_name/edit',
+            views: {
+                '': {
+                    templateUrl: 'document/document.html'
+                },
+                'name@document.edit': {
+                    templateUrl: 'document/document-edit-name.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
+                },
+                'data@document.edit': {
+                    templateUrl: 'document/document-data.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
+                }
+            },
+            resolve: {
+                documentName: function($stateParams){
+                    return $stateParams.document_name;
+                },
+                documentDataPromise: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name);
+                },
+                documentTemplatesPromise: function($stateParams, DocumentService){
+                    return DocumentService.getDocument($stateParams.document_name+'-templates');
+                },
+                documentData: function(documentDataPromise, documentTemplatesPromise, DocumentService){
+                    // Preload the template cache with the templates for this document
+                    var documentTemplates = documentTemplatesPromise.data;
+                    DocumentService.preloadCache(documentTemplates);
+                    return documentDataPromise.data;
+                }
+            }
         });
 
-    $urlRouterProvider.otherwise("");
+    $urlRouterProvider.otherwise("/");
 });
 
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state', 'editableOptions', function(DocumentService, documentName, documentData, $state, editableOptions){
     var documentCtrl = this;
 
-    this.editing = false;
+    // Set the editing flag based on current state
+    this.editing = $state.current.name == 'document.edit';
+
+    // Disable xeditable activation if we are not editing
+    if (this.editing){
+        editableOptions.activationEvent = 'click';
+    } else {
+        editableOptions.activationEvent = 'none';
+    }
 
     this.document = {
         name: documentName,
@@ -111,30 +148,18 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
      * Start editing the document
      */
     this.startEditing = function() {
-        this.editing = true;
-        this.reloadViews();
+        $state.go('document.edit', {document_name: documentName}, {
+            reload: true
+        });
     }
 
     /**
      * Stop editing the document
      */
     this.stopEditing = function() {
-        this.editing = false;
-        this.reloadViews();
-    }
-
-    /**
-     * Reload views
-     */
-    this.reloadViews = function() {
-        // Reload only child views
-        var params = angular.copy($state.params);
-        console.log(params, "PARAMS");
-        // do some tricks to not change URL
-        params.editing = params.editing === null ? "" : null;
-        // go to the same state but without reload : true
-        console.log(params, "PARAMS");
-        $state.go($state.current, params, { reload: false, inherit: true, notify: true });
+        $state.go('document.view', {document_name: documentName}, {
+            reload: true
+        });
     }
 
     /**
@@ -218,16 +243,20 @@ cvApp.controller('EditableController', [function(){
     var editableCtrl = this;
 }]);
 
-cvApp.directive('editable', function() {
+cvApp.directive('editable', ['$state',function($state) {
     return {
         restrict: 'E',
         controller: 'EditableController',
         controllerAs: 'editableCtrl',
         templateUrl: function(elem, attrs){
-            // Default type is text
-            var type = 'text';
-            if (typeof attrs.type != 'undefined'){
-                type = attrs.type;
+            // If we are not editing, use the noedit template
+            var type = 'noedit';
+            if ($state.current.name == 'document.edit') {
+                // If we are editing, the default type is text
+                type = 'text';
+                if (typeof attrs.type != 'undefined') {
+                    type = attrs.type;
+                }
             }
             return 'editable/editable-'+type+'.html';
         },
@@ -237,7 +266,7 @@ cvApp.directive('editable', function() {
             }
         }
     };
-});
+}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',

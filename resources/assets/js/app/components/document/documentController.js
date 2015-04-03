@@ -1,9 +1,17 @@
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state',  function(DocumentService, documentName, documentData, $state){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state', 'editableOptions', function(DocumentService, documentName, documentData, $state, editableOptions){
     var documentCtrl = this;
 
-    this.editing = false;
+    // Set the editing flag based on current state
+    this.editing = $state.current.name == 'document.edit';
+
+    // Disable xeditable activation if we are not editing
+    if (this.editing){
+        editableOptions.activationEvent = 'click';
+    } else {
+        editableOptions.activationEvent = 'none';
+    }
 
     this.document = {
         name: documentName,
@@ -14,30 +22,18 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
      * Start editing the document
      */
     this.startEditing = function() {
-        this.editing = true;
-        this.reloadViews();
+        $state.go('document.edit', {document_name: documentName}, {
+            reload: true
+        });
     }
 
     /**
      * Stop editing the document
      */
     this.stopEditing = function() {
-        this.editing = false;
-        this.reloadViews();
-    }
-
-    /**
-     * Reload views
-     */
-    this.reloadViews = function() {
-        // Reload only child views
-        var params = angular.copy($state.params);
-        console.log(params, "PARAMS");
-        // do some tricks to not change URL
-        params.editing = params.editing === null ? "" : null;
-        // go to the same state but without reload : true
-        console.log(params, "PARAMS");
-        $state.go($state.current, params, { reload: false, inherit: true, notify: true });
+        $state.go('document.view', {document_name: documentName}, {
+            reload: true
+        });
     }
 
     /**
