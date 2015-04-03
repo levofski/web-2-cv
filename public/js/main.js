@@ -148,18 +148,14 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
      * Start editing the document
      */
     this.startEditing = function() {
-        $state.go('document.edit', {document_name: documentName}, {
-            reload: true
-        });
+        $state.go('document.edit', {document_name: documentName});
     }
 
     /**
      * Stop editing the document
      */
     this.stopEditing = function() {
-        $state.go('document.view', {document_name: documentName}, {
-            reload: true
-        });
+        $state.go('document.view', {document_name: documentName});
     }
 
     /**
