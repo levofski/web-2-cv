@@ -2,7 +2,7 @@
  * Service to provide Document Data
  */
 
-cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $templateCache) {
+cvApp.service('DocumentService', ['$http', function($http) {
     var documentService = this;
 
     this.getDocuments = function () {
@@ -17,24 +17,5 @@ cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $te
         return $http.put('/api/' + documentName, documentData);
     }
 
-    this.preloadCache = function(jsonData, path) {
-        // To start off, set the path to en empty string, and add the node-child template to the cache
-        if (typeof path == 'undefined'){
-            path = '';
-            $http.get('node/node-child.html').success(function(data){
-                $templateCache.put('node/node-child.html', data);
-            });
-        }
-        if( typeof jsonData == "object" ) {
-            $.each(jsonData, function(key,val) {
-                // if the key is template, add the value to the cache at this path
-                if (key == 'template'){
-                    $templateCache.put(path, val);
-                } else {
-                    documentService.preloadCache(val, String(path) + '/' + String(key));
-                }
-            });
-        }
-    }
 }]);
 
