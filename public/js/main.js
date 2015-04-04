@@ -145,20 +145,6 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
     };
 
     /**
-     * Start editing the document
-     */
-    this.startEditing = function() {
-        $state.go('document.edit', {document_name: documentName});
-    }
-
-    /**
-     * Stop editing the document
-     */
-    this.stopEditing = function() {
-        $state.go('document.view', {document_name: documentName});
-    }
-
-    /**
      * Create a document with the given name
      *
      * @param documentName
@@ -224,15 +210,6 @@ cvApp.service('DocumentService', ['$http', '$templateCache', function($http, $te
 }]);
 
 
-/** Documents Controller */
-
-cvApp.controller('DocumentsController', ['documents',  function(documents){
-    var documentsCtrl = this;
-
-    this.documents = documents;
-
-}]);
-
 /** Editable Controller */
 
 cvApp.controller('EditableController', [function(){
@@ -263,6 +240,15 @@ cvApp.directive('editable', ['$state',function($state) {
         }
     };
 }]);
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
+
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',

@@ -1,7 +1,7 @@
 <h1 class="panel-title">
     <div class="btn-toolbar pull-right">
         <div class="btn-group btn-group-xs">
-            <a ng-click="documentCtrl.startEditing()" title="Edit document '[[documentCtrl.document.name]]'" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+            <a ui-sref="document.edit({document_name:documentCtrl.document.name})" title="Edit document '[[documentCtrl.document.name]]'" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
         </div>
     </div>
     Viewing Document - "[[documentCtrl.document.name]]"
