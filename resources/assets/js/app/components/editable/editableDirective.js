@@ -6,7 +6,7 @@ cvApp.directive('editable', ['$state',function($state) {
         templateUrl: function(elem, attrs){
             // If we are not editing, use the noedit template
             var type = 'noedit';
-            if ($state.current.name == 'document.edit') {
+            if ($state.current.name == 'documents.document.edit') {
                 // If we are editing, the default type is text
                 type = 'text';
                 if (typeof attrs.type != 'undefined') {

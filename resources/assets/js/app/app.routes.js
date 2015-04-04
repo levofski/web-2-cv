@@ -2,7 +2,7 @@
 
 cvApp.config( function($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('document', {
+        .state('documents', {
             url: '/',
             controller: 'DocumentsController',
             controllerAs : 'documentsCtrl',
@@ -24,7 +24,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('document.new', {
+        .state('documents.new', {
             url: 'new',
             templateUrl: 'document/document-new.html',
             controller: 'DocumentController',
@@ -38,23 +38,10 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        .state('document.view', {
+        .state('documents.document', {
+            abstract: true,
             url: ':document_name',
-            views: {
-                '': {
-                    templateUrl: 'document/document.html'
-                },
-                'name@document.view': {
-                    templateUrl: 'document/document-view-name.html',
-                    controller: 'DocumentController',
-                    controllerAs : 'documentCtrl'
-                },
-                'data@document.view': {
-                    templateUrl: 'document/document-data.html',
-                    controller: 'DocumentController',
-                    controllerAs : 'documentCtrl'
-                }
-            },
+            templateUrl: 'document/document.html',
             resolve: {
                 documentName: function($stateParams){
                     return $stateParams.document_name;
@@ -72,38 +59,33 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
                     return documentDataPromise.data;
                 }
             }
-        }).state('document.edit', {
-            url: ':document_name/edit',
+        })
+        .state('documents.document.view', {
+            url: '/view',
             views: {
-                '': {
-                    templateUrl: 'document/document.html'
-                },
-                'name@document.edit': {
-                    templateUrl: 'document/document-edit-name.html',
+                'name@documents.document': {
+                    templateUrl: 'document/document-view-name.html',
                     controller: 'DocumentController',
                     controllerAs : 'documentCtrl'
                 },
-                'data@document.edit': {
+                'data@documents.document': {
                     templateUrl: 'document/document-data.html',
                     controller: 'DocumentController',
                     controllerAs : 'documentCtrl'
                 }
-            },
-            resolve: {
-                documentName: function($stateParams){
-                    return $stateParams.document_name;
+            }
+        }).state('documents.document.edit', {
+            url: '/edit',
+            views: {
+                'name@documents.document': {
+                    templateUrl: 'document/document-edit-name.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
                 },
-                documentDataPromise: function($stateParams, DocumentService){
-                    return DocumentService.getDocument($stateParams.document_name);
-                },
-                documentTemplatesPromise: function($stateParams, DocumentService){
-                    return DocumentService.getDocument($stateParams.document_name+'-templates');
-                },
-                documentData: function(documentDataPromise, documentTemplatesPromise, DocumentService){
-                    // Preload the template cache with the templates for this document
-                    var documentTemplates = documentTemplatesPromise.data;
-                    DocumentService.preloadCache(documentTemplates);
-                    return documentDataPromise.data;
+                'data@documents.document': {
+                    templateUrl: 'document/document-data.html',
+                    controller: 'DocumentController',
+                    controllerAs : 'documentCtrl'
                 }
             }
         });

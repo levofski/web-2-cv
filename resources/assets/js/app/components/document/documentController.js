@@ -4,7 +4,7 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
     var documentCtrl = this;
 
     // Set the editing flag based on current state
-    this.editing = $state.current.name == 'document.edit';
+    this.editing = $state.current.name == 'documents.document.edit';
 
     // Disable xeditable activation if we are not editing
     if (this.editing){
@@ -33,7 +33,7 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
             };
         }).success(
             function(){
-                $state.go('document', {}, {
+                $state.go('documents', {}, {
                     reload: true
                 });
             }
