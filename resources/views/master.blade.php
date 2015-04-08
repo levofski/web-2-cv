@@ -54,6 +54,7 @@
     <script src="vendor/angular-route/angular-route.js"></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="vendor/angular-ui-ace/ui-ace.js"></script>
     <!-- endbower -->
     <script src="js/main.js"></script>
 </body>
