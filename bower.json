@@ -31,5 +31,22 @@
     "angular-xeditable": "~0.1.9",
     "angular-ui-ace": "bower",
     "angular-ui-bootstrap": "~0.12.1"
+  },
+  "overrides": {
+    "ace-builds": {
+      "main": [
+        "src-min-noconflict/ace.js",
+        "src-min-noconflict/mode-json.js",
+        "src-min-noconflict/worker-json.js",
+        "src-min-noconflict/mode-html.js",
+        "src-min-noconflict/worker-html.js",
+        "src-min-noconflict/theme-idle-fingers.js"
+      ]
+    },
+    "angular-ui-bootstrap": {
+      "main": [
+        "src/modal/modal.js"
+      ]
+    }
   }
 }
