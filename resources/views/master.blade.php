@@ -56,11 +56,10 @@
     <script src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/ace.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/mode-json.js"></script>
-    <script src="vendor/ace-builds/src-min-noconflict/worker-json.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/mode-html.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/worker-html.js"></script>
     <script src="vendor/angular-ui-ace/ui-ace.js"></script>
-    <script src="vendor/angular-ui-bootstrap/src/modal/modal.js"></script>
+    <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <script src="js/main.js"></script>
 </body>

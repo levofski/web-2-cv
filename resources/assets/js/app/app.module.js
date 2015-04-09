@@ -1,6 +1,6 @@
 /** CV App Module */
 
-var cvApp = angular.module('cvApp', ['ui.router', 'xeditable']);
+var cvApp = angular.module('cvApp', ['ui.router', 'ui.bootstrap', 'xeditable']);
 
 cvApp.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');

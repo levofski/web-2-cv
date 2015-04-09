@@ -41,4 +41,27 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
 
     }
 
+    this.items = ['item1', 'item2', 'item3'];
+
+    /**
+     * Open a modal to edit the passed template
+     *
+     * @param path
+     */
+
+    this.openTemplateModal = function (path) {
+        var modalInstance = $modal.open({
+            templateUrl: 'template/modal.html',
+            controller: 'TemplateController',
+            resolve: {
+                items: function () {
+                    return documentCtrl.items;
+                }
+            }
+        });
+        modalInstance.result.then(function (selectedItem) {
+            documentCtrl.selected = selectedItem;
+        });
+    };
+
 }]);

@@ -1,6 +1,6 @@
 /** CV App Module */
 
-var cvApp = angular.module('cvApp', ['ui.router', 'xeditable']);
+var cvApp = angular.module('cvApp', ['ui.router', 'ui.bootstrap', 'xeditable']);
 
 cvApp.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
@@ -149,6 +149,29 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
 
     }
 
+    this.items = ['item1', 'item2', 'item3'];
+
+    /**
+     * Open a modal to edit the passed template
+     *
+     * @param path
+     */
+
+    this.openTemplateModal = function (path) {
+        var modalInstance = $modal.open({
+            templateUrl: 'template/modal.html',
+            controller: 'TemplateController',
+            resolve: {
+                items: function () {
+                    return documentCtrl.items;
+                }
+            }
+        });
+        modalInstance.result.then(function (selectedItem) {
+            documentCtrl.selected = selectedItem;
+        });
+    };
+
 }]);
 
 /**
@@ -173,45 +196,6 @@ cvApp.service('DocumentService', ['$http', function($http) {
 }]);
 
 
-/** Documents Controller */
-
-cvApp.controller('DocumentsController', ['documents',  function(documents){
-    var documentsCtrl = this;
-
-    this.documents = documents;
-
-}]);
-
-/** Editable Controller */
-
-cvApp.controller('EditableController', [function(){
-    var editableCtrl = this;
-}]);
-
-cvApp.directive('editable', ['$state',function($state) {
-    return {
-        restrict: 'E',
-        controller: 'EditableController',
-        controllerAs: 'editableCtrl',
-        templateUrl: function(elem, attrs){
-            // If we are not editing, use the noedit template
-            var type = 'noedit';
-            if ($state.current.name == 'documents.document.edit') {
-                // If we are editing, the default type is text
-                type = 'text';
-                if (typeof attrs.type != 'undefined') {
-                    type = attrs.type;
-                }
-            }
-            return 'editable/editable-'+type+'.html';
-        },
-        link: {
-            pre:function($scope, elm, attrs) {
-                $scope.fieldKey = attrs.fieldKey;
-            }
-        }
-    };
-}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
@@ -291,14 +275,61 @@ cvApp.directive('nodeTree', function() {
         }
     };
 });
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
+
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$state',function($state) {
+    return {
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        templateUrl: function(elem, attrs){
+            // If we are not editing, use the noedit template
+            var type = 'noedit';
+            if ($state.current.name == 'documents.document.edit') {
+                // If we are editing, the default type is text
+                type = 'text';
+                if (typeof attrs.type != 'undefined') {
+                    type = attrs.type;
+                }
+            }
+            return 'editable/editable-'+type+'.html';
+        },
+        link: {
+            pre:function($scope, elm, attrs) {
+                $scope.fieldKey = attrs.fieldKey;
+            }
+        }
+    };
+}]);
 /** Template Controller */
 
-cvApp.controller('TemplateController', ['TemplateService', 'templateName', 'templateData', function(TemplateService, templateName, templateData){
+cvApp.controller('TemplateController', ['TemplateService', '$modalInstance', function(TemplateService, $modalInstance){
     var templateCtrl = this;
 
-    this.template = {
-        name: templateName,
-        data: templateData
+    this.items = items;
+    this.selected = {
+        item: this.items[0]
+    };
+
+    this.ok = function () {
+        $modalInstance.close(templateCtrl.selected.item);
+    };
+
+    this.cancel = function () {
+        $modalInstance.dismiss('cancel');
     };
 
 }]);

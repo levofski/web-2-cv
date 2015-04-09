@@ -1,7 +1,7 @@
 <div class="node-tree">
     <div class="btn-toolbar" ng-if="editing" ng-repeat-start="(nodeKey, nodeValue) in node track by $index">
         <div class="btn-group btn-group-xs">
-            <a title="Edit template for [[nodePath]]" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+            <a title="Edit template for [[nodePath]]" ng-click="documentCtrl.openTemplateModal(nodePath)" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
         </div>
         <div class="btn-group btn-group-xs">
             <a title="Add child to [[nodePath]]" class="btn btn-success"><i class="glyphicon glyphicon-plus-sign"></i></a>

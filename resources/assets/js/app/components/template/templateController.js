@@ -1,11 +1,19 @@
 /** Template Controller */
 
-cvApp.controller('TemplateController', ['TemplateService', 'templateName', 'templateData', function(TemplateService, templateName, templateData){
+cvApp.controller('TemplateController', ['TemplateService', '$modalInstance', function(TemplateService, $modalInstance){
     var templateCtrl = this;
 
-    this.template = {
-        name: templateName,
-        data: templateData
+    this.items = items;
+    this.selected = {
+        item: this.items[0]
+    };
+
+    this.ok = function () {
+        $modalInstance.close(templateCtrl.selected.item);
+    };
+
+    this.cancel = function () {
+        $modalInstance.dismiss('cancel');
     };
 
 }]);
