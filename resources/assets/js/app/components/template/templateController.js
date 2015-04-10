@@ -1,18 +1,19 @@
 /** Template Controller */
 
-cvApp.controller('TemplateController', ['TemplateService', '$modalInstance', function(TemplateService, $modalInstance){
+cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', function($scope, TemplateService, $modalInstance, templatePromise, nodePath){
     var templateCtrl = this;
 
-    this.items = items;
-    this.selected = {
-        item: this.items[0]
+    $scope.nodePath = nodePath;
+    $scope.template = templatePromise.data;
+
+    console.log($scope.nodePath, "TEMPLATE");
+    console.log($scope.template, "TEMPLATE");
+
+    $scope.ok = function () {
+        $modalInstance.close();
     };
 
-    this.ok = function () {
-        $modalInstance.close(templateCtrl.selected.item);
-    };
-
-    this.cancel = function () {
+    $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 

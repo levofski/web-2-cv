@@ -1,6 +1,6 @@
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state', 'editableOptions', function(DocumentService, documentName, documentData, $state, editableOptions){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', 'editableOptions', '$state', '$modal', function(DocumentService, documentName, documentData, editableOptions, $state, $modal){
     var documentCtrl = this;
 
     // Set the editing flag based on current state
@@ -40,28 +40,5 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
         );
 
     }
-
-    this.items = ['item1', 'item2', 'item3'];
-
-    /**
-     * Open a modal to edit the passed template
-     *
-     * @param path
-     */
-
-    this.openTemplateModal = function (path) {
-        var modalInstance = $modal.open({
-            templateUrl: 'template/modal.html',
-            controller: 'TemplateController',
-            resolve: {
-                items: function () {
-                    return documentCtrl.items;
-                }
-            }
-        });
-        modalInstance.result.then(function (selectedItem) {
-            documentCtrl.selected = selectedItem;
-        });
-    };
 
 }]);

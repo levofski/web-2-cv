@@ -5,8 +5,14 @@
 cvApp.service('TemplateService', ['$http', '$templateCache', function($http, $templateCache) {
     var templateService = this;
 
-    this.getTemplate = function (templateName) {
-        return $http.get('/api/' + templateName);
+    this.getTemplate = function (templateName, templatePath) {
+        if (typeof templatePath == 'undefined'){
+            templatePath = '';
+        } else {
+            // Remove any leading slash from path
+            templatePath = templatePath.replace(/^\//, '');
+        }
+        return $http.get('/api/' + templateName + '/' + templatePath);
     }
 
     this.createTemplate = function (templateName, templateData) {

@@ -108,7 +108,7 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
 
 /** Document Controller */
 
-cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', '$state', 'editableOptions', function(DocumentService, documentName, documentData, $state, editableOptions){
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', 'editableOptions', '$state', '$modal', function(DocumentService, documentName, documentData, editableOptions, $state, $modal){
     var documentCtrl = this;
 
     // Set the editing flag based on current state
@@ -149,29 +149,6 @@ cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'docu
 
     }
 
-    this.items = ['item1', 'item2', 'item3'];
-
-    /**
-     * Open a modal to edit the passed template
-     *
-     * @param path
-     */
-
-    this.openTemplateModal = function (path) {
-        var modalInstance = $modal.open({
-            templateUrl: 'template/modal.html',
-            controller: 'TemplateController',
-            resolve: {
-                items: function () {
-                    return documentCtrl.items;
-                }
-            }
-        });
-        modalInstance.result.then(function (selectedItem) {
-            documentCtrl.selected = selectedItem;
-        });
-    };
-
 }]);
 
 /**
@@ -196,6 +173,109 @@ cvApp.service('DocumentService', ['$http', function($http) {
 }]);
 
 
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
+
+/** Template Controller */
+
+cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', function($scope, TemplateService, $modalInstance, templatePromise, nodePath){
+    var templateCtrl = this;
+
+    $scope.nodePath = nodePath;
+    $scope.template = templatePromise.data;
+
+    console.log($scope.nodePath, "TEMPLATE");
+    console.log($scope.template, "TEMPLATE");
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+}]);
+
+/**
+ * Service to provide Template Data
+ */
+
+cvApp.service('TemplateService', ['$http', '$templateCache', function($http, $templateCache) {
+    var templateService = this;
+
+    this.getTemplate = function (templateName, templatePath) {
+        if (typeof templatePath == 'undefined'){
+            templatePath = '';
+        } else {
+            // Remove any leading slash from path
+            templatePath = templatePath.replace(/^\//, '');
+        }
+        return $http.get('/api/' + templateName + '/' + templatePath);
+    }
+
+    this.createTemplate = function (templateName, templateData) {
+        return $http.put('/api/' + templateName, templateData);
+    }
+
+    this.preloadCache = function(jsonData, path) {
+        // To start off, set the path to en empty string, and add the node-child template to the cache
+        if (typeof path == 'undefined'){
+            path = '';
+            $http.get('node/node-child.html').success(function(data){
+                $templateCache.put('node/node-child.html', data);
+            });
+        }
+        if( typeof jsonData == "object" ) {
+            $.each(jsonData, function(key,val) {
+                // if the key is template, add the value to the cache at this path
+                if (key == 'template'){
+                    $templateCache.put(path, val);
+                } else {
+                    templateService.preloadCache(val, String(path) + '/' + String(key));
+                }
+            });
+        }
+    }
+}]);
+
+
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$state',function($state) {
+    return {
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        templateUrl: function(elem, attrs){
+            // If we are not editing, use the noedit template
+            var type = 'noedit';
+            if ($state.current.name == 'documents.document.edit') {
+                // If we are editing, the default type is text
+                type = 'text';
+                if (typeof attrs.type != 'undefined') {
+                    type = attrs.type;
+                }
+            }
+            return 'editable/editable-'+type+'.html';
+        },
+        link: {
+            pre:function($scope, elm, attrs) {
+                $scope.fieldKey = attrs.fieldKey;
+            }
+        }
+    };
+}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
@@ -262,7 +342,7 @@ cvApp.service('NodeService', ['$http', function($http) {
     }
 }]);
 
-cvApp.directive('nodeTree', function() {
+cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', function($modal, $stateParams, TemplateService) {
     return {
         templateUrl: 'node/node-tree.html',
         transclude: true,
@@ -272,103 +352,32 @@ cvApp.directive('nodeTree', function() {
             node: '=',
             nodePath: '@',
             editing: '='
-        }
-    };
-});
-/** Documents Controller */
-
-cvApp.controller('DocumentsController', ['documents',  function(documents){
-    var documentsCtrl = this;
-
-    this.documents = documents;
-
-}]);
-
-/** Editable Controller */
-
-cvApp.controller('EditableController', [function(){
-    var editableCtrl = this;
-}]);
-
-cvApp.directive('editable', ['$state',function($state) {
-    return {
-        restrict: 'E',
-        controller: 'EditableController',
-        controllerAs: 'editableCtrl',
-        templateUrl: function(elem, attrs){
-            // If we are not editing, use the noedit template
-            var type = 'noedit';
-            if ($state.current.name == 'documents.document.edit') {
-                // If we are editing, the default type is text
-                type = 'text';
-                if (typeof attrs.type != 'undefined') {
-                    type = attrs.type;
-                }
-            }
-            return 'editable/editable-'+type+'.html';
         },
-        link: {
-            pre:function($scope, elm, attrs) {
-                $scope.fieldKey = attrs.fieldKey;
-            }
-        }
-    };
-}]);
-/** Template Controller */
+        link: function($scope, elm) {
 
-cvApp.controller('TemplateController', ['TemplateService', '$modalInstance', function(TemplateService, $modalInstance){
-    var templateCtrl = this;
-
-    this.items = items;
-    this.selected = {
-        item: this.items[0]
-    };
-
-    this.ok = function () {
-        $modalInstance.close(templateCtrl.selected.item);
-    };
-
-    this.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-
-}]);
-
-/**
- * Service to provide Template Data
- */
-
-cvApp.service('TemplateService', ['$http', '$templateCache', function($http, $templateCache) {
-    var templateService = this;
-
-    this.getTemplate = function (templateName) {
-        return $http.get('/api/' + templateName);
-    }
-
-    this.createTemplate = function (templateName, templateData) {
-        return $http.put('/api/' + templateName, templateData);
-    }
-
-    this.preloadCache = function(jsonData, path) {
-        // To start off, set the path to en empty string, and add the node-child template to the cache
-        if (typeof path == 'undefined'){
-            path = '';
-            $http.get('node/node-child.html').success(function(data){
-                $templateCache.put('node/node-child.html', data);
-            });
-        }
-        if( typeof jsonData == "object" ) {
-            $.each(jsonData, function(key,val) {
-                // if the key is template, add the value to the cache at this path
-                if (key == 'template'){
-                    $templateCache.put(path, val);
-                } else {
-                    templateService.preloadCache(val, String(path) + '/' + String(key));
-                }
-            });
+            /**
+             * Open a modal to edit the template
+             *
+             * @param path
+             */
+            $scope.openTemplateModal = function (nodePath) {
+                var modalInstance = $modal.open({
+                    templateUrl: 'template/modal.html',
+                    controller: 'TemplateController',
+                    resolve: {
+                        templatePromise: function($stateParams, TemplateService){
+                            return TemplateService.getTemplate($stateParams.document_name+'-templates', nodePath);
+                        },
+                        nodePath: function(){
+                            return nodePath;
+                        }
+                    }
+                });
+                modalInstance.result.then(function () {
+                    console.log("RESULT");
+                });
+            };
         }
     }
 }]);
-
-
 //# sourceMappingURL=main.js.map
