@@ -1,16 +1,36 @@
 <div class="modal-header">
-    <h3 class="modal-title">Editing Template for : [[nodePath]]</h3>
+    <h3 class="modal-title">Editing : [[nodePath]]</h3>
 </div>
 <div class="modal-body">
-    <div ui-ace="{
-      useWrapMode : true,
-      theme:'idle_fingers',
-      mode: 'html',
-      onLoad: aceLoaded,
-      advanced: {
-        fontSize: 16
-      }
-    }" ng-model="templateHtml">
+    <div class="panel panel-default">
+        <div class="panel-heading">Node Data</div>
+        <div class="panel-body">
+            <div ui-ace="{
+              useWrapMode : true,
+              theme:'idle_fingers',
+              mode: 'json',
+              onLoad: aceJsonLoaded,
+              advanced: {
+                fontSize: 16
+              }
+            }" ng-model="nodeValue">
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Template</div>
+        <div class="panel-body">
+            <div ui-ace="{
+              useWrapMode : true,
+              theme:'idle_fingers',
+              mode: 'html',
+              onLoad: aceHtmlLoaded,
+              advanced: {
+                fontSize: 16
+              }
+            }" ng-model="templateHtml">
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

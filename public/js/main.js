@@ -106,6 +106,112 @@ cvApp.config( function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 });
 
+/** Documents Controller */
+
+cvApp.controller('DocumentsController', ['documents',  function(documents){
+    var documentsCtrl = this;
+
+    this.documents = documents;
+
+}]);
+
+/** Document Controller */
+
+cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', 'editableOptions', '$state', '$modal', function(DocumentService, documentName, documentData, editableOptions, $state, $modal){
+    var documentCtrl = this;
+
+    // Set the editing flag based on current state
+    this.editing = $state.current.name == 'documents.document.edit';
+
+    // Disable xeditable activation if we are not editing
+    if (this.editing){
+        editableOptions.activationEvent = 'click';
+    } else {
+        editableOptions.activationEvent = 'none';
+    }
+
+    this.document = {
+        name: documentName,
+        data: documentData
+    };
+
+    /**
+     * Create a document with the given name
+     *
+     * @param documentName
+     */
+    this.createDocument = function() {
+        var documentName = documentCtrl.document.name;
+        var documentData = documentCtrl.document.data;
+        DocumentService.createDocument(documentName, documentData).success(function(data){
+            documentCtrl.document = {
+                name: '',
+                data: ''
+            };
+        }).success(
+            function(){
+                $state.go('documents', {}, {
+                    reload: true
+                });
+            }
+        );
+
+    }
+
+}]);
+
+/**
+ * Service to provide Document Data
+ */
+
+cvApp.service('DocumentService', ['$http', function($http) {
+    var documentService = this;
+
+    this.getDocuments = function () {
+        return $http.get('/api');
+    }
+
+    this.getDocument = function (documentName) {
+        return $http.get('/api/' + documentName);
+    }
+
+    this.createDocument = function (documentName, documentData) {
+        return $http.put('/api/' + documentName, documentData);
+    }
+
+}]);
+
+
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$state',function($state) {
+    return {
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        templateUrl: function(elem, attrs){
+            // If we are not editing, use the noedit template
+            var type = 'noedit';
+            if ($state.current.name == 'documents.document.edit') {
+                // If we are editing, the default type is text
+                type = 'text';
+                if (typeof attrs.type != 'undefined') {
+                    type = attrs.type;
+                }
+            }
+            return 'editable/editable-'+type+'.html';
+        },
+        link: {
+            pre:function($scope, elm, attrs) {
+                $scope.fieldKey = attrs.fieldKey;
+            }
+        }
+    };
+}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
@@ -190,7 +296,7 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
              *
              * @param path
              */
-            $scope.openTemplateModal = function (nodePath) {
+            $scope.openTemplateModal = function (nodePath, nodeValue) {
                 var modalInstance = $modal.open({
                     templateUrl: 'template/modal.html',
                     controller: 'TemplateController',
@@ -201,128 +307,27 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
                         },
                         nodePath: function(){
                             return nodePath;
+                        },
+                        nodeValue: function(){
+                            return nodeValue;
                         }
                     }
                 });
-                modalInstance.result.then(function (templateData) {
-                    //console.log(templateData, "RESULT");
+                modalInstance.result.then(function (result) {
+                    console.log(result, "result");
                 });
             };
         }
     }
-}]);
-/** Document Controller */
-
-cvApp.controller('DocumentController', ['DocumentService', 'documentName', 'documentData', 'editableOptions', '$state', '$modal', function(DocumentService, documentName, documentData, editableOptions, $state, $modal){
-    var documentCtrl = this;
-
-    // Set the editing flag based on current state
-    this.editing = $state.current.name == 'documents.document.edit';
-
-    // Disable xeditable activation if we are not editing
-    if (this.editing){
-        editableOptions.activationEvent = 'click';
-    } else {
-        editableOptions.activationEvent = 'none';
-    }
-
-    this.document = {
-        name: documentName,
-        data: documentData
-    };
-
-    /**
-     * Create a document with the given name
-     *
-     * @param documentName
-     */
-    this.createDocument = function() {
-        var documentName = documentCtrl.document.name;
-        var documentData = documentCtrl.document.data;
-        DocumentService.createDocument(documentName, documentData).success(function(data){
-            documentCtrl.document = {
-                name: '',
-                data: ''
-            };
-        }).success(
-            function(){
-                $state.go('documents', {}, {
-                    reload: true
-                });
-            }
-        );
-
-    }
-
-}]);
-
-/**
- * Service to provide Document Data
- */
-
-cvApp.service('DocumentService', ['$http', function($http) {
-    var documentService = this;
-
-    this.getDocuments = function () {
-        return $http.get('/api');
-    }
-
-    this.getDocument = function (documentName) {
-        return $http.get('/api/' + documentName);
-    }
-
-    this.createDocument = function (documentName, documentData) {
-        return $http.put('/api/' + documentName, documentData);
-    }
-
-}]);
-
-
-/** Documents Controller */
-
-cvApp.controller('DocumentsController', ['documents',  function(documents){
-    var documentsCtrl = this;
-
-    this.documents = documents;
-
-}]);
-
-/** Editable Controller */
-
-cvApp.controller('EditableController', [function(){
-    var editableCtrl = this;
-}]);
-
-cvApp.directive('editable', ['$state',function($state) {
-    return {
-        restrict: 'E',
-        controller: 'EditableController',
-        controllerAs: 'editableCtrl',
-        templateUrl: function(elem, attrs){
-            // If we are not editing, use the noedit template
-            var type = 'noedit';
-            if ($state.current.name == 'documents.document.edit') {
-                // If we are editing, the default type is text
-                type = 'text';
-                if (typeof attrs.type != 'undefined') {
-                    type = attrs.type;
-                }
-            }
-            return 'editable/editable-'+type+'.html';
-        },
-        link: {
-            pre:function($scope, elm, attrs) {
-                $scope.fieldKey = attrs.fieldKey;
-            }
-        }
-    };
 }]);
 /** Template Controller */
 
-cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', function($scope, TemplateService, $modalInstance, templatePromise, nodePath){
+cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', 'nodeValue', function($scope, TemplateService, $modalInstance, templatePromise, nodePath, nodeValue){
     var templateCtrl = this;
 
     $scope.nodePath = nodePath;
+    // Must convert nodeValue to Json string (ui-ace) only accepts string values
+    $scope.nodeValue = angular.toJson(nodeValue, true);
     $scope.templateData = templatePromise.data;
     // Check for the "template" key in the data
     if ($scope.templateData.template){
@@ -330,17 +335,22 @@ cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInst
     }
 
     //console.log($scope.nodePath, "NODE PATH");
+    //console.log($scope.nodeValue, "NODE VALUE");
     //console.log($scope.templateData, "TEMPLATE DATA");
     //console.log($scope.templateHtml, "TEMPLATE HTML");
 
-    $scope.aceLoaded = function(_editor){
+    $scope.aceJsonLoaded = function(_editor){
+        _editor.$blockScrolling = Infinity;
+    };
+
+    $scope.aceHtmlLoaded = function(_editor){
         _editor.$blockScrolling = Infinity;
         // Re-format the html
         $scope.templateHtml = html_beautify($scope.templateHtml);
     };
 
     $scope.ok = function () {
-        $modalInstance.close($scope.templateHtml);
+        $modalInstance.close({templateHtml: $scope.templateHtml, nodeValue: $scope.nodeValue});
     };
 
     $scope.cancel = function () {

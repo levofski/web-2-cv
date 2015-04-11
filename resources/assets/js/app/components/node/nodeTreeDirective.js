@@ -16,7 +16,7 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
              *
              * @param path
              */
-            $scope.openTemplateModal = function (nodePath) {
+            $scope.openTemplateModal = function (nodePath, nodeValue) {
                 var modalInstance = $modal.open({
                     templateUrl: 'template/modal.html',
                     controller: 'TemplateController',
@@ -27,11 +27,14 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
                         },
                         nodePath: function(){
                             return nodePath;
+                        },
+                        nodeValue: function(){
+                            return nodeValue;
                         }
                     }
                 });
-                modalInstance.result.then(function (templateData) {
-                    //console.log(templateData, "RESULT");
+                modalInstance.result.then(function (result) {
+                    console.log(result, "result");
                 });
             };
         }
