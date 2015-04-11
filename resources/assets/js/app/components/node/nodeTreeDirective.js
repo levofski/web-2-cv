@@ -29,8 +29,8 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
                         }
                     }
                 });
-                modalInstance.result.then(function () {
-                    console.log("RESULT");
+                modalInstance.result.then(function (templateData) {
+                    //console.log(templateData, "RESULT");
                 });
             };
         }

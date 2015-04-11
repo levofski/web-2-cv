@@ -6500,5 +6500,8 @@ span.editable-click:hover {
 address {
   white-space: pre-wrap;
 }
+.ace_editor {
+  min-height: 200px;
+}
 
 /*# sourceMappingURL=main.css.map */

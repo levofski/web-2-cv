@@ -1,24 +1,24 @@
 {
   "sections": {
     "0": {
-      "template": "<h1 class='document-title'><editable field-key='nodeValue.fields.name' /></h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
+      "template": "<h1 class='document-title'><editable field-key='nodeValue.fields.name'></editable></h1><div class='row'><node-child ng-model='nodeValue.fields'></node-child></div>",
       "fields": {
-        "template": "<div class='col-md-6'><address><editable type='textarea' field-key='nodeValue.address' /></address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@<editable field-key='nodeValue.twitterUsername' /></a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'><editable field-key='nodeValue.email' /></a></div><div><strong>Telephone</strong> : <editable field-key='nodeValue.telephone' /></div><div><strong>Driving License</strong> : <editable field-key='nodeValue.drivingLicense' /></div></div>"
+        "template": "<div class='col-md-6'><address><editable type='textarea' field-key='nodeValue.address'></editable></address></div><div class='col-md-6'><div><strong>Twitter</strong> : <a href='https://twitter.com/[[nodeValue.twitterUsername]]'>@<editable field-key='nodeValue.twitterUsername'></editable></a></div><div><strong>Email</strong> : <a href='mailto:[[nodeValue.email]]'><editable field-key='nodeValue.email'></editable></a></div><div><strong>Telephone</strong> : <editable field-key='nodeValue.telephone'></editable></div><div><strong>Driving License</strong> : <editable field-key='nodeValue.drivingLicense'></editable></div></div>"
       }
     },
     "1": {
       "template": "<div class='row'><div class='col-md-12'><blockquote><node-child ng-model='nodeValue.fields'></node-child></blockquote></div></div>",
       "bullets": {
         "_": {
-          "template": "<div><editable field-key='nodeValue' /></div>"
+          "template": "<div><editable field-key='nodeValue'></editable></div>"
         }
       }
     },
     "2": {
-      "template": "<h2><editable field-key='nodeValue.name' /></h2><div class='row'><div class='col-md-12'><blockquote><node-child ng-model='nodeValue.sections'></node-child></blockquote></div></div>",
+      "template": "<h2><editable field-key='nodeValue.name'></editable></h2><div class='row'><div class='col-md-12'><blockquote><node-child ng-model='nodeValue.sections'></node-child></blockquote></div></div>",
       "sections": {
         "_": {
-          "template": "<h3><editable field-key='nodeValue.dateFrom' /> - <editable field-key='nodeValue.dateTo' /></h3><blockquote>Company : <editable field-key='nodeValue.company' /></blockquote>"
+          "template": "<h3><editable field-key='nodeValue.dateFrom'></editable> - <editable field-key='nodeValue.dateTo'></editable></h3><blockquote>Company : <editable field-key='nodeValue.company'></editable></blockquote>"
         }
       }
     }

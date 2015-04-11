@@ -58,8 +58,12 @@
     <script src="vendor/ace-builds/src-min-noconflict/mode-json.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/mode-html.js"></script>
     <script src="vendor/ace-builds/src-min-noconflict/worker-html.js"></script>
+    <script src="vendor/ace-builds/src-min-noconflict/theme-idle_fingers.js"></script>
     <script src="vendor/angular-ui-ace/ui-ace.js"></script>
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="vendor/js-beautify/js/lib/beautify.js"></script>
+    <script src="vendor/js-beautify/js/lib/beautify-css.js"></script>
+    <script src="vendor/js-beautify/js/lib/beautify-html.js"></script>
     <!-- endbower -->
     <script src="js/main.js"></script>
 </body>

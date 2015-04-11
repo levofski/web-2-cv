@@ -30,7 +30,8 @@
     "angular-ui-router": "~0.2.13",
     "angular-xeditable": "~0.1.9",
     "angular-ui-ace": "bower",
-    "angular-bootstrap": "~0.12.1"
+    "angular-bootstrap": "~0.12.1",
+    "js-beautify": "~1.5.5"
   },
   "overrides": {
     "ace-builds": {
@@ -40,7 +41,7 @@
         "src-min-finoconflict/worker-json.js",
         "src-min-noconflict/mode-html.js",
         "src-min-noconflict/worker-html.js",
-        "src-min-noconflict/theme-idle-fingers.js"
+        "src-min-noconflict/theme-idle_fingers.js"
       ]
     }
   },

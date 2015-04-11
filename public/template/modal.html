@@ -2,7 +2,13 @@
     <h3 class="modal-title">Editing Template for : [[nodePath]]</h3>
 </div>
 <div class="modal-body">
-    [[template]]
+    <div ui-ace="{
+      useWrapMode : true,
+      theme:'idle_fingers',
+      mode: 'html',
+      onLoad: aceLoaded
+    }" ng-model="templateHtml">
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok()">OK</button>

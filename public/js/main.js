@@ -1,6 +1,6 @@
 /** CV App Module */
 
-var cvApp = angular.module('cvApp', ['ui.router', 'ui.bootstrap', 'xeditable']);
+var cvApp = angular.module('cvApp', ['ui.router', 'ui.bootstrap', 'ui.ace', 'xeditable']);
 
 cvApp.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
@@ -182,100 +182,6 @@ cvApp.controller('DocumentsController', ['documents',  function(documents){
 
 }]);
 
-/** Template Controller */
-
-cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', function($scope, TemplateService, $modalInstance, templatePromise, nodePath){
-    var templateCtrl = this;
-
-    $scope.nodePath = nodePath;
-    $scope.template = templatePromise.data;
-
-    console.log($scope.nodePath, "TEMPLATE");
-    console.log($scope.template, "TEMPLATE");
-
-    $scope.ok = function () {
-        $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-
-}]);
-
-/**
- * Service to provide Template Data
- */
-
-cvApp.service('TemplateService', ['$http', '$templateCache', function($http, $templateCache) {
-    var templateService = this;
-
-    this.getTemplate = function (templateName, templatePath) {
-        if (typeof templatePath == 'undefined'){
-            templatePath = '';
-        } else {
-            // Remove any leading slash from path
-            templatePath = templatePath.replace(/^\//, '');
-        }
-        return $http.get('/api/' + templateName + '/' + templatePath);
-    }
-
-    this.createTemplate = function (templateName, templateData) {
-        return $http.put('/api/' + templateName, templateData);
-    }
-
-    this.preloadCache = function(jsonData, path) {
-        // To start off, set the path to en empty string, and add the node-child template to the cache
-        if (typeof path == 'undefined'){
-            path = '';
-            $http.get('node/node-child.html').success(function(data){
-                $templateCache.put('node/node-child.html', data);
-            });
-        }
-        if( typeof jsonData == "object" ) {
-            $.each(jsonData, function(key,val) {
-                // if the key is template, add the value to the cache at this path
-                if (key == 'template'){
-                    $templateCache.put(path, val);
-                } else {
-                    templateService.preloadCache(val, String(path) + '/' + String(key));
-                }
-            });
-        }
-    }
-}]);
-
-
-/** Editable Controller */
-
-cvApp.controller('EditableController', [function(){
-    var editableCtrl = this;
-}]);
-
-cvApp.directive('editable', ['$state',function($state) {
-    return {
-        restrict: 'E',
-        controller: 'EditableController',
-        controllerAs: 'editableCtrl',
-        templateUrl: function(elem, attrs){
-            // If we are not editing, use the noedit template
-            var type = 'noedit';
-            if ($state.current.name == 'documents.document.edit') {
-                // If we are editing, the default type is text
-                type = 'text';
-                if (typeof attrs.type != 'undefined') {
-                    type = attrs.type;
-                }
-            }
-            return 'editable/editable-'+type+'.html';
-        },
-        link: {
-            pre:function($scope, elm, attrs) {
-                $scope.fieldKey = attrs.fieldKey;
-            }
-        }
-    };
-}]);
 cvApp.directive('nodeChild', function() {
     return {
         templateUrl: 'node/node-child.html',
@@ -373,11 +279,116 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
                         }
                     }
                 });
-                modalInstance.result.then(function () {
-                    console.log("RESULT");
+                modalInstance.result.then(function (templateData) {
+                    //console.log(templateData, "RESULT");
                 });
             };
         }
     }
 }]);
+/** Editable Controller */
+
+cvApp.controller('EditableController', [function(){
+    var editableCtrl = this;
+}]);
+
+cvApp.directive('editable', ['$state',function($state) {
+    return {
+        restrict: 'E',
+        controller: 'EditableController',
+        controllerAs: 'editableCtrl',
+        templateUrl: function(elem, attrs){
+            // If we are not editing, use the noedit template
+            var type = 'noedit';
+            if ($state.current.name == 'documents.document.edit') {
+                // If we are editing, the default type is text
+                type = 'text';
+                if (typeof attrs.type != 'undefined') {
+                    type = attrs.type;
+                }
+            }
+            return 'editable/editable-'+type+'.html';
+        },
+        link: {
+            pre:function($scope, elm, attrs) {
+                $scope.fieldKey = attrs.fieldKey;
+            }
+        }
+    };
+}]);
+/** Template Controller */
+
+cvApp.controller('TemplateController', ['$scope', 'TemplateService', '$modalInstance', 'templatePromise', 'nodePath', function($scope, TemplateService, $modalInstance, templatePromise, nodePath){
+    var templateCtrl = this;
+
+    $scope.nodePath = nodePath;
+    $scope.templateData = templatePromise.data;
+    // Check for the "template" key in the data
+    if ($scope.templateData.template){
+        $scope.templateHtml = $scope.templateData.template;
+    }
+
+    //console.log($scope.nodePath, "NODE PATH");
+    //console.log($scope.templateData, "TEMPLATE DATA");
+    //console.log($scope.templateHtml, "TEMPLATE HTML");
+
+    $scope.aceLoaded = function(_editor){
+        _editor.$blockScrolling = Infinity;
+        // Re-format the html
+        $scope.templateHtml = html_beautify($scope.templateHtml);
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.templateHtml);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+}]);
+
+/**
+ * Service to provide Template Data
+ */
+
+cvApp.service('TemplateService', ['$http', '$templateCache', function($http, $templateCache) {
+    var templateService = this;
+
+    this.getTemplate = function (templateName, templatePath) {
+        if (typeof templatePath == 'undefined'){
+            templatePath = '';
+        } else {
+            // Remove any leading slash from path
+            templatePath = templatePath.replace(/^\//, '');
+        }
+        return $http.get('/api/' + templateName + '/' + templatePath);
+    }
+
+    this.createTemplate = function (templateName, templateData) {
+        return $http.put('/api/' + templateName, templateData);
+    }
+
+    this.preloadCache = function(jsonData, path) {
+        // To start off, set the path to en empty string, and add the node-child template to the cache
+        if (typeof path == 'undefined'){
+            path = '';
+            $http.get('node/node-child.html').success(function(data){
+                $templateCache.put('node/node-child.html', data);
+            });
+        }
+        if( typeof jsonData == "object" ) {
+            $.each(jsonData, function(key,val) {
+                // if the key is template, add the value to the cache at this path
+                if (key == 'template'){
+                    $templateCache.put(path, val);
+                } else {
+                    templateService.preloadCache(val, String(path) + '/' + String(key));
+                }
+            });
+        }
+    }
+}]);
+
+
 //# sourceMappingURL=main.js.map
