@@ -20,6 +20,7 @@ cvApp.directive('nodeTree', ['$modal', '$stateParams', 'TemplateService', functi
                 var modalInstance = $modal.open({
                     templateUrl: 'template/modal.html',
                     controller: 'TemplateController',
+                    size: 'lg',
                     resolve: {
                         templatePromise: function($stateParams, TemplateService){
                             return TemplateService.getTemplate($stateParams.document_name+'-templates', nodePath);
